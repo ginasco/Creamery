@@ -25,8 +25,10 @@ tr:nth-child(even) {
     background-color: #dddddd;
 }     
 
+  
 </style>
     <body>
+          <!--Shermaine trial-->
          <table style=text-align: left; width: 791px; border=1 cellpadding=2 cellspacing=2 id=dataTable align=center>
                 <div align=center><h1>EXPIRED PRODUCTS</h1></div>
                 <thead>
