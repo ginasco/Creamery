@@ -86,7 +86,7 @@ echo "<tr>
 }
 
 if(isset($_POST['showAll'])){
-    require_once('../mysql_connect.php');
+    require_once('mysqlConnector/mysql_connect.php');
     
     echo '<table width="75%" border="1" align="center" cellpadding="0" id="dataTable" cellspacing="0" bordercolor="#000000">
             <tr>

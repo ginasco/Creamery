@@ -13,7 +13,7 @@ if ($_SESSION['usertype']!=102){
         <form method="post" action="Re-Order.php">
             <h1>Re-Order the following items:</h1>
             <?php
-            require_once('../mysql_connect.php');
+            require_once('mysqlConnector/mysql_connect.php');
 
                 $sql = "select p.productName,p.wholesalePrice, pi.inventoryQty, p.productID from products p join perpetualinventory pi on p.productID = pi.productID;";
                 $result =mysqli_query($dbc,$sql);

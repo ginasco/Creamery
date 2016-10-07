@@ -29,7 +29,7 @@ else
 
  
 
-require_once('../mysql_connect.php');
+require_once('mysqlConnector/mysql_connect.php');
   
 if($_SESSION['badlogin'] < 3 ){
     

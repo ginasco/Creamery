@@ -76,7 +76,7 @@ if (isset($_POST['submit'])){
               <th></th>
               </tr></thead>";
         
-        require_once('../mysql_connect.php');
+        require_once('mysqlConnector/mysql_connect.php');
         $query="select username, userID, usertype from users where userID={$userID}";
         $result=mysqli_query($dbc,$query);
         $flag=1;
@@ -110,7 +110,7 @@ if (isset($_POST['all'])){
               <th>user Type</th>
               <th></th>
               </tr></thead>";
-    require_once('../mysql_connect.php');
+    require_once('mysqlConnector/mysql_connect.php');
     $query1="select * from users where usertype!=101";
     $result=mysqli_query($dbc,$query1);
     while($row = $result->fetch_assoc()){ 

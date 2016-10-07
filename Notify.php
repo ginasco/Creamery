@@ -19,7 +19,7 @@ if ($_SESSION['usertype']!=102){
         
         
         <?php
-        require_once('../mysql_connect.php');
+        require_once('mysqlConnector/mysql_connect.php');
 
 $sql = "select distinct(pi.productID), p.productName, sum(pi.inventoryQty) as inventoryQty
 from products p join perpetualinventory pi on p.productID = pi.productID

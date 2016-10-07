@@ -44,7 +44,7 @@ tr:nth-child(even) {
             $time = date("Y/m/d");
             $date = strtotime($time);
             
-            require_once('../mysql_connect.php');
+            require_once('mysqlConnector/mysql_connect.php');
             $query="SELECT i.expiryDate, i.productID, i.inventoryQty, p.productName from perpetualinventory i join products p
                     on i.productID=p.productID where i.active!=0";
             $result=mysqli_query($dbc,$query);
@@ -70,7 +70,7 @@ tr:nth-child(even) {
         
         <?php
             if (isset($_POST['confirm'])){
-                require_once('../mysql_connect.php');
+                require_once('mysqlConnector/mysql_connect.php');
                 $productID=$_POST['productID'];
                 $inventoryQty=$_POST['inventoryQty'];
                 $pullOutName=$_POST['pullOutName'];

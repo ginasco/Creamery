@@ -28,7 +28,7 @@ else{
 
 if (isset($_POST['cUsertype'])){
  $userID = $_POST['change'];
-     require_once('../mysql_connect.php');
+     require_once('mysqlConnector/mysql_connect.php');
     $check="select usertype from users where userID='{$userID}'";
     $check2=mysqli_query($dbc,$check);
     while($row = $check2->fetch_assoc()) {
@@ -79,7 +79,7 @@ if(isset($_POST['changeP'])){
     $renPassword =$_POST['renPassword'];
     
     if($nPassword == $renPassword){
-        require_once('../mysql_connect.php');
+        require_once('mysqlConnector/mysql_connect.php');
         $query1="update users set password=PASSWORD('$nPassword') where userID='{$userID}'";
         $result=mysqli_query($dbc,$query1);
         echo "success";

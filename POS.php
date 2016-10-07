@@ -34,7 +34,7 @@ tr:nth-child(even) {
 
 <?php 
  //print_r($_POST);           
-            require_once('../mysql_connect.php');
+            require_once('mysqlConnector/mysql_connect.php');
             $query="SELECT i.productID, p.productName, p.retailPrice, i.inventoryQty, expiryDate
                     FROM perpetualinventory i JOIN products p ON i.productID = p.productID where inventoryQty>0";
             $result=mysqli_query($dbc,$query);
@@ -102,7 +102,7 @@ tr:nth-child(even) {
             $items = array_combine($productID,$qtySold);
             $pairs = array();
             
-            require_once('../mysql_connect.php');
+            require_once('mysqlConnector/mysql_connect.php');
             
             $query="insert into sales(sold) values(1)";
             $result=mysqli_query($dbc,$query);

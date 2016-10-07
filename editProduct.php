@@ -65,7 +65,7 @@ tr:nth-child(even) {
 
 <?php
 
-require_once('../mysql_connect.php');
+require_once('mysqlConnector/mysql_connect.php');
 $query="select * from products";
         
 

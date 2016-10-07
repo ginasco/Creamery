@@ -45,7 +45,7 @@ tr:nth-child(even) {
         <p>Delivery Receipt Number : </p>
         <select name="sel_name">
             <?php
-                require_once('../mysql_connect.php');
+                require_once('sqlConnector/mysql_connect.php');
                 $query="
                     SELECT distinct d.drNumber
                     FROM delivery d 
@@ -79,7 +79,7 @@ tr:nth-child(even) {
     <th>Expiry Date</th>
   </tr>
    </thead>";
-        require_once('../mysql_connect.php');
+        require_once('sqlConnector/mysql_connect.php');
         $drNumber=$_POST['sel_name'];
         $query2=" select drNumber, p.productID, p.productName, p.sku, p.qtyUnit, p.retailPrice, d.quantityDR, d.expiryDate from delivery d join products p on d.productID= p.productID where d.drNumber='{$drNumber}' order by p.sku";
         $result=mysqli_query($dbc,$query2);
@@ -130,7 +130,7 @@ tr:nth-child(even) {
                     $pairs[] = '('.intval($key).','.intval($value).','.$drNumber.','."'{$_SESSION['username']}'".')';
                 }
                 //add to received table
-                require_once('../mysql_connect.php');
+                require_once('sqlConnector/mysql_connect.php');
                 $query="INSERT INTO received (productID, quantityRC, drNumber, receivedBy) values".implode(',',$pairs);
                 $result=mysqli_query($dbc,$query);
     

@@ -43,7 +43,7 @@ if ($_SESSION['usertype']!=102){
                       </tr>
                                 </thead> <tbody>";
             
-            require_once('../mysql_connect.php');
+            require_once('mysqlConnector/mysql_connect.php');
             $query="select productID, productName, wholesalePrice, qtyUnit from products where productType=101";
             $result=mysqli_query($dbc,$query);
             while($row = $result->fetch_assoc()) {
@@ -100,7 +100,7 @@ if ($_SESSION['usertype']!=102){
                     $pairs[] = '('.intval($key).','.intval($value).','."'{$_SESSION['username']}'".','."'$total'".','."'$remarks'".')';
                 }
             
-            require_once('../mysql_connect.php');
+            require_once('mysqlConnector/mysql_connect.php');
             $query3= "INSERT INTO purchase (productID, purchaseQty, username, totalAmount, remarks) values".implode(',',$pairs);
             $result3=mysqli_query($dbc,$query3);
         }

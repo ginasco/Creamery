@@ -34,7 +34,7 @@ $message=NULL;
 
 if(!isset($message)){
 if($retypepassword==$password){
-require_once('../mysql_connect.php');
+require_once('mysqlConnector/mysql_connect.php');
 $query="Insert into USERS (username,password,usertype) values ('{$username}',PASSWORD('$password'),'{$usertype}')";
 $result=mysqli_query($dbc,$query);
 $flag=1;
