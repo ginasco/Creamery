@@ -83,7 +83,7 @@ $flag=1;
      
     $message.= "please contact administrator";
     
-}               
+}//Gina wants to experiment with it.               
 }/*End of main Submit conditional*/
 
     
