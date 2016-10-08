@@ -12,7 +12,7 @@ else{
     ?>
 <html>
     <head>
-         <script src="Library/jquery.min.js"></script>
+         <script src="js/jquery.min.js"></script>
     </head>
     <style>
    table {

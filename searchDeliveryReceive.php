@@ -12,11 +12,11 @@ else{
 ?>
 <html>  
 <head>
- <link rel="stylesheet" href="Library/bootstrap.min.css">
-         <link rel="stylesheet" href="Library/jquery.dataTables.min.css">
-        <script src="Library/jquery.min.js"></script>
-  <script src="Library/bootstrap.min.js"></script>
-         <script src="Library/jquery.dataTables.min.js"></script>
+ <link rel="stylesheet" href="css/bootstrap.min.css">
+         <link rel="stylesheet" href="css/jquery.dataTables.min.css">
+        <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+         <script src="js/jquery.dataTables.min.js"></script>
     
 </head>
 

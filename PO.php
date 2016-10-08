@@ -8,7 +8,7 @@ if ($_SESSION['usertype']!=102){
     <head>
         <meta charset="utf-8" />
         <title></title>
-		<script src="Library/jquery.min.js"></script>
+		<script src="js/jquery.min.js"></script>
     </head>
 	<style>
 	   table {
