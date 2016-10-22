@@ -40,7 +40,7 @@ if($_SESSION['badlogin'] < 3 ){
              $norecord=0;
          }
      }
-    //lol
+    
     if($norecord == 0){
         $message.= "<p>Wrong username or password22";
                 if (isset($_SESSION['badlogin']))
