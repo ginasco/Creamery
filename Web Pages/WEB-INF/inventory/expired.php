@@ -45,12 +45,12 @@ if ($_SESSION['usertype']!=102){
             <div class="row text-center">
               <div class="col-sm-3 col-xs-6">
                 <div>Quantity of Expired Products <i class="fa fa-fw fa-caret-up text-success text-sm"></i></div>
-                <div class="h2 m-b-sm">5</div>
+                <input class="h2 m-b-sm" style="border:none; text-align:center" readonly id="qtyExpired"/>
               </div>
 
               <div class="col-sm-3 col-xs-6">
                 <div>Expired SKUs <i class="fa fa-fw fa-caret-up text-success text-sm"></i></div>
-                <div class="h2 m-b-sm">1</div>
+                <input class="h2 m-b-sm" style="border:none; text-align:center" readonly id="expiredSku"/>
               </div>
 
             </div>
@@ -84,11 +84,11 @@ if ($_SESSION['usertype']!=102){
                   $expiryDate=strtotime($row["expiryDate"]);
                   if($date>=$expiryDate){
 
-                   echo "<tbody><tr>
+                   echo "<tbody><tr class='productRows'>
                    <td>".$row["sku"]."<input type=hidden name='productID[]' value=".$row["productID"]."></td>
                    <td>".$row["productName"]."<input type=hidden name='productName[]' value=".$row["productName"]."></td>
                    <td>".$row["expiryDate"]."<input type=hidden name='expiryDate[]' value=".$row["expiryDate"]."></td> 
-                   <td>".$row["inventoryQty"]."<input type=hidden name='inventoryQty[]' value=".$row["inventoryQty"]."></td>
+                   <td>".$row["inventoryQty"]."<input type=hidden class='inventoryQty' name='inventoryQty[]' value=".$row["inventoryQty"]."></td>
                  </tr></tbody>";
                }
              }
@@ -115,13 +115,11 @@ if ($_SESSION['usertype']!=102){
 </div>
 </div>
 <?php
-if (empty($_POST['confirm'])){
-   echo "<script type='text/javascript'>alert('nothing to pullout')</script>";
-}
-else if (isset($_POST['confirm'])){
+
+if (isset($_POST['confirm'])){
 
 
-  require_once('mysqlConnector/mysql_connect.php');
+  require_once('../../mysqlConnector/mysql_connect.php');
   $productID=$_POST['productID'];
   $inventoryQty=$_POST['inventoryQty'];
   //$pullOutName=$_POST['pullOutName']; --- do we still need this colum?
@@ -162,10 +160,39 @@ else if (isset($_POST['confirm'])){
   //------- /update inventory -------
 
     echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
+
+    header("location:expired.php"); //problem here
+    exit;
 }
 
 ?>
 <!-- /content -->
 </div>
+
+<script>
+var rowCount = 0;
+var quantityCount=0;
+  $('.productRows').each(function(){
+    rowCount++;
+
+ });
+
+  $('.inventoryQty').each(function(){
+    quantityCount += parseFloat(this.value);
+
+ });
+
+if(rowCount==0){
+  $("#confirm").prop('disabled', true); 
+}
+
+
+ var x = document.getElementById("qtyExpired");
+ x.setAttribute("value", quantityCount);
+
+ var y = document.getElementById("expiredSku");
+ y.setAttribute("value", rowCount);
+
+</script>
 </body>
 </html>
