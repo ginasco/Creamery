@@ -168,9 +168,6 @@ if (isset($_POST['confirm'])){
 ?>
 <!-- /content -->
 </div>
-
-
-
 <script>
 var rowCount = 0;
 var quantityCount=0;
