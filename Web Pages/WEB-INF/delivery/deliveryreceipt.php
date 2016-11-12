@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+  <meta charset="utf-8" />
+  <title>Laguna Creamery Inc</title>
+  <meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <link rel="stylesheet" href="../libs/assets/animate.css/animate.css" type="text/css" />
+  <link rel="stylesheet" href="../libs/assets/font-awesome/css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="../libs/assets/simple-line-icons/css/simple-line-icons.css" type="text/css" />
+  <link rel="stylesheet" href="../libs/jquery/bootstrap/dist/css/bootstrap.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/font.css" type="text/css" />
+  <link rel="stylesheet" href="css/app.css" type="text/css" />
+
+</head>
+<body>
+<div class="app app-header-fixed ">
+  
+
+ <!-- header -->
+  <header id="header" class="app-header navbar" role="menu">
+      <!-- navbar header -->
+      <div class="navbar-header bg-dark">
+        <button class="pull-right visible-xs dk" ui-toggle-class="show" target=".navbar-collapse">
+          <i class="glyphicon glyphicon-cog"></i>
+        </button>
+        <button class="pull-right visible-xs" ui-toggle-class="off-screen" target=".app-aside" ui-scroll="app">
+          <i class="glyphicon glyphicon-align-justify"></i>
+        </button>
+        <!-- brand -->
+        <a href="dashboard.html" class="navbar-brand text-lt">
+         
+          <span class="hidden-folded m-l-xs">Holly's Milk</span>
+        </a>
+        <!-- / brand -->
+      </div>
+      <!-- / navbar header -->
+
+      <!-- navbar collapse -->
+      <div class="collapse pos-rlt navbar-collapse box-shadow bg-white-only">
+        <!-- buttons -->
+        <div class="nav navbar-nav hidden-xs">
+          <a href="#" class="btn no-shadow navbar-btn" ui-toggle-class="app-aside-folded" target=".app">
+            <i class="fa fa-dedent fa-fw text"></i>
+            <i class="fa fa-indent fa-fw text-active"></i>
+          </a>
+         
+       
+        </div>
+        <!-- / buttons -->
+
+        <!-- link and dropdown -->
+        
+        <!-- / link and dropdown -->
+
+       
+
+        <!-- nabar right -->
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+              <i class="icon-bell fa-fw"></i>
+              <span class="visible-xs-inline">Notifications</span>
+              <span class="badge badge-sm up bg-danger pull-right-xs">2</span>
+            </a>
+            <!-- dropdown -->
+            <div class="dropdown-menu w-xl animated fadeInUp">
+              <div class="panel bg-white">
+                <div class="panel-heading b-light bg-light">
+                  <strong>You have <span>2</span> notifications</strong>
+                </div>
+                <div class="list-group">
+                  <a href class="list-group-item">
+                    <span class="pull-left m-r thumb-sm">
+                      
+                    </span>
+                    <span class="clear block m-b-none">
+                      Product 500ml Chocolate Milk is near expiry.<br>
+                      <small class="text-muted">10 minutes ago</small>
+                    </span>
+                  </a>
+                  <a href class="list-group-item">
+                    <span class="clear block m-b-none">
+                      Product 200g Quesong Puti is low in stock.<br>
+                      <small class="text-muted">1 hour ago</small>
+                    </span>
+                  </a>
+                </div>
+                <div class="panel-footer text-sm">
+                  <a href class="pull-right"><i class="fa fa-cog"></i></a>
+                  <a href="#notes" data-toggle="class:show animated fadeInRight">See all the notifications</a>
+                </div>
+              </div>
+            </div>
+            <!-- / dropdown -->
+          </li>
+          <li class="dropdown">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle clear" data-toggle="dropdown">
+              <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
+                <img src="img/a0.jpg" alt="...">
+                <i class="on md b-white bottom"></i>
+              </span>
+              <span class="hidden-sm hidden-md">Marcus Ko</span> <b class="caret"></b>
+            </a>
+            <!-- dropdown -->
+            <ul class="dropdown-menu animated fadeInRight w">
+              
+              <li>
+                <a href>
+                  
+                  <span>Settings</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="app.page.profile">Profile</a>
+              </li>
+              <li>
+                <a ui-sref="app.docs">
+                  
+                  Help
+                </a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a ui-sref="access.signin">Logout</a>
+              </li>
+            </ul>
+            <!-- / dropdown -->
+          </li>
+        </ul>
+        <!-- / navbar right -->
+      </div>
+      <!-- / navbar collapse -->
+  </header>
+  <!-- / header -->
+
+
+    <!-- aside -->
+  <aside id="aside" class="app-aside hidden-xs bg-dark">
+      <div class="aside-wrap">
+        <div class="navi-wrap">
+          <!-- user -->
+          <div class="clearfix hidden-xs text-center hide" id="aside-user">
+            <div class="dropdown wrapper">
+              <a href="app.page.profile">
+                <span class="thumb-lg w-auto-folded avatar m-t-sm">
+                  <img src="img/a0.jpg" class="img-full" alt="...">
+                </span>
+              </a>
+              <a href="#" data-toggle="dropdown" class="dropdown-toggle hidden-folded">
+                <span class="clear">
+                  <span class="block m-t-sm">
+                    <strong class="font-bold text-lt">John.Smith</strong> 
+                    <b class="caret"></b>
+                  </span>
+                  <span class="text-muted text-xs block">Art Director</span>
+                </span>
+              </a>
+              <!-- dropdown -->
+              <ul class="dropdown-menu animated fadeInRight w hidden-folded">
+                <li class="wrapper b-b m-b-sm bg-info m-t-n-xs">
+                  <span class="arrow top hidden-folded arrow-info"></span>
+                  <div>
+                    <p>300mb of 500mb used</p>
+                  </div>
+                  <div class="progress progress-xs m-b-none dker">
+                    <div class="progress-bar bg-white" data-toggle="tooltip" data-original-title="50%" style="width: 50%"></div>
+                  </div>
+                </li>
+                <li>
+                  <a href>Settings</a>
+                </li>
+                <li>
+                  <a href="page_profile.html">Profile</a>
+                </li>
+                <li>
+                  <a href>
+                    <span class="badge bg-danger pull-right">3</span>
+                    Notifications
+                  </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a href="page_signin.html">Logout</a>
+                </li>
+              </ul>
+              <!-- / dropdown -->
+            </div>
+            <div class="line dk hidden-folded"></div>
+          </div>
+          <!-- / user -->
+
+          <!-- nav -->
+          <nav ui-nav class="navi clearfix">
+            <ul class="nav">
+              
+
+              <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+                <span>Dealer Menu</span>
+              </li>
+              <li>
+                <a href class="auto">      
+                  <span class="pull-right text-muted">
+                    <i class="fa fa-fw fa-angle-right text"></i>
+                    <i class="fa fa-fw fa-angle-down text-active"></i>
+                  </span>
+                
+                  <span>Billing</span>
+                </a>
+                <ul class="nav nav-sub dk">
+                  <li class="nav-sub-header">
+                    <a href>
+                      <span>Sales and Billing</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="invoicelist.html">
+                      <span>My Invoices</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="dealer_sales.html">
+                      <span>Sales Report</span>
+                    </a>
+                  </li>
+                  <li>
+                  </li>      
+                </ul>
+              </li>
+                
+                 <li>
+                <a href class="auto">      
+                  <span class="pull-right text-muted">
+                    <i class="fa fa-fw fa-angle-right text"></i>
+                    <i class="fa fa-fw fa-angle-down text-active"></i>
+                  </span>
+                
+                  <span>Inventory</span>
+                </a>
+                <ul class="nav nav-sub dk">
+                  <li class="nav-sub-header">
+                    <a href>
+                      <span>Inventory</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="dealer_inventory.html">
+                      <span>My Inventory</span>
+                    </a>
+                  </li>
+                    <li>
+                    <a href="receive.html">
+                      <span>Receive Delivery</span>
+                    </a>
+                  </li>
+                     <li>
+                    <a href="expired.html">
+                      <span>Pull-Out Stock</span>
+                    </a>
+                  </li>
+                  
+                     <li>
+                    <a href="productionorder.html">
+                      <span>Create Production Order</span>
+                    </a>
+                         <a href="polist.html">
+                      <span>My Production Orders</span>
+                    </a>
+                  </li>
+                  <li>
+                  </li>      
+                </ul>
+              </li>
+                <li>
+                <a href="page_profile.html">
+                  <i class="icon-user icon text-success-lter"></i>
+                  <span>Point of Sale</span>
+                </a>
+              </li>
+                
+                
+                
+              <li class="line dk hidden-folded"></li>
+
+              <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">          
+                <span>Admin Menu</span>
+              </li>  
+              
+                 <li>
+                <a href class="auto">      
+                  <span class="pull-right text-muted">
+                    <i class="fa fa-fw fa-angle-right text"></i>
+                    <i class="fa fa-fw fa-angle-down text-active"></i>
+                  </span>
+                
+                  <span>Billing</span>
+                </a>
+                <ul class="nav nav-sub dk">
+                  <li class="nav-sub-header">
+                    <a href>
+                      <span>Sales and Billing</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="admininvoices.html">
+                      <span>Dealer Invoices</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="receivables.html">
+                      <span>Accounts Receivable</span>
+                    </a>
+                  </li>
+                    <li>
+                    <a href="admin_polist.html">
+                      <span>Purchase Orders</span>
+                    </a>
+                  </li>
+                  <li>
+                  </li>      
+                </ul>
+              </li>
+                
+                <li>
+                <a href class="auto">      
+                  <span class="pull-right text-muted">
+                    <i class="fa fa-fw fa-angle-right text"></i>
+                    <i class="fa fa-fw fa-angle-down text-active"></i>
+                  </span>
+                
+                  <span>Distribution</span>
+                </a>
+                <ul class="nav nav-sub dk">
+                  <li class="nav-sub-header">
+                    <a href>
+                      <span>Distribution</span>
+                        
+                        <li>
+                    <a href="allocation.html">
+                      <span>Allocate Deliveries</span>
+                    </a>
+                  </li>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="deliverylist.html">
+                      <span>Delivery Statuses</span>
+                    </a>
+                  </li>
+                    <li>
+                    <a href="productlist.html">
+                      <span>Manage Products</span>
+                    </a>
+                  </li>
+                  <li>
+                  </li>      
+                </ul>
+              </li>
+                
+                <li>
+                <a href class="auto">      
+                  <span class="pull-right text-muted">
+                    <i class="fa fa-fw fa-angle-right text"></i>
+                    <i class="fa fa-fw fa-angle-down text-active"></i>
+                  </span>
+                
+                  <span>Production</span>
+                </a>
+                <ul class="nav nav-sub dk">
+                  <li class="nav-sub-header">
+                    <a href>
+                      <span>Production </span>
+                    </a>
+                  </li>
+                    <li>
+                    <a href="prodorder.html">
+                      <span>Create Production Order</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="admin_pblist.html">
+                      <span>List Production Orders</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="pbreportlist.html">
+                      <span>Production Reports</span>
+                    </a>
+                  </li>
+                  <li>
+                  </li>      
+                </ul>
+              </li>
+                
+                <li>
+                <a href class="auto">      
+                  <span class="pull-right text-muted">
+                    <i class="fa fa-fw fa-angle-right text"></i>
+                    <i class="fa fa-fw fa-angle-down text-active"></i>
+                  </span>
+                
+                  <span>Dealer Management</span>
+                </a>
+                <ul class="nav nav-sub dk">
+                  <li class="nav-sub-header">
+                    <a href>
+                      <span>Dealer Management</span>
+                    </a>
+                  </li>
+                   <li>
+                    <a href="newuser.html">
+                      <span>Create Dealer</span>
+                    </a>
+                  </li>
+                    
+                    <li>
+                    <a href="dealerlist.html">
+                      <span>List Dealers (Manage)</span>
+                    </a>
+                  </li>
+                  <li>
+                    
+                  </li>
+                  <li>
+                  </li>      
+                </ul>
+              </li>
+                
+                
+                
+            </ul>
+          </nav>
+          <!-- nav -->
+
+          
+        </div>
+      </div>
+  </aside>
+  <!-- / aside -->
+
+
+  <!-- content -->
+  <div id="content" class="app-content" role="main">
+  	<div class="app-content-body ">
+	    
+
+<div class="bg-light lter b-b wrapper-md hidden-print">
+  <a href class="btn btn-sm btn-info pull-right" onClick="window.print();">Print</a>
+  <h1 class="m-n font-thin h3">Delivery Receipt / DEL/MK/00001</h1>
+</div>
+<div class="wrapper-md">
+  <div>
+
+    <div class="well m-t bg-light lt">
+      <div class="row">
+        <div class="col-xs-6">
+          <strong>Customer:</strong>
+          <h4>Marcus Ko</h4>
+          <p>
+            19 Anahaw Road<br>
+            North Forbes Park, Makati City<br>
+            National Capital Region <br>
+            Phone: +63 917 325 8562<br>
+            Email: marcus_ko@gmail.com<br>
+          </p>
+        </div>
+        <div class="col-xs-6">
+          <strong>DETAILS</strong>
+          <p>
+            <B>Date of Delivery:</B> November 3, 2016 <br>
+            <b>Truck Assigned:</b> PPO 686<br>
+           
+          </p>
+        </div>
+      </div>
+    </div>
+    <p class="m-t m-b">Order date: <strong>November 1, 2016</strong><br>
+        Order status: <span class="label bg-warning">In Transit</span><br>
+        Purchase Order ID: <strong>#9399034</strong>
+    </p>
+    <div class="line"></div>
+    <table class="table table-striped bg-white b-a">
+      <thead>
+        <tr>
+          <th style="width: 60px">RECEIVED</th>
+          <th style="width: 140px">SKU</th>
+              <th>PRODUCT DESCRIPTION</th>
+          <th style="width: 60px">QTY</th>
+          <th style="width: 90px">EXPIRY DATE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="checkbox" value=""></td>
+          <td>CHMK500</td>
+          <td>500ml Chocolate Milk</td>
+          <td>30</td>
+          <td>2016-11-9</td>
+        </tr>
+        <tr>
+        <TD><input type="checkbox" value=""></TD>
+           <td>QSPT200</td>
+          <td>200g Quesong Puti</td>
+          <td>30</td>
+          <td>2016-11-9</td>
+        </tr>
+        
+      </tbody>
+    </table>   
+      
+      <Strong>Delivery Confirmation Code</Strong>
+      <br><Strong>CLICK FIELD THEN SCAN BARCODE WITH SCANNER</Strong>
+       <input type="password" class="form-control" placeholder="Confirmation Code">
+            
+      
+       <align="right"><button class="btn m-b-xs w-xs btn-success">Delivered</button></align> 
+  </div>
+</div>
+        </div>
+        
+        
+
+
+	</div>
+  </div>
+  <!-- /content -->
+  
+  <!-- footer -->
+  >
+  <!-- / footer -->
+
+
+
+</div>
+
+<script src="../libs/jquery/jquery/dist/jquery.js"></script>
+<script src="../libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
+<script src="js/ui-load.js"></script>
+<script src="js/ui-jp.config.js"></script>
+<script src="js/ui-jp.js"></script>
+<script src="js/ui-nav.js"></script>
+<script src="js/ui-toggle.js"></script>
+<script src="js/ui-client.js"></script>
+
+</body>
+</html>

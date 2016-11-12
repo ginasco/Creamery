@@ -1,0 +1,261 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"in",
+				"inventoryQty"
+			],
+			[
+				"user",
+				"usersinfo"
+			],
+			[
+				"fon",
+				"font-bold"
+			],
+			[
+				"st",
+				"style"
+			],
+			[
+				"sty",
+				"style=display:none"
+			],
+			[
+				"v",
+				"visible-print"
+			],
+			[
+				"val",
+				"value"
+			],
+			[
+				"set",
+				"setAttribute"
+			],
+			[
+				"po",
+				"_POST"
+			],
+			[
+				"POST",
+				"_POST"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 334.0,
+		"last_filter": "pac",
+		"selected_items":
+		[
+			[
+				"pac",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 485.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Applications/XAMPP/xamppfiles/htdocs/Sysdeve/html/expired.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Creamery/pullOut.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Sysdeve/html/login.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Sysdeve/html/dashboard_dealer.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Sysdeve/html/dashboard_admin.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Sysdeve/html/dashboard/dashboard_admin.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Sysdeve/html/dashboard/dashboard_dealer.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Sysdeve/html/dealerlist.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Sysdeve/html/navigation/nav_admin.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Sysdeve/html/dealerlist.html",
+		"/Applications/XAMPP/xamppfiles/htdocs/Sysdeve/html/dashboard.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Sysdeve/html/navigation/nav_dealer.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Sysdeve/html/nav_dealer.html",
+		"/Users/ginaco/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
+		"/Applications/XAMPP/xamppfiles/htdocs/Creamery/editUser.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Creamery/updateUser.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Creamery/editProduct.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Creamery/POS.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Creamery/mysqlConnector/mysql_connect.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Creamery/InventoryValuation.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Creamery/searchDeliveryReceive.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Creamery/PO.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Creamery/Library/bootstrap.min.css",
+		"/Applications/XAMPP/xamppfiles/htdocs/Creamery/Library/jquery.dataTables.min.css",
+		"/Applications/XAMPP/xamppfiles/htdocs/Creamery/Library/bootstrap.min.js",
+		"/Applications/XAMPP/xamppfiles/htdocs/Creamery/addNewUser.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Creamery/Library/jquery.dataTables.min.js",
+		"/Applications/XAMPP/xamppfiles/htdocs/Creamery/Notify.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Creamery/Re-Order.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/Creamery/expiryTracker.php",
+		"/sdfd.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/DEV-APPS/EXERCISE.html",
+		"/Applications/XAMPP/xamppfiles/htdocs/DEV-APPS/AdrianFinalMP.zip"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"/Applications/XAMPP/xamppfiles/htdocs/Creamery"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"dealer Management",
+			"admin",
+			"aside",
+			"table",
+			"data",
+			"gecko",
+			"css",
+			"Library",
+			"block",
+			"print_div",
+			"printableArea",
+			"<html>\n    <?php\nsession_start();\nif ($_SESSION['usertype']!=102){\n        header(\"Location: http://\".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF']).\"/index.php\");\n    }\n?>\n    <head>\n        <script src=\"Library/jquery.min.js\"></script>\n    </head>\n    <style>\n   table {\n    font-family: arial, sans-serif;\n    border-collapse: collapse;\n    width: 50%;\n}\n\ntd, th {\n    border: 1px solid #dddddd;\n    text-align: left;\n    padding: 8px;\n}\n\ntr:nth-child(even) {\n    background-color: #dddddd;\n}     \n\n</style>\n    <body>\n        <table style=\"text-align: left; width: 500px;\" border=\"1\" cellpadding=\"2\" cellspacing=\"2\" id=\"dataTable\" align=\"right\">\n  \n        \n            <div align=center><h1>HOLLY'S MILK</h1></div>\n\n<?php \n //print_r($_POST);           \n            require_once('mysqlConnector/mysql_connect.php');\n            $query=\"SELECT i.productID, p.productName, p.retailPrice, i.inventoryQty, expiryDate\n                    FROM perpetualinventory i JOIN products p ON i.productID = p.productID where inventoryQty>0\";\n            $result=mysqli_query($dbc,$query);\n            \n            echo \"<thead>\n  <tr>\n    <th></th>\n    <th>Product ID</th>\n    <th>Product Name</th>\n    <th>Retail Price</th>\n    <th>Quantity</th>\n    <th>Expiry Date</th>\n  </tr>\n            </thead> <tbody>\";\n            while($row = $result->fetch_assoc()) {\n                     echo\"\n                     \n                            <tr>\n                                <td><button type=submit name=add  class=btn btn-info btn-lg id=add>Add</button></td>\n                                <td class=pR>\".$row[\"productID\"].\"</td>\n                                <td class=pN>\".$row[\"productName\"].\"</td> \n                                <td class=rP>\".$row[\"retailPrice\"].\"</td>\n                                <td class=qty>\".$row[\"inventoryQty\"].\"</td>\n                                <td class=qty>\".$row[\"expiryDate\"].\"</td>\n                            </tr>\";\n                }\n            \n            echo \"</tbody>\";\n            \n?>\n        </table>\n     <form action=\"POS.php\" method=\"post\">   \n        <table id=\"receipt\" style=\"text-align: left; width: 500px;\" border=\"1\" cellpadding=\"2\" cellspacing=\"2\" id=\"dataTable2\" align=\"left\">\n        \n            <thead>\n  <tr>\n    <th>Product ID</th>\n    <th>Product Name</th>\n    <th>Retail Price</th>\n    <th>Quantity</th>\n    <th>Subtotal</th>\n      \n  </tr>\n            </thead> \n               <tbody id=\"tableList\">    \n                 </tbody>\n                Total: <input id=\"total\" readonly type=\"number\" name=\"total\" class=\"total\"/>\n                Received: <input id=\"received\"   type=\"number\" min=0 onkeypress=\"return event.charCode >= 48 && event.charCode <= 57\" name=\"received\" class=\"received\"/>\n                Change: <input id=\"change\"  readonly type=\"number\" min=0 onkeypress=\"return event.charCode >= 48 && event.charCode <= 57\" name=\"change\" class=\"change\"/>\n                 </table>\n          <P><input type=\"submit\" name=\"confirm\" value=\"Confirm\" onclick=\"print_div()\"></P>\n               </form>\n                \n         \n        <?php\n        if (isset($_POST['confirm'])){\n            $productID=$_POST['productID'];\n            $qtySold=$_POST['qtySold'];\n            $productName=$_POST['productName'];\n            $total=$_POST['total'];\n            $received=$_POST['received'];\n            $change=$_POST['change'];\n\n            //PDF\n            require(\"fpdf/fpdf.php\");\n            $pdf=new FPDF();\n            $pdf->AddPage();\n            $pdf->output();\n\n            $items = array_combine($productID,$qtySold);\n            $pairs = array();\n            \n            require_once('mysqlConnector/mysql_connect.php');\n            \n            $query=\"insert into sales(sold) values(1)\";\n            $result=mysqli_query($dbc,$query);\n            \n            $query2=\"select receiptNum from sales order by dateSR DESC LIMIT 1\";\n            $result2=mysqli_query($dbc,$query2);\n            \n            while($row = $result2->fetch_assoc()) {\n                    $receiptNum=$row[\"receiptNum\"];\n                }\n            $receiptNum;\n            foreach($items as $key=>$value){\n                    $pairs[] = '('.intval($key).','.intval($value).','.\"'{$_SESSION['username']}'\".','.\"'$receiptNum'\".','.\"'$total'\".')';\n                }\n            $query3= \"INSERT INTO salessr (productID, qtySR, username, receiptNum, totalSold) values\".implode(',',$pairs);\n            $result3=mysqli_query($dbc,$query3);\n            \n            \n            //update inventory\n            \n            $query7=\"select productID, expiryDate, inventoryQty\n                    from perpetualinventory where inventoryQty<=0\";\n                $result7=mysqli_query($dbc,$query7);\n                while($rowC = $result7->fetch_assoc()) {\n                     $query8=\"update perpetualinventory set active=0 where expiryDate='{$rowC['expiryDate']}' and productID='{$rowC['productID']}'\";\n                     $result8=mysqli_query($dbc,$query8);\n                 }\n            \n            \n            $query4=\"select productID, qtySR\n                    from salessr \n                    where receiptNum='{$receiptNum}'\";\n            $result4=mysqli_query($dbc,$query4);\n            while($rowA = $result4->fetch_assoc()) {\n                 $query6=\"select min(expiryDate) as expiryDate from perpetualinventory where productID ='{$rowA['productID']}' and active=1\";\n                 $result6=mysqli_query($dbc,$query6);\n                 while($rowB = $result6->fetch_assoc()) {\n                     $expiryDate=$rowB['expiryDate'];\n                 }\n                $expiryDate;\n                \n                \n                \n                \n                $query5=\"UPDATE perpetualinventory\n                         SET perpetualinventory.inventoryQty=perpetualinventory.inventoryQty-'{$rowA['qtySR']}'\n                         WHERE perpetualinventory.productID='{$rowA['productID']}'\n                         AND perpetualinventory.expiryDate = '$expiryDate' and active=1\";\n                $result5=mysqli_query($dbc,$query5);\n            }\n              header(\"location: POS.php\");\n    exit;\n        }\n        \n        ?>\n\n          <div class=\"visible-print\">\n\n            <div style=\"margin-bottom: 6%;\" align=\"center\">\n            <!--logo-->\n                <img src=\"\" alt=\"Creamery\"/><br>\n                <h3>Title</h3>\n                <p style=\"font-size: medium; \">Title<br></p>\n                <p>Prepared By:  </p>\n                <p id=\"DateHere\"></p>\n            </div>\n            <!--TABLE-->\n            <p style=\"margin-left: 5%;\">Receipt</p>\n            <div id=\"printTable\" style=\"width: 90%; margin-left: auto; margin-right: auto;\">\n\n            </div>\n        </div>\n\n        <script>\n            var change = 0;\n           $(document).on('click', \"#add\", function(){\n         //  document.getElementById().disabled = true; \n               \n            $(this).prop('disabled', true);   \n            var pR =  $(this).closest('tr').find(\".pR\").text();\n            var pN =  $(this).closest('tr').find(\".pN\").text();\n            var rP =  $(this).closest('tr').find(\".rP\").text();\n            var qty =  $(this).closest('tr').find(\".qty\").text();\n               \n               var para = document.createElement(\"tr\");\n               var element = document.getElementById(\"tableList\");\n               para.setAttribute(\"class\", \"trList\");\n                element.appendChild(para);\n             $(\".trList\").append('<td><input name=\"productID[]\" id=\"productID\" type=\"text\" readOnly value=\"'+pR+'\" /></td>');\n             $(\".trList\").append('<td><input name=\"productName\" id=\"productName\" type=\"text\" readOnly value=\"'+pN+'\"/></td>');\n             $(\".trList\").append('<td><input type=\"hidden\" class=\"currQty\" value=\"'+qty+'\"/> <input name=\"retailPrice\" class=\"retailPrice\" type=\"number\" readOnly value=\"'+rP+'\"/></td>');\n             $(\".trList\").append('<td>  <input type=\"number\" class=\"num\" id=\"orderValue\" required min=0 type=\"number\" onkeypress=\"return event.charCode >= 48 && event.charCode <= 57\" name=\"qtySold[]\"></td> <td><input readOnly type=\"number\" class=\"eachQty\" /></td>');\n                para.setAttribute(\"class\", \"trListSaved\");\n            });\n                    \n            \n             $(document).unbind('keyUp').on('keyup', \"#orderValue\", function(){\n                 var x =  parseInt($(this).val(), 10);               \n                 var y = parseInt( $(this).closest('tr').find('.currQty').val(), 10);\n                 \n                \n                if(x<=y){\n                     var currEnter =  $(this).val();\n                     var rp = $(this).closest('tr').find('.retailPrice').val();\n                     console.log(\"Current ENTERED IF \" + currEnter);\n                    \n                     var sumEach = rp * currEnter;\n                     $(this).closest('tr').find('.eachQty').val(sumEach);\n                      var sumTotal = 0;\n                    $('#receipt tbody tr').each(function() {\n                       \n                       \n                        var $row = $(this);\n                        var rp = parseInt($row.find('.eachQty').val(),10);\n                     \n                         console.log(rp);\n                         sumTotal +=rp;\n                     $(\"#total\").val(sumTotal);\n                            });\n                    \n                    \n               } else{\n                     alert(\"ERROR PLEASE ENTER EQUALS TO OR LESS THAN\" + y);\n               } \n                 \n                     \n             });\n            \n            \n            $(document).unbind('keyUp').on('keyup', \"#received\", function(){\n                  x =  $(this).val();\n                  y = $(\"#total\").val();\n                  console.log(\"TOTAL\" + y);\n                console.log(\"RECEIVED\"+ x);\n                change=x-y;\n                     console.log(\"change:\" + change);\n                      \n                     $(\"#change\").val(change);\n                     \n             }); \n            \n            //Printing - Receipt\n              function print_div() {\n                var m_names = new Array(\"January\", \"February\", \"March\",\n                        \"April\", \"May\", \"June\", \"July\", \"August\", \"September\",\n                        \"October\", \"November\", \"December\");\n                var d = new Date();\n                var curr_date = d.getDate();\n                var curr_month = d.getMonth();\n                var curr_year = d.getFullYear();\n                var today = m_names[curr_month] + \" \" + curr_date\n                        + \", \" + curr_year;\n                \n                $(\"#DateHere\").html(today);\n                jQuery('#printTable').html(jQuery(\"#receipt\").html());\n                window.print();\n                document.body.onfocus = doneyet();\n            }\n            \n        </script>\n         <br><br>\n			 <a href=\"customer.php\"> Home Page</a>\n			 <br><br>\n        </body>\n    </html>",
+			"#receipt",
+			"receipt",
+			"receopt",
+			".."
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"js",
+			"mysqlConnector"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "bump.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 208.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
