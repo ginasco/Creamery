@@ -1,8 +1,4 @@
-<?php
-if ($_SESSION['usertype']!=102){
-  header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."../../accounts/login.php");
-}
-?>
+
 <!DOCTYPE html>
 <html lang="en" class="">
 <head>
@@ -20,6 +16,12 @@ if ($_SESSION['usertype']!=102){
  <!-- nav -->
 <?php include '../session/levelOfAccess.php';?>
 <!-- / nav -->
+
+<?php
+if ($_SESSION['usertype']!=102){
+  header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."../../accounts/login.php");
+}
+?>
 
   <!-- content -->
   <div id="content" class="app-content" role="main">
