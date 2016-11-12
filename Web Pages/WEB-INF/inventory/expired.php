@@ -185,7 +185,6 @@ if(rowCount==0){
   $("#confirm").prop('disabled', true); 
 }
 
-
  var x = document.getElementById("qtyExpired");
  x.setAttribute("value", quantityCount);
 
