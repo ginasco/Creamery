@@ -30,7 +30,7 @@
         <i class="glyphicon glyphicon-align-justify"></i>
       </button>
       <!-- brand -->
-      <a href="../dashboard/dashboard_admin.php" class="navbar-brand text-lt">
+      <a href="../dashboard/dashboard_dealer.php" class="navbar-brand text-lt">
 
         <span class="hidden-folded m-l-xs">Holly's Milk</span>
       </a>
