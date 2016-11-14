@@ -31,7 +31,7 @@
         <i class="glyphicon glyphicon-align-justify"></i>
       </button>
       <!-- brand -->
-      <a href="dashboard/dashboard_admin.php" class="navbar-brand text-lt">
+      <a href="../dashboard/dashboard_admin.php" class="navbar-brand text-lt">
 
         <span class="hidden-folded m-l-xs">Holly's Milk</span>
       </a>
@@ -282,7 +282,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="../po/prodorder.php">
+                  <a href="../po/productionorder.php">
                     <span>Create Production Order</span>
                   </a>
                 </li>
