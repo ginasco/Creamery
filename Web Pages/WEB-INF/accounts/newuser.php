@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" class="">
 <head>
@@ -9,7 +8,9 @@
   
 
 </head>
+
 <body>
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 <div class="app app-header-fixed ">
   
 
@@ -17,17 +18,166 @@
    <?php include '../session/levelOfAccess.php';?>
    
    <!-- / nav -->
+   
+<?php
+
+
+//if ($_SESSION['usertype']!=101){
+  //     header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/login.php");
+   // } 
+    
+$flag=0;
+if (isset($_POST['submit'])){
+
+$message=NULL;
+
+ if (empty($_POST['username'])){
+  $username=FALSE;
+  $message.='<p>You forgot to enter the username!';
+ }else
+  $username=$_POST['username'];
+
+ if (empty($_POST['password'])){
+  $password=NULL;
+ }else
+  $password=$_POST['password'];
+
+ if (empty($_POST['retypepassword'])){
+  $retypepassword=NULL;
+ }else
+  $retypepassword=$_POST['retypepassword'];
+
+
+ if (empty($_POST['usertype'])){
+  $usertype=NULL;
+ }else
+  $usertype=$_POST['usertype'];
+
+
+if(!isset($message)){
+if($retypepassword==$password){
+require_once('../../mysqlConnector/mysql_connect.php');
+$query="Insert into USERS (username,password,usertype) values ('{$username}',PASSWORD('$password'),'{$usertype}')";
+
+$result=mysqli_query($dbc,$query);
+echo $result;
+
+$flag=1;
+}
+else{
+	echo "password do not match! retype password!";
+	
+}
+}
+ 
+
+}/*End of main Submit conditional*/
+
+if (isset($message)){
+ echo '<font color="red">'.$message. '</font>';
+}
+
+?>
+
 
 <?php
 if ($_SESSION['usertype']!=101){
-  header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."../../accounts/login.php");
+        header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/login.php");
+    } 
+    
+$flag=0;
+if (isset($_POST['submit'])){
+
+$message=NULL;
+
+  if (empty($_POST['password'])){
+  $password=NULL;
+ }else
+  $password=$_POST['password'];
+
+ if (empty($_POST['retypepassword'])){
+  $retypepassword=NULL;
+ }else
+  $retypepassword=$_POST['retypepassword'];
+
+ if (empty($_POST['tinNum'])){
+  $tinNum=FALSE;
+  $message.='<p>You forgot to enter the TIN Number!';
+ }else
+  $tinNum=$_POST['tinNum'];
+
+ if (empty($_POST['fName'])){
+  $fName=FALSE;
+  $message.='<p>You forgot to enter the First Name!';
+ }else
+  $fName=$_POST['fName'];
+
+ if (empty($_POST['lName'])){
+  $lName=FALSE;
+  $message.='<p>You forgot to enter the Last Name!';
+ }else
+  $lName=$_POST['lName'];
+
+ if (empty($_POST['contactNum'])){
+  $contactNum=FALSE;
+  $message.='<p>You forgot to enter the Contact Number!';
+ }else
+  $contactNum=$_POST['contactNum'];
+
+ if (empty($_POST['emailAdd'])){
+  $emailAdd=FALSE;
+  $message.='<p>You forgot to enter the Email Address!';
+ }else
+  $emailAdd=$_POST['emailAdd'];
+
+ if (empty($_POST['address'])){
+  $address=FALSE;
+  $message.='<p>You forgot to enter the Address!';
+ }else
+  $address=$_POST['address'];
+
+ if (empty($_POST['city'])){
+  $city=FALSE;
+  $message.='<p>You forgot to enter the City!';
+ }else
+  $city=$_POST['city'];
+
+
+
+if(!isset($message)){
+if($retypepassword==$password){
+require_once('../../mysqlConnector/mysql_connect.php');
+$query="Insert into USERSINFO (tinNum,address,city,contactNum,emailAdd,fName,lName) values ('{$tinNum}','{$address}','{$city}','{$contactNum}','{$emailAdd}','{$fName}','{$lName}')";
+
+$result=mysqli_query($dbc,$query);
+
+echo $result;
+$flag=1;
 }
+else{
+	echo "password do not match! retype password!";
+	
+}
+}
+ 
+
+}/*End of main Submit conditional*/
+
+if (isset($message)){
+ echo '<font color="red">'.$message. '</font>';
+}
+?>
+<?php
+//if ($_SESSION['usertype']!=101){
+ // header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."../../accounts/login.php");
+//}
 ?>
 
 
   <!-- content -->
   <div id="content" class="app-content" role="main">
   	<div class="app-content-body ">
+	    
 	    
 <div class="container">
     <h1 class="well">Create New Dealer</h1>
@@ -38,45 +188,62 @@ if ($_SESSION['usertype']!=101){
 						<div class="row">
 							<div class="col-sm-6 form-group">
 								<label>First Name</label>
-								<input type="text" placeholder="Enter First Name Here.." class="form-control">
+								<input type="text"  required name="fName"  placeholder="Enter First Name Here.."   class="form-control" value="<?php if (isset($_POST['fName']) && !$flag) echo $_POST['fName']; ?>"/>  
 							</div>
 							<div class="col-sm-6 form-group">
 								<label>Last Name</label>
-								<input type="text" placeholder="Enter Last Name Here.." class="form-control">
+								<input type="text"  required name="lName"  placeholder="Enter Last Name Here.." class="form-control" value="<?php if (isset($_POST['lName']) && !$flag) echo $_POST['lName']; ?>"/>  
+							</div>
+							<div class="col-sm-6 form-group">
+								<label>User Name</label>
+								<input type="text" required name="username" placeholder="Enter your desired Username here.." class="form-control" value="<?php if (isset($_POST['username']) && !$flag) echo $_POST['username']; ?>"/>  
+							</div>
+							<div class="col-sm-6 form-group">
+								<label>Password</label>
+								<input type="password"  required name="password"  placeholder="Enter your desired Password here.." class="form-control"  value="<?php if (isset($_POST['password']) && !$flag) echo $_POST['password']; ?>"/>  
+								<label>Re-type Password</label>
+								<input type="password"  required name="retypepassword"  placeholder="Re-type your desired Password here.." class="form-control"   value="<?php if (isset($_POST['retypepassword']) && !$flag) echo $_POST['retypepassword']; ?>"/>
 							</div>
 						</div>					
 						<div class="form-group">
 							<label>Address</label>
-							<textarea placeholder="Enter Address Here.." rows="3" class="form-control"></textarea>
+							<textarea  required name="address" placeholder="Enter Address Here.." rows="3" class="form-control" value="<?php if (isset($_POST['address']) && !$flag) echo $_POST['address']; ?>"/> </textarea>
 						</div>	
 						<div class="row">
 							<div class="col-sm-4 form-group">
 								<label>City</label>
-								<input type="text" placeholder="Enter City Name Here.." class="form-control">
+								<input type="text"  required name="city"  placeholder="Enter City Name Here.." class="form-control"  value="<?php if (isset($_POST['city']) && !$flag) echo $_POST['city']; ?>"/> 
 							</div>	
 							<div class="col-sm-4 form-group">
-								<label>State</label>
-								<input type="text" placeholder="Enter State Name Here.." class="form-control">
+								<label>Email Address</label>
+						<input type="text"  required name="emailAdd"  placeholder="Enter Email Address Here.." class="form-control"  value="<?php if (isset($_POST['emailAdd']) && !$flag) echo $_POST['emailAdd']; ?>"/> 
 							</div>	
 							<div class="col-sm-4 form-group">
-								<label>Zip</label>
-								<input type="text" placeholder="Enter Zip Code Here.." class="form-control">
+							<label>Contact Number</label>
+						<input type="number"  required name="contactNum"  placeholder="Enter Contact Number Here.." class="form-control"  value="<?php if (isset($_POST['contactNum']) && !$flag) echo $_POST['contactNum']; ?>"/> 
 							</div>		
+								<div class="col-sm-4 form-group">
+							<label>TIN Number</label>
+						<input type="text"  required name="tinNum"  placeholder="Enter TIN Number Here.." class="form-control"  value="<?php if (isset($_POST['tinNum']) && !$flag) echo $_POST['tinNum']; ?>"/> 
+							</div>	
+							<div class="col-sm-4 form-group">
+							<p>Usertype:</p> <br>
+               <select name="usertype">
+						
+                        <option value=101>101- ADMIN</option>
+                        <option value=102>102- DEALER</option>
+                       
+                    </select>
+							</div>	
+							
 						</div>
 						<div class="row">
 								
 							
 						</div>						
-					<div class="form-group">
-						<label>Phone Number</label>
-						<input type="text" placeholder="Enter Phone Number Here.." class="form-control">
-					</div>		
-					<div class="form-group">
-						<label>Email Address</label>
-						<input type="text" placeholder="Enter Email Address Here.." class="form-control">
-					</div>	
 				
-					<button type="button" class="btn btn-lg btn-info">Submit</button>					
+				
+					<button type="submit" name="submit" class="btn btn-lg btn-info">Submit</button>					
 					</div>
 				</form> 
 				</div>
