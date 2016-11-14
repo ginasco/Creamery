@@ -60,7 +60,7 @@ if ($_SESSION['usertype']!=101){
       <tbody>
         <?php
           require_once('../../mysqlConnector/mysql_connect.php');
-          $query1="select * from users u join usersinfo i on u.userID = i.userID where usertype!=101;";
+          $query1="select * from users u join usersinfo i on u.userID = i.userID where usertype!=101 order by fName;";
           $result=mysqli_query($dbc,$query1);
           while($row = $result->fetch_assoc()){ 
             

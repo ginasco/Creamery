@@ -55,7 +55,7 @@ if($_SESSION['badlogin'] < 3 ){
     }
     
     
-$query="select username, password, usertype, userID from users where username='{$_SESSION['username']}' and password = Password('{$_SESSION['password']}')";
+$query="select u.username, u.password, u.usertype, u.userID, i.fName, i.lName from users u join usersinfo i on u.userID = i.userID where username='{$_SESSION['username']}' and password = Password('{$_SESSION['password']}')";
 $result=mysqli_query($dbc,$query);
 $flag=1;
     
@@ -65,11 +65,13 @@ $flag=1;
             if($row["usertype"]==101){
             $_SESSION['usertype']=101;
             $_SESSION['userID']=$row["userID"];
-            header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/../dashboard/dashboard_admin.php");//admin
+            header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/../dashboard/dashboard_admin.php");
+            $_SESSION['name']=$row["fName"] .' '.$row["lName"];//admin
             }else if($row["usertype"]==102){
                 $_SESSION['usertype']=102;
                 $_SESSION['userID']=$row["userID"];
-                header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/../dashboard/dashboard_dealer.php");//customer
+                header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/../dashboard/dashboard_dealer.php");
+                $_SESSION['name']=$row["fName"] .' '.$row["lName"];//customer
             }else if($row["usertype"]==103){
                 $message.= "<p>You don't have access";
             }
