@@ -43,7 +43,7 @@ if ($_SESSION['usertype']!=102){
          <div class="wrapper-md">
            <div class="wrapper-md bg-white-only b-b">
             <div class="row text-center">
-              <div class="col-sm-3 col-xs-6">
+              <div class="col-sm-3 col-xs-6" >
                 <div>Quantity of Expired Products <i class="fa fa-fw fa-caret-up text-success text-sm"></i></div>
                 <input class="h2 m-b-sm" style="border:none; text-align:center" readonly id="qtyExpired"/>
               </div>
@@ -161,7 +161,7 @@ if (isset($_POST['confirm'])){
 
     echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
 
-    header("location:expired.php"); //problem here
+    header("location:expired.php"); 
     exit;
 }
 
