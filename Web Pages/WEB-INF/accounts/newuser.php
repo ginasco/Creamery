@@ -209,11 +209,30 @@ if (isset($message)){
 							<label>Address</label>
 							<textarea  required name="address" placeholder="Enter Address Here.." rows="3" class="form-control" value="<?php if (isset($_POST['address']) && !$flag) echo $_POST['address']; ?>"/> </textarea>
 						</div>	
-						<div class="row">
-							<div class="col-sm-4 form-group">
-								<label>City</label>
-								<input type="text"  required name="city"  placeholder="Enter City Name Here.." class="form-control"  value="<?php if (isset($_POST['city']) && !$flag) echo $_POST['city']; ?>"/> 
-							</div>	
+						
+<p>City:</p> <br>
+               <select name="city">
+						
+                        <option value="Manila">Manila</option>
+                        <option value="Caloocan">Caloocan</option>
+						<option value="Las Piñas">Las Piñas</option>
+                        <option value="Makati">Makati</option>
+						<option value="Malabon">Malabon</option>
+                        <option value="Mandaluyong">Mandaluyong</option>
+						<option value="Marikina">Marikina</option>
+                        <option value="Muntinlupa">Muntinlupa</option>
+						<option value="Navotas">Navotas</option>
+                        <option value="Pasay">Pasay</option>
+						<option value="Pasig">Pasig</option>
+                        <option value="Parañaque">Parañaque</option>
+						<option value="Quezon City">Quezon City</option>
+                        <option value="San Juan">San Juan</option>
+						<option value="Taguig">Taguig</option>
+                        <option value="Valenzuela">Valenzuela </option>
+				
+
+                    </select>
+						<div class="row">	
 							<div class="col-sm-4 form-group">
 								<label>Email Address</label>
 						<input type="text"  required name="emailAdd"  placeholder="Enter Email Address Here.." class="form-control"  value="<?php if (isset($_POST['emailAdd']) && !$flag) echo $_POST['emailAdd']; ?>"/> 
