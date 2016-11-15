@@ -131,7 +131,7 @@ if ($_SESSION['usertype']!=101){
         </div>
                           
         <div class="modal-footer">
-            <input type="submit" name="submit" value="Save" id="submit" />
+            <input type="submit" class="btn btn-sm btn-primary" name="submit" value="Save" id="submit" />
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
     </form>
@@ -174,9 +174,9 @@ if ($_SESSION['usertype']!=101){
             }
 
             if(status==="102"){
-              $(".modal-body").append('Status:  <select name="userStatus" required id="userStatus"> <option value="'+status+'">'+status+'</option> <option value=103>103-Inactive</option></select><br>');
+              $(".modal-body").append('Status:  <select name="userStatus" required id="userStatus"> <option value="'+status+'">'+status+'-Active</option> <option value=103>103-Inactive</option></select><br>');
             }else if (status==="103"){
-              $(".modal-body").append('Status:  <select name="userStatus" required id="userStatus"> <option value="'+status+'">'+status+'</option> <option value=102>102-Active</option></select><br>');
+              $(".modal-body").append('Status:  <select name="userStatus" required id="userStatus"> <option value="'+status+'">'+status+'-Inactive</option> <option value=102>102-Active</option></select><br>');
             }              
 });
         </script>
