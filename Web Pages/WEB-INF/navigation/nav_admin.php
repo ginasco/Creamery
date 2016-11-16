@@ -215,6 +215,11 @@
                     <span>Dealer Invoices</span>
                   </a>
                 </li>
+				  <li>
+                  <a href="../sales/admin_sales.php">
+                    <span>Sales Report</span>
+                  </a>
+                </li>
                 <li>
                   <a href="../billing/receivables.php">
                     <span>Accounts Receivable</span>
