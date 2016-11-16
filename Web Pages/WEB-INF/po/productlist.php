@@ -46,6 +46,7 @@
                 <th>Product Name</th>
                 <th data-breakpoints="xs sm md" data-title="Status">Status</th>
                 <th data-breakpoints="xs sm md" data-title="Status" style="text-align:right">Unit Price</th>
+                <th data-breakpoints="xs sm md" data-title="Status" style="text-align:right">Wholesale Price</th>
                 <th data-breakpoints="xs sm md" data-title="Status" style="text-align:right">Retail Price</th>
                 <th data-breakpoints="xs sm md" data-title="Status"></th>
               </tr>
@@ -54,7 +55,7 @@
               <tr data-expanded="true">
                 <?php 
                 require_once('../../mysqlConnector/mysql_connect.php');
-                $query="select * from products order by productName";
+                $query="select * from products order by sku";
 
                 $result=mysqli_query($dbc,$query);
                 while($row = $result->fetch_assoc()) {
@@ -68,6 +69,7 @@
                     <td class=sku>".$row["sku"]."</td>
                     <td class=pN>".$row["productName"]."</td>
                     <td >".$productType."</td> 
+                    <td class=uP style=text-align:right;width:100px>".$row["unitPrice"]."</td>
                     <td class=wP style=text-align:right;width:100px>".$row["wholesalePrice"]."</td>
                     <td class=rP style=text-align:right;width:120px>".$row["retailPrice"]."</td>
                     <td class=pT style=display:none>".$row["productType"]."</td>
@@ -89,6 +91,7 @@
                     <td class=sku>".$row["sku"]."</td>
                     <td class=pN>".$row["productName"]."</td> 
                     <td >".$productType."</td>
+                    <td class=uP style=text-align:right;width:100px>".$row["unitPrice"]."</td>
                     <td class=wP style=text-align:right;width:100px>".$row["wholesalePrice"]."</td>
                     <td class=rP style=text-align:right;width:120px>".$row["retailPrice"]."</td>
                     <td class=pT style=display:none>".$row["productType"]."</td>
@@ -143,6 +146,8 @@ if (isset($_POST['changePrice'])){
   $wholesalePrice=$_POST['wholesalePrice'];
   $retailPrice=$_POST['retailPrice'];
   $qtyUnit=$_POST['qtyUnit'];
+  $unitPrice=$_POST['unitPrice'];
+
 
   require_once('../../mysqlConnector/mysql_connect.php');
 
@@ -154,13 +159,13 @@ if (isset($_POST['changePrice'])){
       $disableProduct="Update products set productType=102 where productID='{$productID}'";
       $disableProductResult=mysqli_query($dbc,$disableProduct);
 
-      $addProduct=" insert into products (sku, productName, productType, wholesalePrice, retailPrice, qtyUnit) values ('{$sku}','{$productName}','{$productType}','{$wholesalePrice}','{$retailPrice}', '{$qtyUnit}')";
+      $addProduct=" insert into products (sku, productName, productType, wholesalePrice, retailPrice, qtyUnit, unitPrice) values ('{$sku}','{$productName}','{$productType}','{$wholesalePrice}','{$retailPrice}', '{$qtyUnit}', '{$unitPrice}')";
       $addProductResult=mysqli_query($dbc,$addProduct);
       header("location: productlist.php");
       exit;
     }
     else if($row["productType"]==102){
-      $addProduct1=" insert into products (sku, productName, productType, wholesalePrice, retailPrice, qtyUnit) values ('{$sku}','{$productName}','{$productType}','{$wholesalePrice}','{$retailPrice}', '{$qtyUnit}')";
+      $addProduct1=" insert into products (sku, productName, productType, wholesalePrice, retailPrice, qtyUnit, unitPrice) values ('{$sku}','{$productName}','{$productType}','{$wholesalePrice}','{$retailPrice}', '{$qtyUnit}', '{$unitPrice}')";
       $addProductResult1=mysqli_query($dbc,$addProduct1);
       header("location: productlist.php");
       exit;
@@ -175,10 +180,11 @@ if (isset($_POST['createNewProduct'])){
   $wholesalePrice=$_POST['wholesalePrice'];
   $retailPrice=$_POST['retailPrice'];
   $qtyUnit=$_POST['qtyUnit'];
+  $unitPrice=$_POST['unitPrice'];
 
   require_once('../../mysqlConnector/mysql_connect.php');
 
-  $addNewProduct=" insert into products (sku, productName, productType, wholesalePrice, retailPrice, qtyUnit) values ('{$sku}','{$productName}','{$productType}','{$wholesalePrice}','{$retailPrice}', '{$qtyUnit}')";
+  $addNewProduct=" insert into products (sku, productName, productType, wholesalePrice, retailPrice, qtyUnit, unitPrice) values ('{$sku}','{$productName}','{$productType}','{$wholesalePrice}','{$retailPrice}', '{$qtyUnit}', '{$unitPrice}')";
   $addNewProductResult=mysqli_query($dbc,$addNewProduct);
   header("location: productlist.php");
   exit;
@@ -219,7 +225,12 @@ if (isset($_POST['createNewProduct'])){
           
           <div class="form-group">
             <label>Unit Price</label>
-            <input type="number" value="<?php if (isset($_POST['wholesalePrice']) && !$flag) echo $_POST['wholesalePrice']; ?>" name="wholesalePrice" class="form-control"  placeholder="Unit Price" required>
+            <input type="number" name="unitPrice" class="form-control"  placeholder="Unit Price" required>
+          </div>
+
+          <div class="form-group">
+            <label>wholesale Price</label>
+            <input type="number" name="wholesalePrice" class="form-control"  placeholder="Unit Price" required>
           </div>
           
           <div class="form-group">
@@ -234,8 +245,8 @@ if (isset($_POST['createNewProduct'])){
               <option value=102>102-Disable</option>
             </select>
           </div>
-          
-          <button name="createNewProduct" class="btn btn-sm btn-primary">Submit</button>
+          <input type="submit" name="createNewProduct" value="Create" class="btn btn-sm btn-primary"/>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </form>
       </div>
 
@@ -344,6 +355,7 @@ if (isset($_POST['createNewProduct'])){
    var SKU =  $(this).closest ('tr').find(".sku").text();
    var pI =  $(this).closest ('tr').find(".pI").text();
    var pN =  $(this).closest ('tr').find(".pN").text();
+   var uP =  $(this).closest ('tr').find(".uP").text();
    var wP =  $(this).closest ('tr').find(".wP").text();
    var rP =  $(this).closest ('tr').find(".rP").text();
    var pT =  $(this).closest ('tr').find(".pT").text();
@@ -351,8 +363,9 @@ if (isset($_POST['createNewProduct'])){
 
    $(".modal-body").append('SKU: <input name="sku" id="sku" style=border:none;font-size:16px type="text" readOnly value="'+SKU+'"/><input name="productType" id="productType" type="text" style=display:none value="'+pT+'"/><br>');
    $(".modal-body").append('Product Name: <input name="productName" style=border:none;font-size:16px  readOnly type="text" value="'+pN+'"/><input name="qtyUnit" id="qtyUnit" type="text" style=display:none value="'+qtyU+'"/><br>');
-   $(".modal-body").append('Wholesale Price: <input name="wholesalePrice" required min=0 type="number" value="'+wP+'"/><input name="productID" id="productID" type="text" style=display:none value="'+pI+'"/><br>');
-   $(".modal-body").append('Retail Price: <input name="retailPrice" required type="number" min=0 value="'+rP+'"/><br>');              
+   $(".modal-body").append('Unit Price: <input name="unitPrice" required type="number" step="0.01" min=0 value="'+uP+'"/><br>');
+   $(".modal-body").append('Wholesale Price: <input name="wholesalePrice" required min=0 type="number" step="0.01" value="'+wP+'"/><input name="productID" id="productID" type="text" style=display:none value="'+pI+'"/><br>');
+   $(".modal-body").append('Retail Price: <input name="retailPrice" required type="number" step="0.01" min=0 value="'+rP+'"/><br>');              
  });
 
 </script>

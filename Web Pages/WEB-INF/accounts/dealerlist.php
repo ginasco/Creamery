@@ -170,7 +170,7 @@ if ($_SESSION['usertype']!=101){
              
             
             if(cities===cities){
-              $(".modal-body").append('City:  <select name="philCity" required id="philCity"> <option value="'+cities+'">'+cities+'</option> <option value="Paranaque">Paranaque</option><option value="Makati">Makati</option> </select><br>');
+              $(".modal-body").append('City:  <select name="philCity" required id="philCity"> <option value="'+cities+'">'+cities+'</option><option value="Caloocan">Caloocan</option><option value="Las Piñas">Las Piñas</option><option value="Makati">Makati</option><option value="Malabon">Malabon</option><option value="Mandaluyong">Mandaluyong</option><option value="Manila">Manila</option><option value="Marikina">Marikina</option><option value="Muntinlupa">Muntinlupa</option><option value="Navotas">Navotas</option><option value="Paranaque">Paranaque</option><option value="Pasay">Pasay</option><option value="Pasig">Pasig</option><option value="Quezon City">Quezon City</option><option value="San Juan">San Juan</option><option value="Taguig">Taguig</option><option value="Valenzuela">Valenzuela</option></select><br>');
             }
 
             if(status==="102"){
