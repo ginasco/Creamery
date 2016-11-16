@@ -7,7 +7,7 @@
   <meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<link rel="stylesheet" type="text/css" href="../sales/css/datepicker.css" />
+  <link rel="stylesheet" type="text/css" href="../sales/css/datepicker.css" />
   <link rel="stylesheet" href="../libs/assets/animate.css/animate.css" type="text/css" />
   <link rel="stylesheet" href="../libs/assets/font-awesome/css/font-awesome.min.css" type="text/css" />
   <link rel="stylesheet" href="../libs/assets/simple-line-icons/css/simple-line-icons.css" type="text/css" />
@@ -15,7 +15,7 @@
 
   <link rel="stylesheet" href="../../imports/css/font.css" type="text/css" />
   <link rel="stylesheet" href="../../imports/css/app.css" type="text/css" />
- 
+
 
 
 </head>
@@ -100,8 +100,8 @@
         <li class="dropdown">
           <a href="#" data-toggle="dropdown" class="dropdown-toggle clear" data-toggle="dropdown">
             <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
-              
-              
+
+
             </span>
             <span class="hidden-sm hidden-md"><?php echo $_SESSION['name'] ?></span> <b class="caret"></b>
           </a>
@@ -142,7 +142,7 @@
           <div class="dropdown wrapper">
             <a href="app.page.profile">
               <span class="thumb-lg w-auto-folded avatar m-t-sm">
-              <img src="../img/a0.jpg" class="img-full" alt="...">
+                <img src="../img/a0.jpg" class="img-full" alt="...">
               </span>
             </a>
             <a href="#" data-toggle="dropdown" class="dropdown-toggle hidden-folded">
@@ -215,7 +215,7 @@
                     <span>Dealer Invoices</span>
                   </a>
                 </li>
-				  <li>
+                <li>
                   <a href="../sales/admin_sales.php">
                     <span>Sales Report</span>
                   </a>
@@ -228,6 +228,11 @@
                 <li>
                   <a href="../po/admin_polist.php">
                     <span>Purchase Orders</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="../reports/spoilage_list.php">
+                    <span>Spoilage</span>
                   </a>
                 </li>
                 <li>
@@ -355,12 +360,12 @@
   <!-- / footer -->
 
 </body>
-  <script src="../libs/jquery/jquery/dist/jquery.js"></script>
-  <script src="../libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="../libs/jquery/js/ui-load.js"></script>
-  <script src="../libs/jquery/js/ui-jp.config.js"></script>
-  <script src="../libs/jquery/js/ui-jp.js"></script>
-  <script src="../libs/jquery/js/ui-nav.js"></script>
-  <script src="../libs/jquery/js/ui-toggle.js"></script>
-  <script src="../libs/jquery/js/ui-client.js"></script>
+<script src="../libs/jquery/jquery/dist/jquery.js"></script>
+<script src="../libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
+<script src="../libs/jquery/js/ui-load.js"></script>
+<script src="../libs/jquery/js/ui-jp.config.js"></script>
+<script src="../libs/jquery/js/ui-jp.js"></script>
+<script src="../libs/jquery/js/ui-nav.js"></script>
+<script src="../libs/jquery/js/ui-toggle.js"></script>
+<script src="../libs/jquery/js/ui-client.js"></script>
 </html>
