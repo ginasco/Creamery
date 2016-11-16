@@ -34,7 +34,7 @@ if(isset($_POST['submit'])){
  if(!empty($search3)){
   
 $resultSet=$mysqli->query("SELECT p.sku,p.productName,s.dateSR,sr.username,p.qtyUnit,p.wholesalePrice,sr.qtySR,(wholesalePrice * qtySR) AS total FROM products p JOIN salessr sr ON sr.productId=p.productId
-	JOIN sales s ON sr.receiptNum=s.receiptNum WHERE username='{$_SESSION['username']}' and sr.productID='$search3' and dateSR BETWEEN '$search2' AND '$search' ORDER BY dateSR");
+	JOIN sales s ON sr.receiptNum=s.receiptNum WHERE username='$_SESSION['name']' and sr.productID='$search3' and dateSR BETWEEN '$search2' AND '$search' ORDER BY dateSR");
 														//put here the session
 									
 echo '<table width="75%" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#000000">

@@ -248,6 +248,11 @@
                     <span>My Inventory</span>
                   </a>
                 </li>
+					  <li>
+                  <a href="../inventory/expiryTracker.php">
+                    <span>Expiry Tracker</span>
+                  </a>
+                </li>
 				 <li>
                   <a href="../inventory/notify.php">
                     <span>Check Inventory</span>
