@@ -9,6 +9,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   
 
+<link rel="stylesheet" type="text/css" href="../sales/css/datepicker.css" />
+
+
+
   <link rel="stylesheet" href="../libs/assets/animate.css/animate.css" type="text/css" />
   <link rel="stylesheet" href="../libs/assets/font-awesome/css/font-awesome.min.css" type="text/css" />
   <link rel="stylesheet" href="../libs/assets/simple-line-icons/css/simple-line-icons.css" type="text/css" />
@@ -16,7 +20,8 @@
 
   <link rel="stylesheet" href="../../imports/css/font.css" type="text/css" />
   <link rel="stylesheet" href="../../imports/css/app.css" type="text/css" />
- 
+
+
 
 </head>
 <body>
@@ -287,6 +292,7 @@
     &copy; 2016 Copyright.
   </div>
 </footer>
+
 <script src="../libs/jquery/jquery/dist/jquery.js"></script>
   <script src="../libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
     <script src="../libs/jquery/js/ui-load.js"></script>
