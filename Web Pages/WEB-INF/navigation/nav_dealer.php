@@ -248,6 +248,11 @@
                     <span>My Inventory</span>
                   </a>
                 </li>
+				 <li>
+                  <a href="../inventory/notify.php">
+                    <span>Check Inventory</span>
+                  </a>
+                </li>
                 <li>
                   <a href="../billing/receive.php">
                     <span>Receive Delivery</span>
