@@ -60,7 +60,7 @@ if ($_SESSION['usertype']!=102){
 
           <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="form-inline" role="form">
             <div class="table-responsive">
-              <table ui-jq="dataTable" class="table table-striped b-t b-b">
+              <table  class="table table-striped b-t b-b">
                 <thead>
                   <tr>
                     <th  style="width:10%">SKU</th>
@@ -127,7 +127,7 @@ if (isset($_POST['confirm'])){
 
   
     //-------insert to pullouts -------
-    $query="insert into pullouts (distributorName) values ('{$_SESSION['username']}')";
+    $query="insert into pullouts (distributorName) values ('$_SESSION['name']')";
     $result=mysqli_query($dbc,$query);
   //------- /insert to pullouts -------
 
@@ -159,7 +159,7 @@ if (isset($_POST['confirm'])){
     $result4=mysqli_query($dbc,$query4);
   //------- /update inventory -------
 
-    echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
+    //echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
 
     header("location:expired.php"); 
     exit;
