@@ -1,12 +1,13 @@
 
 <!DOCTYPE html>
+<form method="POST">
 <html lang="en" class="">
 <head>
   <meta charset="utf-8" />
   <title>Laguna Creamery Inc</title>
   <meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  
+    <link rel="stylesheet" type="text/css" href="../sales/css/datepicker.css" />
 
 </head>
 <body>
@@ -14,7 +15,9 @@
   
 
  <!-- nav -->
-<?php include '../session/levelOfAccess.php';?>
+<?php include '../session/levelOfAccess.php';
+	$totalAmount= 0;
+	$inHand=0;?>
 <!-- / nav -->
 
 <?php
@@ -23,7 +26,88 @@ if ($_SESSION['usertype']!=102){
 }
 ?>
 
-  <!-- content -->
+ 
+    
+    <!-- Insert php here -->
+<?php
+
+if(isset($_POST['submit'])){
+	//connect to db
+
+	$mysqli= NEW MySQLi("localhost","holly","milk","devapps");
+	//get string value from search
+	//removes any special characters
+	$search = $mysqli->real_escape_string($_POST['search']);
+	$search2 = $mysqli->real_escape_string($_POST['search2']);
+
+	//query db
+ if(empty($search3)){
+    $resultSet=$mysqli->query("SELECT pi.dateInstance,p.productName,p.qtyUnit,pi.inventoryQty,p.wholesalePrice,(p.wholesalePrice *(pi.inventoryQty)) AS total,pi.username FROM  products p  JOIN perpetualinventory pi ON p.productID= pi.productID 	
+				   WHERE   pi.username='{$_SESSION['username']}' and pi.dateInstance BETWEEN '$search2%' AND '$search%'  and pi.active=1 ORDER BY pi.dateInstance");
+  // pi.username='{$_SESSION['username']}' 
+    
+    echo '<table width="75%" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#000000">
+<tr>
+<td width="10%"><div align="center"><b>Date
+</div></b></td>
+<td width="10%"><div align="center"><b>Username
+</div></b></td>
+<td width="5%"><div align="center"><b>Product Name
+</div></b></td>
+<td width="5%"><div align="center"><b>quantity
+</div></b></td>
+<td width="5%"><div align="center"><b>quantityUnit
+</div></b></td>
+<td width="5%"><div align="center"><b>Wholesale Price
+</div></b></td>
+<td width="5%"><div align="center"><b>Total
+</div></b></td>
+
+</tr>';
+    
+    	if($resultSet->num_rows>0){
+		while($rows=$resultSet->fetch_assoc()){
+
+echo "<tr>
+<td width=\"10%\"><div align=\"center\">".$rows['dateInstance']."
+</div></td>
+<td width=\"10%\"><div align=\"center\">".$rows['username']."
+</div></td>
+<td width=\"25%\"><div align=\"center\">".$rows['productName']."
+</div></td>
+<td width=\"5%\"><div align=\"center\">".$rows['inventoryQty']."
+</div></td>
+<td width=\"5%\"><div align=\"center\">".$rows['qtyUnit']."
+</div></td>
+<td width=\"5%\"><div align=\"center\">".$rows['wholesalePrice']."
+</div></td>
+<td width=\"5%\"><div align=\"center\">".$rows['total']."
+</div></td>
+
+</tr>";
+$inHand+=$rows['inventoryQty'];
+$totalAmount+=$rows['total'];
+ //echo $inHand;
+// echo $totalAmount;	
+		
+		}//if no data output 
+		}//if no data output 
+	else{
+			
+		echo"No results";
+		}
+ }
+
+
+
+
+
+
+
+
+}
+?>
+ <!-- content -->
   <div id="content" class="app-content" role="main">
   	<div class="app-content-body ">
 	    
@@ -41,73 +125,49 @@ if ($_SESSION['usertype']!=102){
       <div class="row text-center">
         <div class="col-sm-3 col-xs-6">
           <div>Quantity in Hand <i class="fa fa-fw fa-caret-up text-success text-sm"></i></div>
-          <div class="h2 m-b-sm">55</div>
+          <div class="h2 m-b-sm"><?php echo $inHand; ?></div>
         </div>
         
         <div class="col-sm-3 col-xs-6">
           <div>Inventory Valuation <i class="fa fa-fw fa-caret-up text-success text-sm"></i></div>
-          <div class="h2 m-b-sm">Php 3850</div>
+          <div class="h2 m-b-sm"><?php echo $totalAmount; ?></div>
         </div>
-        <div class="col-sm-3 col-xs-6">
-         <div>Quantity to be Delivered <i class="fa fa-fw fa-caret-down text-danger text-sm"></i></div>
-          <div class="h2 m-b-sm">300</div>
-        </div>
+       
       </div>
     </div>
-    
-     <b>Current Stock Summary (Inventory)</b> 
 
-    <div class="table-responsive">
-      <table ui-jq="dataTable" ui-options="{
-          sAjaxSource: 'api/datatable.json',
-          aoColumns: [
-            { mData: 'engine' },
-            { mData: 'browser' },
-            { mData: 'platform' },
-            { mData: 'version' },
-            { mData: 'grade' }
-          ]
-        }" class="table table-striped b-t b-b">
-        <thead>
-          <tr>
-            <th  style="width:10%">SKU</th>
-            <th  style="width:25%">Product Name</th>
-            <th  style="width:20%">Expiration</th>
-            <th  style="width:10%">Quantity</th>
-            <th  style="width:10%">Purchasing Price</th>
-            <th  style="width:10%">Selling Price</th>
-            
-        
-          </tr>
-        </thead>
-        <tbody>
-            <tr>
-            <td>QSPT200</td>
-            <td>200g Quesong Puti</td>
-            <td>2016-11-12</td>
-            <td>5</td>
-            <td>Php 50</td>
-            <td>Php 70</td>
-          
-      
-          </tr>
-             <tr>
-            <td>CHMK500</td>
-            <td>500ml Chocolate Milk</td>
-            <td>2016-11-15</td>
-            <td>50</td>   
-            <td>Php 50</td>
-            <td>Php 70</td>
-          
-               
-          </tr>
-          
-        </tbody>
-      </table>
+		
+		<div class="col-sm-8">  
+      <div class="hero-unit">
+		
+		<p> Starting Date:
+         <input type="text"  name="search2" data-date-format='yyyy-mm-dd' id="from" > 
+		<?php //$date=0;	$from_date = date("Y-m-d", strtotime($date)); echo $from_date; ?>
+		<p> End Date </p>
+			 <input type="text" name="search"  data-date-format='yyyy-mm-dd' id="to" > 
+			 <?php //  $to_date= date("Y-m-d", strtotime($date));  echo $to_date;?>
+			 		<input type="SUBMIT" name="submit" value="search"/>
+			 
+			<br> <br> <br> 	<br> <br> <br><br> <br> <br>	<br> <br> <br><br> <br> <br>
+
+        </div>
     </div>
 
-                  
-</di
+
+        <script type="text/javascript">
+ $(function(){
+        $("#to").datepicker({ dateFormat: 'yy-mm-dd' });
+        $("#from").datepicker({ dateFormat: 'yy-mm-dd' }).bind("change",function(){
+            var minValue = $(this).val();
+            minValue = $.datepicker.parseDate("yy-mm-dd", minValue);
+            minValue.setDate(minValue.getDate()+1);
+            $("#to").datepicker( "option", "minDate", minValue );
+        })
+    });
+</script>     
+
+<script src="../sales/js/bootstrap-datepicker.js"></script>     
+</div>
   </div>
 </div>
 
