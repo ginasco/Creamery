@@ -15,7 +15,15 @@
   
 
  <!-- nav -->
-<?php include '../session/levelOfAccess.php';?>
+<?php include '../session/levelOfAccess.php';
+	$totalAmount= 0;
+	$inHand=0;
+	$totalAmount1= 0;
+	$inHand1=0;
+	$outputAm=0;
+	$outputHand=0;
+	
+	;?>
 <?php
 if ($_SESSION['usertype']!=102){
         header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/login.php");
@@ -31,17 +39,16 @@ if(isset($_POST['submit'])){
 	$search2 = $mysqli->real_escape_string($_POST['search2']);
 	$search3 = $mysqli->real_escape_string($_POST['search3']);
 	//query db
- if(!empty($search3)){
+ if($search3==0){
   
     $resultSet=$mysqli->query("SELECT p.sku,p.productName,s.dateSR,sr.username,p.qtyUnit,p.retailPrice,sr.qtySR,(retailPrice * qtySR) AS total FROM products p JOIN salessr sr ON sr.productId=p.productId
-	JOIN sales s ON sr.receiptNum=s.receiptNum WHERE dateSR BETWEEN '$search2' AND '$search' ORDER BY dateSR");
+    JOIN sales s ON sr.receiptNum=s.receiptNum WHERE username='{$_SESSION['username']}' and dateSR BETWEEN '$search2' AND '$search' ORDER BY dateSR");
+
 														//put here the session
 									
 echo '<table width="75%" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#000000">
 <tr>
 <td width="10%"><div align="center"><b>Date
-</div></b></td>
-<td width="10%"><div align="center"><b>Username
 </div></b></td>
 <td width="5%"><div align="center"><b>SKU
 </div></b></td>
@@ -49,7 +56,7 @@ echo '<table width="75%" border="1" align="center" cellpadding="0" cellspacing="
 </div></b></td>
 <td width="5%"><div align="center"><b>quantity
 </div></b></td>
-<td width="5%"><div align="center"><b>Wholesale Price
+<td width="5%"><div align="center"><b>Retail Price
 </div></b></td>
 <td width="5%"><div align="center"><b>Total
 </div></b></td>
@@ -68,7 +75,67 @@ echo '<table width="75%" border="1" align="center" cellpadding="0" cellspacing="
 echo "<tr>
 <td width=\"10%\"><div align=\"center\">".$rows['dateSR']."
 </div></td>
-<td width=\"10%\"><div align=\"center\">".$rows['username']."
+<td width=\"5%\"><div align=\"center\">".$rows['sku']."
+</div></td>
+<td width=\"25%\"><div align=\"center\">".$rows['productName']."
+</div></td>
+<td width=\"5%\"><div align=\"center\">".$rows['qtySR']."
+</div></td>
+<td width=\"5%\"><div align=\"center\">".$rows['retailPrice']."
+</div></td>
+<td width=\"5%\"><div align=\"center\">".$rows['total']."
+</div></td>
+
+</tr>";
+$inHand+=$rows['qtySR'];
+$totalAmount+=$rows['total'];
+	
+	
+		}
+		//if no data output 
+	}else{
+			
+			echo"No results";
+		}
+	
+	
+        }
+		
+		 else if($search3!=0){
+  
+    $resultSet=$mysqli->query("SELECT p.sku,p.productName,s.dateSR,sr.username,p.qtyUnit,p.retailPrice,sr.qtySR,(retailPrice * qtySR) AS total FROM products p JOIN salessr sr ON sr.productId=p.productId
+    JOIN sales s ON sr.receiptNum=s.receiptNum WHERE username='{$_SESSION['username']}' and sr.productID='$search3' and dateSR BETWEEN '$search2' AND '$search' ORDER BY dateSR");
+
+														//put here the session
+									
+echo '<table width="75%" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#000000">
+<tr>
+<td width="10%"><div align="center"><b>Date
+</div></b></td>
+<td width="5%"><div align="center"><b>SKU
+</div></b></td>
+<td width="25%"><div align="center"><b>Product Name
+</div></b></td>
+<td width="5%"><div align="center"><b>quantity
+</div></b></td>
+<td width="5%"><div align="center"><b>Retail Price
+</div></b></td>
+<td width="5%"><div align="center"><b>Total
+</div></b></td>
+
+</tr>';
+	
+	
+	
+	
+
+	
+	//check if there are any info gathered from db
+	if($resultSet->num_rows>0){
+		while($rows=$resultSet->fetch_assoc()){
+
+echo "<tr>
+<td width=\"10%\"><div align=\"center\">".$rows['dateSR']."
 </div></td>
 <td width=\"5%\"><div align=\"center\">".$rows['sku']."
 </div></td>
@@ -76,13 +143,14 @@ echo "<tr>
 </div></td>
 <td width=\"5%\"><div align=\"center\">".$rows['qtySR']."
 </div></td>
-<td width=\"5%\"><div align=\"center\">".$rows['wholesalePrice']."
+<td width=\"5%\"><div align=\"center\">".$rows['retailPrice']."
 </div></td>
 <td width=\"5%\"><div align=\"center\">".$rows['total']."
 </div></td>
 
 </tr>";
-
+$inHand1+=$rows['qtySR'];
+$totalAmount1+=$rows['total'];
 	
 		}
 		//if no data output 
@@ -106,9 +174,40 @@ echo "<tr>
 
 
 
-<?php
 
-?>
+
+ <div class="wrapper-md bg-white-only b-b">
+      <div class="row text-center">
+        <div class="col-sm-3 col-xs-6">
+          <div>Total Quantity<i class="fa fa-fw fa-caret-up text-success text-sm"></i></div>
+          <div class="h2 m-b-sm"><?php
+		  if($inHand1==0){
+	$outputHand=$inHand;
+	echo $outputHand;
+}
+else if($inHand==0){
+	$outputHand=$inHand1;
+	echo $outputHand;
+}
+						?></div>
+        </div>
+        
+        <div class="col-sm-3 col-xs-6">
+          <div>Total Amount <i class="fa fa-fw fa-caret-up text-success text-sm"></i></div>
+          <div class="h2 m-b-sm"><?php
+					if($totalAmount1==0){
+	$outputAm=$totalAmount;
+	echo $outputAm;
+}
+else if($totalAmount==0){
+	$outputAm=$totalAmount1;
+	echo $outputAm;
+}
+		  ?></div>
+        </div>
+       
+      </div>
+    </div>
 <form method="POST">
   <!-- content -->
   <div id="content" class="app-content" role="main">
@@ -142,7 +241,7 @@ echo "<tr>
 		<p> Starting Date:
          <input type="text"  name="search2" data-date-format='yyyy-mm-dd' id="from" > 
 		<?php //$date=0;	$from_date = date("Y-m-d", strtotime($date)); echo $from_date; ?>
-		<p> End Date </p>
+		<p> End Date: </p>
 			 <input type="text" name="search"  data-date-format='yyyy-mm-dd' id="to" > 
 			 <?php //  $to_date= date("Y-m-d", strtotime($date));  echo $to_date;?>
 			 
@@ -156,7 +255,7 @@ echo "<tr>
 		  <div class="col-sm-4 form-group">
 							<p>Product:</p> <br>
                <select name="search3">
-						
+						<option value=0>---</option>
                         <option value=1>Milk</option>
                         <option value=2>Yogurt</option>
 						<option value=3>Chocolate Milk</option>

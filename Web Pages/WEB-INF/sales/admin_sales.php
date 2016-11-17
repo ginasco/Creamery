@@ -15,7 +15,14 @@
   
 
  <!-- nav -->
-<?php include '../session/levelOfAccess.php';?>
+<?php include '../session/levelOfAccess.php';
+	$totalAmount= 0;
+	$inHand=0;
+	$totalAmount1= 0;
+	$inHand1=0;
+	$outputAm=0;
+	$outputHand=0;
+	?>
 <?php
 if ($_SESSION['usertype']!=101){
         header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/login.php");
@@ -83,7 +90,8 @@ echo "<tr>
 </div></td>
 
 </tr>";
-
+$inHand+=$rows['qtySR'];
+$totalAmount+=$rows['total'];
 	
 		}
 		//if no data output 
@@ -146,7 +154,8 @@ echo "<tr>
 </div></td>
 
 </tr>";
-
+$inHand1+=$rows['qtySR'];
+$totalAmount1+=$rows['total'];
 	
 		}
 		//if no data output 
@@ -165,9 +174,39 @@ echo "<tr>
 
 
 
-<?php
+ <div class="wrapper-md bg-white-only b-b">
+      <div class="row text-center">
+        <div class="col-sm-3 col-xs-6">
+          <div>Total Quantity<i class="fa fa-fw fa-caret-up text-success text-sm"></i></div>
+          <div class="h2 m-b-sm"><?php
+		  if($inHand1==0){
+	$outputHand=$inHand;
+	echo $outputHand;
+}
+else if($inHand==0){
+	$outputHand=$inHand1;
+	echo $outputHand;
+}
+						?></div>
+        </div>
+        
+        <div class="col-sm-3 col-xs-6">
+          <div>Total Amount <i class="fa fa-fw fa-caret-up text-success text-sm"></i></div>
+          <div class="h2 m-b-sm"><?php
+					if($totalAmount1==0){
+	$outputAm=$totalAmount;
+	echo $outputAm;
+}
+else if($totalAmount==0){
+	$outputAm=$totalAmount1;
+	echo $outputAm;
+}
+		  ?></div>
+        </div>
+       
+      </div>
+    </div>
 
-?>
 <form method="POST">
   <!-- content -->
   <div id="content" class="app-content" role="main">
@@ -201,13 +240,14 @@ echo "<tr>
 		<p> Starting Date:
          <input type="text"  name="search2" data-date-format='yyyy-mm-dd' id="from" > 
 		<?php //$date=0;	$from_date = date("Y-m-d", strtotime($date)); echo $from_date; ?>
-		<p> End Date </p>
+		<p> End Date: </p>
 			 <input type="text" name="search"  data-date-format='yyyy-mm-dd' id="to" > 
 			 <?php //  $to_date= date("Y-m-d", strtotime($date));  echo $to_date;?>
 			 
         </div>
     </div>
 </div>
+
 		  </div>
 		  
 		
@@ -218,7 +258,7 @@ echo "<tr>
 <br> <br>
 					<input type="SUBMIT" name="submit" value="search"/>
 							</div>	
-		
+
 
 <script type="text/javascript">
  $(function(){
