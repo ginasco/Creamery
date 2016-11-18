@@ -127,7 +127,7 @@ if (isset($_POST['confirm'])){
 
   
     //-------insert to pullouts -------
-    $query="insert into pullouts (distributorName) values ('$_SESSION['name']')";
+    $query="insert into pullouts (distributorName) values ('{$_SESSION['name']}')";
     $result=mysqli_query($dbc,$query);
   //------- /insert to pullouts -------
 
