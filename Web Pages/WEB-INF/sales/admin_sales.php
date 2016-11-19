@@ -43,7 +43,7 @@ if(isset($_POST['submit'])){
 	//query db
 //if not work use *
     if(empty($search3)){
-    $resultSet=$mysqli->query("SELECT p.sku,p.productName,s.dateSR,sr.username,p.qtyUnit,p.retailPrice,sr.qtySR,(retailPrice * qtySR) AS total FROM products p JOIN salessr sr ON sr.productId=p.productId
+    $resultSet=$mysqli->query("SELECT p.sku,p.productName,DATE(s.dateSR,sr.username,p.qtyUnit,p.retailPrice,sr.qtySR,(retailPrice * qtySR) AS total FROM products p JOIN salessr sr ON sr.productId=p.productId
 	JOIN sales s ON sr.receiptNum=s.receiptNum WHERE dateSR BETWEEN '$search2' AND '$search' ORDER BY dateSR");
     
     
