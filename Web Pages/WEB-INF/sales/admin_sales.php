@@ -165,8 +165,6 @@
 			</div>
 		</div>
 	</div>
-
-	<form method="POST">
 		<!-- content -->
 
 		<script type="text/javascript">
