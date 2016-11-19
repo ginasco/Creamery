@@ -7,6 +7,7 @@
   <meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
+  
   <link rel="stylesheet" type="text/css" href="../sales/css/datepicker.css" />
   <link rel="stylesheet" href="../libs/assets/animate.css/animate.css" type="text/css" />
   <link rel="stylesheet" href="../libs/assets/font-awesome/css/font-awesome.min.css" type="text/css" />
@@ -18,10 +19,10 @@
 
   <!-- star rating  -->
     
-         <link rel="stylesheet" href="../accounts/css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
+      
    
-<script src="../../imports/libs/jquery/js/jquery.min.js"></script>
-    <script src="../accounts/js/star-rating.js" type="text/javascript"></script>
+
+
 <!--  star rating-->
 
 
@@ -380,4 +381,5 @@
 <script src="../libs/jquery/js/ui-nav.js"></script>
 <script src="../libs/jquery/js/ui-toggle.js"></script>
 <script src="../libs/jquery/js/ui-client.js"></script>
+  <script src="../accounts/js/star-rating.js" type="text/javascript"></script>
 </html>

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en" class="">
 <head>
 <meta charset="utf-8" />
@@ -6,11 +7,14 @@
 <meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<script src="js/jquery.min.js"></script>
+
 <!-- star rating  -->
     
-      
+      <script src="../../imports/libs/jquery/js/jquery.min.js"></script>
 
+    <link rel="stylesheet" href="../accounts/css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
+  
+  
    
 
    
@@ -71,36 +75,51 @@ if ($_SESSION['usertype']!=101){
           $query1="SELECT ui.userID,ui.fName,ui.lName,ui.rating FROM USERSINFO ui WHERE ui.rating <=5;";
           $result=mysqli_query($dbc,$query1);
           while($row = $result->fetch_assoc()){ 
-            
+        
         
 			$fullname = $row["fName"] .' '.$row["lName"];
 			$userID = $row["userID"];
+			$rating = $row["rating"];
+			
             echo "<tr>
-                    <td class=fullName>".$fullname."</td>
-					<td class=rating><input id=star1 value=".$row["rating"]." type=number class=rating min=0 max=5 step=0.5 data-size=sm>
+                    <td class=fullName>".$fullname." <input type= text name=userid[] value=".$row["userID"]." style=display:none></td>
+				<td class=rating><input id=rating value=".$row["rating"]." type=number class=rating min=0 max=5 step=0.2 data-size=sm>
     <hr></td>
+									
  
-                    </tr>";
+                    </tr>"
+					;
+			
+			
         }
        
         ?>
       </tbody>
     </table>
-	<button type="submit" id="update"name="submit" class="btn btn-lg btn-info">UPDATE</button>		
+	<button type="submit" id="update" name="submit" class="btn btn-lg btn-info">UPDATE</button>		
 	</form>
+<!--	<input id=rating value=".$row["rating"]." type=number class=rating min=0 max=5 step=0.2 data-size=sm>-->
+	  
 	<?php
-	 if (isset($_POST['submit'])){
-            $userID= $_POST['userID'];
-            $rating=$_POST['rating'];
+	// if (isset($_POST['submit'])){
+        //    $userID= $_POST['userID'];
+        //    $rating=$_POST['rating'];
          
-            
-            $updateDealer="Update usersinfo
-                           set rating='{$rating}'
-                           where userID='{$userID}'";
-            $result=mysqli_query($dbc,$updateDealer);
-             header("location:dealerlist.php"); 
-            exit;
-        }
+ 
+		//	echo $userID;
+		//	echo $rating;
+				
+				//require_once('../mysql_connect.php');
+        //   $query3= "INSERT INTO purchase (productID, purchaseQty, username, totalAmount, remarks) values".implode(',',$pairs);
+          //  $result3=mysqli_query($dbc,$query3);
+			//$query="UPDATE USERSINFO SET rating('".implode($rating,"','")."') WHERE userID IN ('".implode($userID,"','")."')";
+			
+		//  echo $userID;
+		 // echo $rating;
+		  
+             //header("location:dealerlist.php"); 
+            //exit;
+       // }
 		?>
   </div>
 </div>
@@ -141,53 +160,11 @@ if ($_SESSION['usertype']!=101){
 <!-- /content -->
 
                  <form>
-    
-    
-    
- 
-
-
-
 
 </div>
-
-<!--
-        <script>
-           $(document).on('click', "#openModal", function(){
-             $(".modal-body").empty();
-            $("#myModal").modal("show");
-            
-            var fullName =  $(this).closest ('tr').find(".fullName").text();
-            var contactNumber =  $(this).closest ('tr').find(".contactNumber").text();
-            var status =  $(this).closest ('tr').find(".status").text();
-            var emailAddress =  $(this).closest ('tr').find(".emailAddress").text();
-            var cities =  $(this).closest ('tr').find(".cities").text();
-            var userID =  $(this).closest ('tr').find(".userID").text();
-            var address =  $(this).closest ('tr').find(".address").text();
-            var tinNumber =  $(this).closest ('tr').find(".tinNumber").text();
-
-             $(".modal-body").append('<input name="fullName" id="fullName" type="text" style=border:none;font-weight:bold;font-size:16px readOnly value="'+fullName+'"/><br>');
-             $(".modal-body").append('Tin Number: <input name="tinNumber" required type="text" required value="'+tinNumber+'"/><br>');
-             $(".modal-body").append('Contact Number: <input name="contactNumber" required type="text" required min=0 type="number" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="'+contactNumber+'"/><br>');
-             $(".modal-body").append('Email Address: <input name="emailAddress" required type="text" value="'+emailAddress+'"/><input name="userID" required type="text" style=display:none value="'+userID+'"/><br>');
-             $(".modal-body").append('Address: <input name="address" required type="text" required value="'+address+'"/><br>');
-             
-            
-            if(cities===cities){
-              $(".modal-body").append('City:  <select name="philCity" required id="philCity"> <option value="'+cities+'">'+cities+'</option><option value="Caloocan">Caloocan</option><option value="Las Piñas">Las Piñas</option><option value="Makati">Makati</option><option value="Malabon">Malabon</option><option value="Mandaluyong">Mandaluyong</option><option value="Manila">Manila</option><option value="Marikina">Marikina</option><option value="Muntinlupa">Muntinlupa</option><option value="Navotas">Navotas</option><option value="Paranaque">Paranaque</option><option value="Pasay">Pasay</option><option value="Pasig">Pasig</option><option value="Quezon City">Quezon City</option><option value="San Juan">San Juan</option><option value="Taguig">Taguig</option><option value="Valenzuela">Valenzuela</option></select><br>');
-            }
-
-            if(status==="102"){
-              $(".modal-body").append('Status:  <select name="userStatus" required id="userStatus"> <option value="'+status+'">'+status+'-Active</option> <option value=103>103-Inactive</option></select><br>');
-            }else if (status==="103"){
-              $(".modal-body").append('Status:  <select name="userStatus" required id="userStatus"> <option value="'+status+'">'+status+'-Inactive</option> <option value=102>102-Active</option></select><br>');
-            }              
-});
-        </script>
--->
 <script>
     jQuery(document).ready(function () {
-        $("#input-21f").rating({
+        $("#rating").rating({
             starCaptions: function(val) {
                 if (val < 3) {
                     return val;
@@ -195,49 +172,16 @@ if ($_SESSION['usertype']!=101){
                     return 'high';
                 }
             },
-            starCaptionClasses: function(val) {
-                if (val < 3) {
-                    return 'label label-danger';
-                } else {
-                    return 'label label-success';
-                }
-            },
+        
             hoverOnClear: false
         });
-        
-        $('#rating-input').rating({
-              min: 0,
-              max: 5,
-              step: 1,
-              size: 'lg',
-              showClear: false
-           });
-           
-        $('#btn-rating-input').on('click', function() {
-            $('#rating-input').rating('refresh', {
-                showClear:true, 
-                disabled: !$('#rating-input').attr('disabled')
-            });
-        });
+   
+        $('#rating').rating('update',3);
         
         
-        $('.btn-danger').on('click', function() {
-            $("#kartik").rating('destroy');
-        });
-        
-        $('.btn-success').on('click', function() {
-            $("#kartik").rating('create');
-        });
-        
-        $('#rating-input').on('rating.change', function() {
-            alert($('#rating-input').val());
-        });
-        
-        
-        $('.rb-rating').rating({'showCaption':true, 'stars':'3', 'min':'0', 'max':'3', 'step':'1', 'size':'xs', 'starCaptions': {0:'status:nix', 1:'status:wackelt', 2:'status:geht', 3:'status:laeuft'}});
+     
     });
 </script>
-
 
 
 
