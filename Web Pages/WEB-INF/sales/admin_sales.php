@@ -42,11 +42,12 @@
 								<div class="row text-center">
 									<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 										<div class="col-sm-8" align="left">  
-											<div class="container">
+											
 												<div class="hero-unit">
 													<p> Starting Date: <input type="text"  name="search2" data-date-format='yyyy-mm-dd' id="from" > End Date:<input type="text" name="search"  data-date-format='yyyy-mm-dd' id="to" > </p>
 												</div>
-											</div>
+													
+											
 										</div>
 										<div  align="right">
 											<p>Search by username: <input type="text" name="search3"><input type="submit" name="submit" value="search"></p>
