@@ -16,6 +16,7 @@
  
 </form>
 <hr>
+<!--
 <script>
     jQuery(document).ready(function () {
         $("#input-21f").rating({
@@ -67,6 +68,22 @@
         
         $('.rb-rating').rating({'showCaption':true, 'stars':'3', 'min':'0', 'max':'3', 'step':'1', 'size':'xs', 'starCaptions': {0:'status:nix', 1:'status:wackelt', 2:'status:geht', 3:'status:laeuft'}});
     });
+	
+	
+	
+	
+</script> -->
+
+<form>
+    <label for="input-3" class="control-label">Rate This</label>
+    <input id="input-3" name="input-3" value="2" class="rating-loading">
+    <button class="btn btn-primary">Submit</button>
+    <button type="reset" class="btn btn-default">Reset</button>
+</form>
+<script>
+$(document).on('ready', function(){
+    $('#input-3').rating({});
+});
 </script>
  
     <script src="../accounts/js/star-rating.js" type="text/javascript"></script>

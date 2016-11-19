@@ -142,12 +142,18 @@ $message=NULL;
  }else
   $city=$_POST['city'];
 
+ if (empty($_POST['rating'])){
+  $rating=FALSE;
+  $message.='<p>You forgot to select the rating!';
+ }else
+  $rating=$_POST['rating'];
+
 
 
 if(!isset($message)){
 if($retypepassword==$password){
 require_once('../../mysqlConnector/mysql_connect.php');
-$query="Insert into USERSINFO (tinNum,address,city,contactNum,emailAdd,fName,lName) values ('{$tinNum}','{$address}','{$city}','{$contactNum}','{$emailAdd}','{$fName}','{$lName}')";
+$query="Insert into USERSINFO (tinNum,address,city,contactNum,emailAdd,fName,lName,rating) values ('{$tinNum}','{$address}','{$city}','{$contactNum}','{$emailAdd}','{$fName}','{$lName}','{$rating}')";
 
 $result=mysqli_query($dbc,$query);
 
@@ -253,6 +259,19 @@ if (isset($message)){
                         <option value=102>102- DEALER</option>
                        
                     </select>
+								<p>Rating:</p> <br>
+               <select name="rating">
+						
+                        <option value=1>1</option>
+                        <option value=2>2</option>
+						<option value=3>3</option>
+                        <option value=4>4</option>
+						<option value=5>5</option>
+                        <option value=10>ADMIN</option>
+                       
+                    </select>
+					
+							
 							</div>	
 							
 						</div>

@@ -10,7 +10,7 @@
 <!-- star rating  -->
     
     
-    <link rel="stylesheet" href="../accounts/css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
+
    
 <script src="../../imports/libs/jquery/js/jquery.min.js"></script>
     <script src="../js/star-rating.js" type="text/javascript"></script>
@@ -68,12 +68,13 @@ if ($_SESSION['usertype']!=101){
 	  
         <?php
           require_once('../../mysqlConnector/mysql_connect.php');
-          $query1="SELECT ui.fName,ui.lName,ui.rating FROM USERSINFO ui WHERE ui.rating <=5;";
+          $query1="SELECT ui.userID,ui.fName,ui.lName,ui.rating FROM USERSINFO ui WHERE ui.rating <=5;";
           $result=mysqli_query($dbc,$query1);
           while($row = $result->fetch_assoc()){ 
             
         
 			$fullname = $row["fName"] .' '.$row["lName"];
+			$userID = $row["userID"];
             echo "<tr>
                     <td class=fullName>".$fullname."</td>
 					<td class=rating><input id=star1 value=".$row["rating"]." type=number class=rating min=0 max=5 step=0.5 data-size=sm>
