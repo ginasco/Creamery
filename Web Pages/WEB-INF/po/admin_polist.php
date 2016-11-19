@@ -49,13 +49,13 @@ if ($_SESSION['usertype']!=101){
               </thead>
               <tbody>
                 <tr>
-                 <td> <a href="PO.html"><u>000002</u></a></td>
+                 <td> <a href="adminPO.php"><u>000002</u></a></td>
                  <td>1 November 2016</td>
                  <td>Marcus Ko</td>
                  <td>PB-1000</td>
                  <td><span class="label bg-warning">Unfulfilled</span></td>
                </tr><tr>
-               <td> <a href="PO.html"><u>000001</u></a></td>
+               <td> <a href="adminPO.php"><u>000001</u></a></td>
                <td>8 October 2016</td>
                <td>Marcus Ko</td>
                <td>N/A</td>

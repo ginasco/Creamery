@@ -11,8 +11,14 @@
 
 <link rel="stylesheet" type="text/css" href="../sales/css/datepicker.css" />
 
-
-
+<!-- star rating  -->
+    
+    
+    <link rel="stylesheet" href="../accounts/css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
+   
+<script src="../../imports/libs/jquery/js/jquery.min.js"></script>
+    <script src="../js/star-rating.js" type="text/javascript"></script>
+<!--  star rating-->
   <link rel="stylesheet" href="../libs/assets/animate.css/animate.css" type="text/css" />
   <link rel="stylesheet" href="../libs/assets/font-awesome/css/font-awesome.min.css" type="text/css" />
   <link rel="stylesheet" href="../libs/assets/simple-line-icons/css/simple-line-icons.css" type="text/css" />

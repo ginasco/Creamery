@@ -85,7 +85,7 @@
 
 											$resultSet=$mysqli->query("
 												Select p.productName,pi.expiryDate, pi.inventoryQty FROM perpetualinventory pi JOIN products p  
-												ON p.productID=pi.productID WHERE pi.username='{$_SESSION['username']}' and p.productName LIKE 'Milk' and pi.active=1;");
+												ON p.productID=pi.productID WHERE pi.username='{$_SESSION['username']}' and p.productName LIKE '$search' and pi.active=1;");
 //and p.productName='$search%'");
 // WHERE pi.username='{$_SESSION['username']}' and p.productName='$search%'");
 

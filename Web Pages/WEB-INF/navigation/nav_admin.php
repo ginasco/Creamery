@@ -16,6 +16,14 @@
   <link rel="stylesheet" href="../../imports/css/font.css" type="text/css" />
   <link rel="stylesheet" href="../../imports/css/app.css" type="text/css" />
 
+  <!-- star rating  -->
+    
+    
+    <link rel="stylesheet" href="../accounts/css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
+   
+<script src="../../imports/libs/jquery/js/jquery.min.js"></script>
+    <script src="../js/star-rating.js" type="text/javascript"></script>
+<!--  star rating-->
 
 
 </head>
