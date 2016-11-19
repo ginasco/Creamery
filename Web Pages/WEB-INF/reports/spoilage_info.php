@@ -42,49 +42,67 @@
         <?php 
         $conNum=$_POST['conNum'];
         require_once('../../mysqlConnector/mysql_connect.php');
-
-        echo"
-        <p class=m-t m-b>Dealer: <strong>1 November 2016</strong><br>
-         Address: <strong>1 November 2016</strong><br>
-         Pullout Date: <strong>1 November 2016</strong><br>
-         Control Number: <strong>PB-1000</strong><br>
-       </p>";
+        $query="Select distinct controlNum, concat(i.fName,' ',i.lName) as distributorName, DATE(pullOutDate) AS pullOutDate, concat(i.address,' ',i.city) as address From pullouts p join users u on p.distributorName=u.username join usersinfo i on u.userID=i.userID where controlNum = '$conNum'";
+        $result=mysqli_query($dbc,$query);
+        while($row = $result->fetch_assoc()) {
+          echo"
+            <p class=m-t m-b>Dealer: <strong>".$row["distributorName"]."</strong><br>
+             Address: <strong>".$row["address"]."</strong><br>
+             Pullout Date: <strong>".$row["pullOutDate"]."</strong><br>
+             Control Number: <strong>".$row["controlNum"]."</strong><br>
+           </p>";
+        }
+        
        ?>
-       <div>
-        <div class="well m-t bg-light lt">
-          <div class="row">
+       <div class="wrapper-md"><div class="wrapper-md bg-white-only b-b">
+            <div class="row text-center">
+              <div class="col-sm-3 col-xs-6" >
+                <div>Quantity of Pullout Products <i class="fa fa-fw fa-caret-up text-success text-sm"></i></div>
+                <input class="h2 m-b-sm" style="border:none; text-align:center" readonly id="qtyPullout"/>
+              </div>
 
+              <div class="col-sm-3 col-xs-6">
+                <div>Net Loss (in PESOS)<i class="fa fa-fw fa-caret-up text-success text-sm"></i></div>
+                <input class="h2 m-b-sm" style="border:none; text-align:center" readonly id="netLoss"/>
+              </div>
 
+            </div>
           </div>
-        </div>
+       <div>
+        
         <div class="line"></div>
         <table class="table table-striped bg-white b-a">
           <thead>
             <tr>
-              <th style="width: 60px">QTY</th>
-              <th style="width: 70px">SKU</th>
-              <th style="width:400px">DESCRIPTION</th>
+              <th style="width: 20%">QTY</th>
+              <th style="width: 20%">SKU</th>
+              <th style="width:20%">DESCRIPTION</th>
+              <th style="width:20%">Unit</th>
+              <th style="width:9%">Unit Price</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>51</td>
-              <TD>CHMK500</TD>
-              <td>500ml Chocolate Milk</td>
-
-            </tr>
-            <tr>
-              <td>5</td>
-              <TD>QSPT200</TD>
-              <td>500G Quesong Puti</td>
-
-
-            </tr>
-
-          </tbody>
+          <?php
+          $conNum=$_POST['conNum'];
+          require_once('../../mysqlConnector/mysql_connect.php');
+          $query="Select p.sku, p.productName, u.pullOutQty,p.unitPrice, p.qtyUnit From pullouts2 u join products p on u.productID=p.productID where u.controlNum='$conNum'";
+          $result=mysqli_query($dbc,$query);
+          while($row = $result->fetch_assoc()){
+            echo"
+            <tbody><tr class='productRows'>
+                <td >".$row["pullOutQty"]."<input type=hidden name=pullOutQty class=pullOutQty value=".$row["pullOutQty"]."></td>
+                <td >".$row["sku"]."</td>
+                <td>".$row["productName"]."</td>
+                <td>".$row["qtyUnit"]."</td>
+                <td style=text-align:right>".$row["unitPrice"]."<input type=hidden name=unitPrice class=unitPrice value=".$row["unitPrice"]."></td>
+                <td></td> 
+              </tr></tbody>
+            ";
+          }
+          ?>
+            
         </table> 
 
-        <button class="btn m-b-xs w-xs btn-danger">Cancel P.B</button>
+        
       </div>
     </div>
 
@@ -98,7 +116,27 @@
 
 
 </div>
+<script>
+var loss = 0;
+var quantityCount=0;
+  $('.unitPrice').each(function(){
+    loss+=parseFloat(this.value);
 
+ });
+
+  $('.pullOutQty').each(function(){
+    quantityCount += parseFloat(this.value);
+
+ });
+
+
+ var x = document.getElementById("qtyPullout");
+ x.setAttribute("value", quantityCount);
+
+ var y = document.getElementById("netLoss");
+ y.setAttribute("value", loss);
+
+</script>
 
 
 </body>
