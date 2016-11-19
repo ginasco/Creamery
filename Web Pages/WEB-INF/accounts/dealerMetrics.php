@@ -9,11 +9,11 @@
 <script src="js/jquery.min.js"></script>
 <!-- star rating  -->
     
-    
+      
 
    
-<script src="../../imports/libs/jquery/js/jquery.min.js"></script>
-    <script src="../js/star-rating.js" type="text/javascript"></script>
+
+   
 <!--  star rating-->
 </head>
 <body>
@@ -238,14 +238,8 @@ if ($_SESSION['usertype']!=101){
     });
 </script>
 
-<script>
-$('#input-id').rating({'update': 3,
-                       'showCaption':false,
-                       'showClear':false
-                     });
-</script>
- 
-    <script src="../accounts/js/star-rating.js" type="text/javascript"></script>
+
+
 
 </body>
 </html>

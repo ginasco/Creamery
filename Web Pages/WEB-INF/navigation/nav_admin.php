@@ -18,8 +18,7 @@
 
   <!-- star rating  -->
     
-    
- 
+         <link rel="stylesheet" href="../accounts/css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
    
 <script src="../../imports/libs/jquery/js/jquery.min.js"></script>
     <script src="../accounts/js/star-rating.js" type="text/javascript"></script>
