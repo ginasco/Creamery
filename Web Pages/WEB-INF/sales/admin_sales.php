@@ -98,69 +98,42 @@
 
 	//query db
 //if not work use *
-<<<<<<< HEAD
-    if(empty($search3)){
-    $resultSet=$mysqli->query("SELECT p.sku,p.productName,DATE(s.dateSR,sr.username,p.qtyUnit,p.retailPrice,sr.qtySR,(retailPrice * qtySR) AS total FROM products p JOIN salessr sr ON sr.productId=p.productId
-	JOIN sales s ON sr.receiptNum=s.receiptNum WHERE dateSR BETWEEN '$search2' AND '$search' ORDER BY dateSR");
-    
-    
-    echo '<table width="75%" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#000000">
-<tr>
-<td width="10%"><div align="center"><b>Date
-</div></b></td>
-<td width="10%"><div align="center"><b>Username
-</div></b></td>
-<td width="5%"><div align="center"><b>SKU
-</div></b></td>
-<td width="25%"><div align="center"><b>Product Name
-</div></b></td>
-<td width="5%"><div align="center"><b>quantity
-</div></b></td>
-<td width="5%"><div align="center"><b>quantityUnit
-</div></b></td>
-<td width="5%"><div align="center"><b>Wholesale Price
-</div></b></td>
-<td width="5%"><div align="center"><b>Total
-</div></b></td>
-
-</tr>';
-  
-    	if($resultSet->num_rows>0){
-		while($rows=$resultSet->fetch_assoc()){
-
-echo "<tr>
-<td width=\"10%\"><div align=\"center\">".$rows['dateSR']."
-</div></td>
-<td width=\"10%\"><div align=\"center\">".$rows['username']."
-</div></td>
-<td width=\"5%\"><div align=\"center\">".$rows['sku']."
-</div></td>
-<td width=\"25%\"><div align=\"center\">".$rows['productName']."
-</div></td>
-<td width=\"5%\"><div align=\"center\">".$rows['qtySR']."
-</div></td>
-<td width=\"5%\"><div align=\"center\">".$rows['qtyUnit']."
-</div></td>
-<td width=\"5%\"><div align=\"center\">".$rows['retailPrice']."
-</div></td>
-<td width=\"5%\"><div align=\"center\">".$rows['total']."
-</div></td>
-
-</tr>";
-$inHand+=$rows['qtySR'];
-$totalAmount+=$rows['total'];
-	
-		}
-=======
-												if(empty($search3)){
-													$resultSet=$mysqli->query("SELECT p.sku,p.productName,DATE(s.dateSR) AS dateSR,sr.username,p.qtyUnit,p.retailPrice,sr.qtySR,(retailPrice * qtySR) AS total FROM products p JOIN salessr sr ON sr.productId=p.productId
-														JOIN sales s ON sr.receiptNum=s.receiptNum WHERE dateSR BETWEEN '$search2' AND '$search' ORDER BY dateSR");
+													if(empty($search3)){
+														$resultSet=$mysqli->query("SELECT p.sku,p.productName,DATE(s.dateSR) AS dateSR,sr.username,p.qtyUnit,p.retailPrice,sr.qtySR,(retailPrice * qtySR) AS total FROM products p JOIN salessr sr ON sr.productId=p.productId
+															JOIN sales s ON sr.receiptNum=s.receiptNum WHERE dateSR BETWEEN '$search2' AND '$search' ORDER BY dateSR");
 
 
+														if($resultSet->num_rows>0){
+															while($rows=$resultSet->fetch_assoc()){
+
+																echo "</tbody><tr>
+																<td >".$rows['dateSR']."</td>
+																<td >".$rows['username']."</td>
+																<td >".$rows['sku']."</td>
+																<td >".$rows['productName']."</td>
+																<td >".$rows['qtySR']."<input type=hidden class='qtySR' name='qtySR' value=".$rows["qtySR"]."></td>
+																<td >".$rows['qtyUnit']."</td>
+																<td >".$rows['retailPrice']."</td>
+																<td >".$rows['total']."<input type=hidden class='total' name='total' value=".$rows["total"]."></td>
+															</tr></tbody>";
+														}
+		//if no data output 
+													}else{
+
+														echo"No results";
+													}
+
+												}
+
+												else{$resultSet=$mysqli->query("SELECT p.sku,p.productName,DATE(s.dateSR) AS dateSR,sr.username,p.qtyUnit,p.retailPrice,sr.qtySR,(retailPrice * qtySR) AS total FROM products p JOIN salessr sr ON sr.productId=p.productId
+													JOIN sales s ON sr.receiptNum=s.receiptNum WHERE username='$search3' and dateSR BETWEEN '$search2' AND '$search' ORDER BY dateSR");
+														//put here the session
+
+	//check if there are any info gathered from db
 													if($resultSet->num_rows>0){
 														while($rows=$resultSet->fetch_assoc()){
 
-															echo "</tbody><tr>
+															echo "<tbody><tr>
 															<td >".$rows['dateSR']."</td>
 															<td >".$rows['username']."</td>
 															<td >".$rows['sku']."</td>
@@ -169,57 +142,29 @@ $totalAmount+=$rows['total'];
 															<td >".$rows['qtyUnit']."</td>
 															<td >".$rows['retailPrice']."</td>
 															<td >".$rows['total']."<input type=hidden class='total' name='total' value=".$rows["total"]."></td>
+
 														</tr></tbody>";
 													}
->>>>>>> 81aaf51e6ae09cf6202d47df0160857c314aa78c
 		//if no data output 
 												}else{
 
 													echo"No results";
 												}
-
-											}
-
-											else{$resultSet=$mysqli->query("SELECT p.sku,p.productName,DATE(s.dateSR) AS dateSR,sr.username,p.qtyUnit,p.retailPrice,sr.qtySR,(retailPrice * qtySR) AS total FROM products p JOIN salessr sr ON sr.productId=p.productId
-												JOIN sales s ON sr.receiptNum=s.receiptNum WHERE username='$search3' and dateSR BETWEEN '$search2' AND '$search' ORDER BY dateSR");
-														//put here the session
-
-	//check if there are any info gathered from db
-												if($resultSet->num_rows>0){
-													while($rows=$resultSet->fetch_assoc()){
-
-														echo "<tbody><tr>
-														<td >".$rows['dateSR']."</td>
-														<td >".$rows['username']."</td>
-														<td >".$rows['sku']."</td>
-														<td >".$rows['productName']."</td>
-														<td >".$rows['qtySR']."<input type=hidden class='qtySR' name='qtySR' value=".$rows["qtySR"]."></td>
-														<td >".$rows['qtyUnit']."</td>
-														<td >".$rows['retailPrice']."</td>
-														<td >".$rows['total']."<input type=hidden class='total' name='total' value=".$rows["total"]."></td>
-
-													</tr></tbody>";
-												}
-		//if no data output 
-											}else{
-
-												echo"No results";
 											}
 										}
-									}
-									?>
-									<p></p>
+										?>
+										<p></p>
 
-									<p></p>
+										<p></p>
 
-								</table>
-							</div>
-						</form>
+									</table>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 		<!-- content -->
 
 		<script type="text/javascript">
@@ -244,24 +189,24 @@ $totalAmount+=$rows['total'];
 
 </div>
 <script>
-var tQty = 0;
-var tAmount=0;
-  $('.qtySR').each(function(){
-    tQty+=parseFloat(this.value);
+	var tQty = 0;
+	var tAmount=0;
+	$('.qtySR').each(function(){
+		tQty+=parseFloat(this.value);
 
- });
+	});
 
-  $('.total').each(function(){
-    tAmount += parseFloat(this.value);
+	$('.total').each(function(){
+		tAmount += parseFloat(this.value);
 
- });
+	});
 
 
- var x = document.getElementById("totalQty");
- x.setAttribute("value", tQty);
+	var x = document.getElementById("totalQty");
+	x.setAttribute("value", tQty);
 
- var y = document.getElementById("totalAmount");
- y.setAttribute("value", tAmount);
+	var y = document.getElementById("totalAmount");
+	y.setAttribute("value", tAmount);
 
 </script>
 
