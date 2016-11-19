@@ -98,65 +98,6 @@
 
 	//query db
 //if not work use *
-<<<<<<< HEAD
-
-    if(empty($search3)){
-    $resultSet=$mysqli->query("SELECT p.sku,p.productName,DATE(s.dateSR,sr.username,p.qtyUnit,p.retailPrice,sr.qtySR,(retailPrice * qtySR) AS total FROM products p JOIN salessr sr ON sr.productId=p.productId
-	JOIN sales s ON sr.receiptNum=s.receiptNum WHERE dateSR BETWEEN '$search2' AND '$search' ORDER BY dateSR");
-    
-    
-    echo '<table width="75%" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#000000">
-<tr>
-<td width="10%"><div align="center"><b>Date
-</div></b></td>
-<td width="10%"><div align="center"><b>Username
-</div></b></td>
-<td width="5%"><div align="center"><b>SKU
-</div></b></td>
-<td width="25%"><div align="center"><b>Product Name
-</div></b></td>
-<td width="5%"><div align="center"><b>quantity
-</div></b></td>
-<td width="5%"><div align="center"><b>quantityUnit
-</div></b></td>
-<td width="5%"><div align="center"><b>Wholesale Price
-</div></b></td>
-<td width="5%"><div align="center"><b>Total
-</div></b></td>
-
-</tr>';
-  
-    	if($resultSet->num_rows>0){
-		while($rows=$resultSet->fetch_assoc()){
-
-echo "<tr>
-<td width=\"10%\"><div align=\"center\">".$rows['dateSR']."
-</div></td>
-<td width=\"10%\"><div align=\"center\">".$rows['username']."
-</div></td>
-<td width=\"5%\"><div align=\"center\">".$rows['sku']."
-</div></td>
-<td width=\"25%\"><div align=\"center\">".$rows['productName']."
-</div></td>
-<td width=\"5%\"><div align=\"center\">".$rows['qtySR']."
-</div></td>
-<td width=\"5%\"><div align=\"center\">".$rows['qtyUnit']."
-</div></td>
-<td width=\"5%\"><div align=\"center\">".$rows['retailPrice']."
-</div></td>
-<td width=\"5%\"><div align=\"center\">".$rows['total']."
-</div></td>
-
-</tr>";
-$inHand+=$rows['qtySR'];
-$totalAmount+=$rows['total'];
-	
-		}
-
-												if(empty($search3)){
-													$resultSet=$mysqli->query("SELECT p.sku,p.productName,DATE(s.dateSR) AS dateSR,sr.username,p.qtyUnit,p.retailPrice,sr.qtySR,(retailPrice * qtySR) AS total FROM products p JOIN salessr sr ON sr.productId=p.productId
-														JOIN sales s ON sr.receiptNum=s.receiptNum WHERE dateSR BETWEEN '$search2' AND '$search' ORDER BY dateSR");
-=======
 													if(empty($search3)){
 														$resultSet=$mysqli->query("SELECT p.sku,p.productName,DATE(s.dateSR) AS dateSR,sr.username,p.qtyUnit,p.retailPrice,sr.qtySR,(retailPrice * qtySR) AS total FROM products p JOIN salessr sr ON sr.productId=p.productId
 															JOIN sales s ON sr.receiptNum=s.receiptNum WHERE dateSR BETWEEN '$search2' AND '$search' ORDER BY dateSR");
@@ -181,7 +122,6 @@ $totalAmount+=$rows['total'];
 
 														echo"No results";
 													}
->>>>>>> 34e69b819b590765a83d6b7272368ab64c3a1fe9
 
 												}
 
