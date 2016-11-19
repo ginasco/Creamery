@@ -270,11 +270,11 @@
                 </li>
 
                 <li>
-                  <a href="../po/productionorder.php"> <!-- no po for dealer  -->
-                    <span>Create Production Order</span>
+                  <a href="../po/purchaseorder.php">
+                    <span>Create Purchase Order</span>
                   </a>
                   <a href="../po/polist.php">
-                    <span>My Production Orders</span>
+                    <span>My Purcahse Orders</span>
                   </a>
                 </li>
                 <li>
