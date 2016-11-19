@@ -57,7 +57,6 @@
             <th  style="width:10%">Purchasing Price</th>
             <th  style="width:10%">Selling Price</th>
             
-        
           </tr>
         </thead>
         <tbody>
