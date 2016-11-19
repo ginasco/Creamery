@@ -98,7 +98,7 @@
 
 	//query db
 //if not work use *
-<<<<<<< HEAD
+
     if(empty($search3)){
     $resultSet=$mysqli->query("SELECT p.sku,p.productName,DATE(s.dateSR,sr.username,p.qtyUnit,p.retailPrice,sr.qtySR,(retailPrice * qtySR) AS total FROM products p JOIN salessr sr ON sr.productId=p.productId
 	JOIN sales s ON sr.receiptNum=s.receiptNum WHERE dateSR BETWEEN '$search2' AND '$search' ORDER BY dateSR");
@@ -151,7 +151,7 @@ $inHand+=$rows['qtySR'];
 $totalAmount+=$rows['total'];
 	
 		}
-=======
+
 												if(empty($search3)){
 													$resultSet=$mysqli->query("SELECT p.sku,p.productName,DATE(s.dateSR) AS dateSR,sr.username,p.qtyUnit,p.retailPrice,sr.qtySR,(retailPrice * qtySR) AS total FROM products p JOIN salessr sr ON sr.productId=p.productId
 														JOIN sales s ON sr.receiptNum=s.receiptNum WHERE dateSR BETWEEN '$search2' AND '$search' ORDER BY dateSR");
