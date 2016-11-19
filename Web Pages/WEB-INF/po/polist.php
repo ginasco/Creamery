@@ -57,7 +57,7 @@ if ($_SESSION['usertype']!=102){
         </thead>
         <tbody>
               <tr>
-           <td> <a href="PO.html"><u>000002</u></a></td>
+           <td> <a href="PO.php"><u>000002</u></a></td>
             <td>1 November 2016</td>
             <td>2 November - 10 November 2016</td>
             <td><span class="label bg-warning">Unfulfilled</span></td>
