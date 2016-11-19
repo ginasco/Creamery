@@ -59,7 +59,7 @@
               <?php
 
               require_once('../../mysqlConnector/mysql_connect.php');
-              $query="Select distinct controlNum, distributorName, DATE(pullOutDate) AS pullOutDate From pullouts order by controlNum;";
+              $query="Select distinct controlNum, concat(i.fName,' ',i.lName) as distributorName, DATE(pullOutDate) AS pullOutDate From pullouts p join users u on p.distributorName=u.username join usersinfo i on u.userID=i.userID order by controlNum desc;";
               $result=mysqli_query($dbc,$query);
               while($row = $result->fetch_assoc()) {
                 $conNum=$row["controlNum"];
