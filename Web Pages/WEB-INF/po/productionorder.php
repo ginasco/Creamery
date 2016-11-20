@@ -1,5 +1,6 @@
 
 <!DOCTYPE html>
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 <html lang="en" class="">
 <head>
   <meta charset="utf-8" />
@@ -22,8 +23,35 @@ if ($_SESSION['usertype']!=101){
   header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."../../accounts/login.php");
 }
 ?>
+<?php
+
+//$orderQty = $mysqli->real_escape_string($_POST['orderQty']);
+//$productID = $mysqli->real_escape_string($_POST['productID']);
+if (isset($_POST['submit'])){
+$message=NULL;
+ if (empty($_POST['productID'])){
+  $productID=FALSE;
+  $message.='<p>You forgot to enter the Contact Number!';
+ }else
+  $productID=$_POST['productID'];
+
+ if (empty($_POST['orderQty'])){
+  $orderQty=FALSE;
+  $message.='<p>You forgot to enter the Email Address!';
+ }else
+  $orderQty=$_POST['orderQty'];
 
 
+require_once('../../mysqlConnector/mysql_connect.php');
+$query="INSERT INTO  productionorder (productID, orderQty) VALUES('{$productID}','{$orderQty}')";
+
+$result=mysqli_query($dbc,$query);
+echo $result;
+$flag=1;
+
+
+}
+?>
   <!-- content -->
   <div id="content" class="app-content" role="main">
   	<div class="app-content-body ">
@@ -43,49 +71,32 @@ if ($_SESSION['usertype']!=101){
         </b> 
 
     <div class="table-responsive">
-      <table  class="table table-striped b-t b-b">
-        <thead>
-          <tr>
-            <th  style="width:10%">SKU</th>
-            <th  style="width:25%">Product Name</th>
-            <th  style="width:10%">Total Quantity in P.Os </th>
-            <th  style="width:10%">Production Quantity</th>
-            
-        
-          </tr>
-        </thead>
-        <tbody>
-            <tr>
-            <td>QSPT200</td>
-            <td>200g Quesong Puti</td>
-                 <td>50</td>
-            <td><div class="col-sm-10">
-            <input type="number" min="0" ui-options="" class="form-control w-md" />
-          </div></td>
-         
-          
-      
-          </tr>
-             <tr>
-            <td>CHMK500</td>
-            <td>500ml Chocolate Milk</td>
-               <td>50</td>
-                 <td><div class="col-sm-10">
-            <input type="number" min="0" ui-options="" class="form-control w-md" />
-          </div></td>   
-         
- 
-          
-               
-          </tr>
-          
-        </tbody>
-      </table>
-      <button type="submit" class="btn btn-default">Reset</button>     <button type="submit" class="btn btn-success">Submit</button> 
+     
+	<INPUT type="button" value="Add Row" onclick="addRow('dataTable')" />
+
+	<INPUT type="button" value="Delete Row" onclick="deleteRow('dataTable')" />
+
+	<TABLE id="dataTable" width="350px" border="1">
+		<TR>
+			<TD><INPUT type="checkbox" name="chk" /></TD>
+			<TD><INPUT type="text" name="orderQty" value="<?php if (isset($_POST['orderQty']) && !$flag) echo $_POST['orderQty']; ?>"/> </textarea></TD>
+			<TD>
+				<SELECT name="productID">
+					<OPTION value=1>Milk</OPTION>
+					<OPTION value=2>Yogurt</OPTION>
+					<OPTION value=3>Chocolate Milk</OPTION>
+					<OPTION value=4>Kesong Puti</OPTION>
+					<OPTION value=5>Low Fat Milk</OPTION>
+				</SELECT>
+			</TD>
+		</TR>
+	</TABLE>
+
+          <button type="submit" name="submit" class="btn btn-success">Submit</button> 
     </div>
 
                   
-</di
+</div>
   </div>
 </div>
 
@@ -104,4 +115,60 @@ if ($_SESSION['usertype']!=101){
 
 
 </body>
+<SCRIPT language="javascript">
+		function addRow(tableID) {
+
+			var table = document.getElementById(tableID);
+
+			var rowCount = table.rows.length;
+			var row = table.insertRow(rowCount);
+
+			var colCount = table.rows[0].cells.length;
+
+			for(var i=0; i<colCount; i++) {
+
+				var newcell	= row.insertCell(i);
+
+				newcell.innerHTML = table.rows[0].cells[i].innerHTML;
+				//alert(newcell.childNodes);
+				switch(newcell.childNodes[0].type) {
+					case "text":
+							newcell.childNodes[0].value = "";
+							break;
+					case "checkbox":
+							newcell.childNodes[0].checked = false;
+							break;
+					case "select-one":
+							newcell.childNodes[0].selectedIndex = 0;
+							break;
+				}
+			}
+		}
+
+		function deleteRow(tableID) {
+			try {
+			var table = document.getElementById(tableID);
+			var rowCount = table.rows.length;
+
+			for(var i=0; i<rowCount; i++) {
+				var row = table.rows[i];
+				var chkbox = row.cells[0].childNodes[0];
+				if(null != chkbox && true == chkbox.checked) {
+					if(rowCount <= 1) {
+						alert("Cannot delete all the rows.");
+						break;
+					}
+					table.deleteRow(i);
+					rowCount--;
+					i--;
+				}
+
+
+			}
+			}catch(e) {
+				alert(e);
+			}
+		}
+
+	</SCRIPT>
 </html>
