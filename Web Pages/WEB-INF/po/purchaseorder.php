@@ -74,13 +74,14 @@
                   </tr>
                 </thead>
                 <tbody id="tableList">
+
                </tbody>
               </table>
               <button type="submit" name="confirm" class="btn btn-success">Submit</button> 
-              </form>
+              
               
             </div>
-
+</form>
 </div>
 </div>
 </div>
@@ -92,7 +93,7 @@
         if (isset($_POST['confirm'])){
             $productID=$_POST['productID'];
             $purchaseQty=$_POST['orderQty'];
-            $total="n/a";
+            $total=0;
             
             $items = array_combine($productID,$purchaseQty);
             $pairs = array();
@@ -103,7 +104,7 @@
                     $pairs[] = '('.intval($key).','.intval($value).','."'{$_SESSION['username']}'".','."'$total'".','."'$remarks'".')';
                 }
             
-            require_once('../mysql_connect.php');
+            require_once('../../mysqlConnector/mysql_connect.php');
             $query3= "INSERT INTO purchase (productID, purchaseQty, username, totalAmount, remarks) values".implode(',',$pairs);
             $result3=mysqli_query($dbc,$query3);
         }
