@@ -107,6 +107,7 @@
             require_once('../../mysqlConnector/mysql_connect.php');
             $query3= "INSERT INTO purchase (productID, purchaseQty, username, totalAmount, remarks) values".implode(',',$pairs);
             $result3=mysqli_query($dbc,$query3);
+            echo "<script>alert('success');</script>";
         }
         
         ?>
@@ -123,9 +124,9 @@
                element.appendChild(para);
                var e = document.getElementById("productChosen");
                var productID = e.options[e.selectedIndex].value;
-               alert(productID);
+               
                var productChosen = $("#productChosen").find(":selected").text();
-               alert(productChosen);
+
 
                 $(".trList").append('<td>'+productChosen+'<input type="number" style=display:none readOnly name="productID[]" value="'+productID+'"</td>');
                 $(".trList").append('<td><input type="number" min="0" name="orderQty[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="quantity"/></td>');
