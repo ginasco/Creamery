@@ -90,11 +90,11 @@
 
 <?php
         if (isset($_POST['confirm'])){
-            $productID=$_POST['productName'];
+            $productID=$_POST['productID'];
             $purchaseQty=$_POST['orderQty'];
             $total="n/a";
             
-            $items = array_combine($productID,$qtyOrder);
+            $items = array_combine($productID,$purchaseQty);
             $pairs = array();
             
             $remarks="n/a";
@@ -120,10 +120,13 @@
                var element = document.getElementById("tableList");
                para.setAttribute("class", "trList");
                element.appendChild(para);
+               var e = document.getElementById("productChosen");
+               var productID = e.options[e.selectedIndex].value;
+               alert(productID);
                var productChosen = $("#productChosen").find(":selected").text();
                alert(productChosen);
 
-                $(".trList").append('<td>'+productChosen+'<input type="text" style=display:none readOnly name="productName[]" value="'+productChosen+'"</td>');
+                $(".trList").append('<td>'+productChosen+'<input type="number" style=display:none readOnly name="productID[]" value="'+productID+'"</td>');
                 $(".trList").append('<td><input type="number" min="0" name="orderQty[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="quantity"/></td>');
                 $(".trList").append('<td><input type="button" name="delete" class="ibtnDel btn btn-outline btn-danger"  value=Delete ></td>');
 
