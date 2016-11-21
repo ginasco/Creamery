@@ -130,10 +130,17 @@
 
                 $(".trList").append('<td>'+productChosen+'<input type="number" style=display:none readOnly name="productID[]" value="'+productID+'"</td>');
                 $(".trList").append('<td><input type="number" min="0" name="orderQty[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="quantity"/></td>');
-                $(".trList").append('<td><input type="button" name="delete" class="ibtnDel btn btn-outline btn-danger"  value=Delete ></td>');
+                $(".trList").append('<td><input type="button" name="delete" id="delete" class="ibtnDel btn btn-outline btn-danger"  value=Delete ></td>');
 
                 para.setAttribute("class", "trListSaved");
             });
+
+ $(document).on('click', "#delete", function(event){
+        $(this).closest("tr").remove();
+               
+            });
+
+
 </script>
 </body>
 </html>
