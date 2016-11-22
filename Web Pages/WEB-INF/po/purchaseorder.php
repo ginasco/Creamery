@@ -91,21 +91,33 @@
 
 <?php
         if (isset($_POST['confirm'])){
+          require_once('../../mysqlConnector/mysql_connect.php');
             $productID=$_POST['productID'];
             $purchaseQty=$_POST['orderQty'];
             $total=0;
+            $ordered=0;
             
             $items = array_combine($productID,$purchaseQty);
             $pairs = array();
             
             $remarks="n/a";
-            
+
+            $insertQuery="insert into purchase (username) values ('{$_SESSION['username']}')";
+            $resultInsert=mysqli_query($dbc,$insertQuery);
+
+             $getNumber="select poNumber from purchase order by poNumber DESC LIMIT 1";
+              $resultNumber=mysqli_query($dbc,$getNumber);
+              while($row=$resultNumber->fetch_assoc()) {
+                $poNumber=$row["poNumber"];
+              }
+              $poNumber;
+
             foreach($items as $key=>$value){
-                    $pairs[] = '('.intval($key).','.intval($value).','."'{$_SESSION['username']}'".','."'$total'".','."'$remarks'".')';
+                $pairs[] = '('.intval($key).','.intval($value).','."'$total'".','."'$remarks'".','."'$poNumber'".','."'$ordered'".')';
                 }
             
-            require_once('../../mysqlConnector/mysql_connect.php');
-            $query3= "INSERT INTO purchase (productID, purchaseQty, username, totalAmount, remarks) values".implode(',',$pairs);
+            
+            $query3= "INSERT INTO purchase2 (productID, purchaseQty, total, remark, poNumber, ordered ) values".implode(',',$pairs);
             $result3=mysqli_query($dbc,$query3);
             echo "<script>alert('success');</script>";
         }
