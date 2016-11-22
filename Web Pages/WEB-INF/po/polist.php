@@ -37,41 +37,49 @@ if ($_SESSION['usertype']!=102){
       My Purchase Orders
     </div>
     <div class="table-responsive">
-      <table ui-jq="dataTable" ui-options="{
-          sAjaxSource: 'api/datatable.json',
-          aoColumns: [
-            { mData: 'engine' },
-            { mData: 'browser' },
-            { mData: 'platform' },
-            { mData: 'version' },
-            { mData: 'grade' }
-          ]
-        }" class="table table-striped b-t b-b">
+      <table class="table table-striped b-t b-b">
         <thead>
           <tr>
             <th  style="width:20%">P.O Number</th>
             <th  style="width:25%">P.O Date</th>
-            <th  style="width:25%">Sales Period</th>
-            <th  style="width:15%">Status</th>
+            <th  style="width:15%">Total</th>
           </tr>
         </thead>
-        <tbody>
-              <tr>
-           <td> <a href="PO.php"><u>000002</u></a></td>
-            <td>1 November 2016</td>
-            <td>2 November - 10 November 2016</td>
-            <td><span class="label bg-warning">Unfulfilled</span></td>
-            </tr><tr>
-                  <td>000001</td>
-            <td>8 October 2016</td>
-            <td>5 October - 9 October 2016</td>
-            <td><span class="label bg-danger">Cancelled</span></td></tr>
+        <tbody > 
+              
+           <?php  
+            require_once('../../mysqlConnector/mysql_connect.php');
+
+            $query="Select poNumber, DATE(datePurchase) AS datePurchase From purchase where username ='{$_SESSION['username']}' order by poNumber desc";
+              $result=mysqli_query($dbc,$query);
+              while($row = $result->fetch_assoc()) {
+                $poNumber=$row["poNumber"];
+
+                
+
+                echo "<tbody><tr class='productRows'>
+                <td ><input type=button name=controlNum id=happy class=pN style=border:none;background:none value=".$poNumber."></td>
+                <td>".$row["datePurchase"]."<input type=hidden name=datePurchase value=".$row["datePurchase"]."></td>";
+                
+                $getTotal="select SUM(p.wholesalePrice* pu.purchaseQty) AS total from purchase2 pu join products p on pu.productID=p.productID where poNumber='{$poNumber}'";
+                $resultTotal=mysqli_query($dbc,$getTotal);
+                while($row = $resultTotal->fetch_assoc()) {
+                  $total = $row["total"];
+                }
+                    $total;
+                echo " <td>".$total."</td> 
+              </tr></tbody>";
+            }
+
+           ?>
         </tbody>
       </table>
     </div>
   </div>
 </div>
-
+<form id="form" action="PO.php" method="Post">
+            <input type="text" style="display:none" id="poNum" name="poNum" />
+          </form>
 
 
 	</div>
@@ -84,7 +92,17 @@ if ($_SESSION['usertype']!=102){
 
 </div>
 
+<script>
 
+  $(document).on('click', '#happy', function(e){
+    e.preventDefault();
+    var pN =  $(this).closest ('tr').find(".pN").val();
+    document.getElementById('poNum').setAttribute('value',pN);
+    $("#form").submit();
+
+  });
+
+</script>
 
 </body>
 </html>
