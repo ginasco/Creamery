@@ -77,7 +77,7 @@ if ($_SESSION['usertype']!=102){
 
                 require_once('../../mysqlConnector/mysql_connect.php');
                 $query="SELECT i.expiryDate, i.productID, i.inventoryQty, p.productName, p.sku from perpetualinventory i join products p
-                on i.productID=p.productID where i.active!=0 and i.pulloutStat=0";
+                on i.productID=p.productID where i.active!=0 and i.pulloutStat=0 and username ='{$_SESSION['username']}'";
                 $result=mysqli_query($dbc,$query);
                 while($row = $result->fetch_assoc()) {
 
