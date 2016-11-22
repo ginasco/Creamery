@@ -1,174 +1,170 @@
-
 <!DOCTYPE html>
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 <html lang="en" class="">
 <head>
   <meta charset="utf-8" />
   <title>Laguna Creamery Inc</title>
   <meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  
+  <link rel="stylesheet" href="../libs/assets/animate.css/animate.css" type="text/css" />
+  <link rel="stylesheet" href="../libs/assets/font-awesome/css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="../libs/assets/simple-line-icons/css/simple-line-icons.css" type="text/css" />
+  <link rel="stylesheet" href="../libs/jquery/bootstrap/dist/css/bootstrap.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/font.css" type="text/css" />
+  <link rel="stylesheet" href="css/app.css" type="text/css" />
 
 </head>
 <body>
-<div class="app app-header-fixed ">
-  
-
- <!-- nav -->
-<?php include '../session/levelOfAccess.php';?>
-<!-- / nav -->
-
-<?php
-if ($_SESSION['usertype']!=101){
-  header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."../../accounts/login.php");
-}
-?>
-<?php
-
-//$orderQty = $mysqli->real_escape_string($_POST['orderQty']);
-//$productID = $mysqli->real_escape_string($_POST['productID']);
-if (isset($_POST['submit'])){
-$message=NULL;
- if (empty($_POST['productID'])){
-  $productID=FALSE;
-  $message.='<p>You forgot to enter the Contact Number!';
- }else
-  $productID=$_POST['productID'];
-
- if (empty($_POST['orderQty'])){
-  $orderQty=FALSE;
-  $message.='<p>You forgot to enter the Email Address!';
- }else
-  $orderQty=$_POST['orderQty'];
+  <div class="app app-header-fixed ">
 
 
-require_once('../../mysqlConnector/mysql_connect.php');
-$query="INSERT INTO  productionorder (productID, orderQty) VALUES('{$productID}','{$orderQty}')";
+   <!-- nav -->
+   <?php include '../session/levelOfAccess.php';?>
+   
+   <!-- / nav -->
 
-$result=mysqli_query($dbc,$query);
-echo $result;
-$flag=1;
+   <?php
+   if ($_SESSION['usertype']!=101){
+    header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."../../accounts/login.php");
+  }
+  require_once('../../mysqlConnector/mysql_connect.php');
+                $query="select productID, productName, wholesalePrice, retailPrice, sku from products";
+                $result=mysqli_query($dbc,$query);
+  ?>
 
-
-}
-?>
   <!-- content -->
   <div id="content" class="app-content" role="main">
   	<div class="app-content-body ">
-	    
 
-<div class="bg-light lter b-b wrapper-md">
-  <h1 class="m-n font-thin h3">Create Production Order</h1>
+
+      <div class="bg-light lter b-b wrapper-md">
+        <h1 class="m-n font-thin h3">Production Order</h1>
+      </div>
+      <div class="wrapper-md">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Create Production Order
+          </div>
+          <div class="wrapper-md">
+
+           <b>Products to be Ordered
+           </b> <br>
+        <!--  <button type="submit" name="add" class="btn btn-default" id="add">Add Product</button><br> -->
+           <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+            <div class="table-responsive">
+              <table  class="table table-striped b-t b-b" id="myTable">
+                <thead>
+                  <tr>
+                    <th  style="width:25%">SKU</th>
+					  <th  style="width:25%">Product Name</th>
+                    <th  style="width:10%">Quantity</th>
+                   
+                  </tr>
+                </thead>
+                <tbody id="tableList">
+					<?php
+
+											$output = NULL;
+										
+	//connect to db
+
+												$mysqli= NEW MySQLi("localhost","holly","milk","devapps");
+	//get string value from search
+	//removes any special characters
+											
+
+	//query db
+//if not work use *
+													
+														$resultSet=$mysqli->query("SELECT sku, productName, SUM(purchaseQty) as purchaseQty FROM purchase pu JOIN products p ON pu.productID=p.productID WHERE ordered=0  GROUP BY sku;");
+
+
+														if($resultSet->num_rows>0){
+															while($rows=$resultSet->fetch_assoc()){
+
+																echo "</tbody><tr>
+																<td >".$rows['sku']."</td>
+																<td >".$rows['productName']."</td>
+																<td >".$rows['purchaseQty']."</td>
+															</tr></tbody>";
+														}
+		//if no data output 
+													}else{
+
+														echo"No results";
+													}
+
+										?>
+               </tbody>
+              </table>
+              <button type="submit" name="confirm" class="btn btn-success">Submit</button> 
+              
+              
+            </div>
+</form>
 </div>
-<div class="wrapper-md">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Laguna Creamery Production Order
-    </div>
-    <div class="wrapper-md">
-    
-     <b>Quantity of Production
-        </b> 
-
-    <div class="table-responsive">
-     
-	<INPUT type="button" value="Add Row" onclick="addRow('dataTable')" />
-
-	<INPUT type="button" value="Delete Row" onclick="deleteRow('dataTable')" />
-
-	<TABLE id="dataTable" width="350px" border="1">
-		<TR>
-			<TD><INPUT type="checkbox" name="chk" /></TD>
-			<TD><INPUT type="text" name="orderQty" value="<?php if (isset($_POST['orderQty']) && !$flag) echo $_POST['orderQty']; ?>"/> </textarea></TD>
-			<TD>
-				<SELECT name="productID">
-					<OPTION value=1>Milk</OPTION>
-					<OPTION value=2>Yogurt</OPTION>
-					<OPTION value=3>Chocolate Milk</OPTION>
-					<OPTION value=4>Kesong Puti</OPTION>
-					<OPTION value=5>Low Fat Milk</OPTION>
-				</SELECT>
-			</TD>
-		</TR>
-	</TABLE>
-
-          <button type="submit" name="submit" class="btn btn-success">Submit</button> 
-    </div>
-
-                  
 </div>
-  </div>
+</div>
+</div>
+</div>
 </div>
 
 
 
-	</div>
-  </div>
+
+
+<?php
+        if (isset($_POST['confirm'])){
+            $productID=$_POST['productID'];
+            $orderQty=$_POST['orderQty'];
+            $total=0;
+            
+            $items = array_combine($productID,$orderQty);
+            $pairs = array();
+            
+            $remarks="n/a";
+            
+            foreach($items as $key=>$value){
+                    $pairs[] = '('.intval($key).','.intval($value).','."'{$_SESSION['username']}'".','."'$total'".','."'$remarks'".')';
+                }
+            
+            require_once('../../mysqlConnector/mysql_connect.php');
+            $query3= "INSERT INTO purchase (productID, purchaseQty, username, totalAmount, remarks) values".implode(',',$pairs);
+            $result3=mysqli_query($dbc,$query3);
+            echo "<script>alert('success');</script>";
+        }
+        
+        ?>
   <!-- /content -->
   
-  
-
-
 
 </div>
 
+<script>
+ $(document).on('click', "#add", function(){
+               var para = document.createElement("tr");
+               var element = document.getElementById("tableList");
+               para.setAttribute("class", "trList");
+               element.appendChild(para);
+               var e = document.getElementById("productChosen");
+               var productID = e.options[e.selectedIndex].value;
+               
+               var productChosen = $("#productChosen").find(":selected").text();
 
 
+                $(".trList").append('<td>'+productChosen+'<input type="number" style=display:none readOnly name="productID[]" value="'+productID+'"</td>');
+                $(".trList").append('<td><input type="number" min="0" name="orderQty[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="quantity"/></td>');
+                $(".trList").append('<td><input type="button" name="delete" id="delete" class="ibtnDel btn btn-outline btn-danger"  value=Delete ></td>');
+
+                para.setAttribute("class", "trListSaved");
+            });
+
+ $(document).on('click', "#delete", function(event){
+        $(this).closest("tr").remove();
+               
+            });
+
+
+</script>
 </body>
-<SCRIPT language="javascript">
-		function addRow(tableID) {
-
-			var table = document.getElementById(tableID);
-
-			var rowCount = table.rows.length;
-			var row = table.insertRow(rowCount);
-
-			var colCount = table.rows[0].cells.length;
-
-			for(var i=0; i<colCount; i++) {
-
-				var newcell	= row.insertCell(i);
-
-				newcell.innerHTML = table.rows[0].cells[i].innerHTML;
-				//alert(newcell.childNodes);
-				switch(newcell.childNodes[0].type) {
-					case "text":
-							newcell.childNodes[0].value = "";
-							break;
-					case "checkbox":
-							newcell.childNodes[0].checked = false;
-							break;
-					case "select-one":
-							newcell.childNodes[0].selectedIndex = 0;
-							break;
-				}
-			}
-		}
-
-		function deleteRow(tableID) {
-			try {
-			var table = document.getElementById(tableID);
-			var rowCount = table.rows.length;
-
-			for(var i=0; i<rowCount; i++) {
-				var row = table.rows[i];
-				var chkbox = row.cells[0].childNodes[0];
-				if(null != chkbox && true == chkbox.checked) {
-					if(rowCount <= 1) {
-						alert("Cannot delete all the rows.");
-						break;
-					}
-					table.deleteRow(i);
-					rowCount--;
-					i--;
-				}
-
-
-			}
-			}catch(e) {
-				alert(e);
-			}
-		}
-
-	</SCRIPT>
 </html>
