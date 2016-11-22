@@ -86,6 +86,7 @@
 																<td >".$rows['sku']."</td>
 																<td >".$rows['productName']."</td>
 																<td >".$rows['purchaseQty']."</td>
+																<td><input type=text name=orderQty >
 															</tr></tbody>";
 														}
 		//if no data output 

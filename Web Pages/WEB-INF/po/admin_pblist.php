@@ -41,13 +41,13 @@ if ($_SESSION['usertype']!=101){
       <table  class="table table-striped b-t b-b">
         <thead>
           <tr>
-            <th  style="width:20%">P.B Number</th>
-            <th  style="width:25%">P.O Date</th>
+            <th  style="width:20%">Production Number</th>
+            <th  style="width:25%">Production Order Date</th>
             <th  style="width:15%">Status</th>
           </tr>
         </thead>
         <tbody>
-              <tr>
+            <!--  <tr>
            <td> <a href="prodorder.html"><u>10000</u></a></td>
             <td>1 November 2016</td>
             <td><span class="label bg-warning">In Production</span></td>
@@ -55,7 +55,63 @@ if ($_SESSION['usertype']!=101){
            <td> <a href="#"><u>9999</u></a></td>
             <td>1 October 2016</td>
             <td><span class="label bg-danger">Canceled</span></td>
-            </tr>
+            </tr> -->
+			<?php
+			$output = NULL;
+											
+	//connect to db
+
+												$mysqli= NEW MySQLi("localhost","holly","milk","devapps");
+	//get string value from search
+	//removes any special characters
+										
+
+	//query db
+//if not work use *
+												
+							$resultSet=$mysqli->query("SELECT * FROM productionorder;");
+
+														if($resultSet->num_rows>0){
+															
+															while($rows=$resultSet->fetch_assoc()){
+$status = $rows['ordered'];
+if($status ==0){
+$status="unprocessed";	
+}
+else{
+	$status="processed";
+}
+																echo "</tbody><tr>
+																<td ><a href=prodorder.html>".$rows['productionNo']."</td>
+																<td >".$rows['productionDate']."</td>
+																<td >".$rows['productionDate']."</td>
+																<td >$status</td>
+																
+															</tr></tbody>";
+														}
+														}
+														
+			?>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
         </tbody>
       </table>
     </div>
