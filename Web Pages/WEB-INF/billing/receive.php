@@ -6,7 +6,6 @@
   <title>Laguna Creamery Inc</title>
   <meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  
 
 </head>
 <body>
@@ -37,8 +36,42 @@ if ($_SESSION['usertype']!=102){
     <div class="panel-heading">
       Delivery Receipts
     </div>
+
+    <div class="wrapper-md bg-white-only b-b">
+            <div class="row text-center">
+              <div class="col-sm-3 col-xs-6" >
+                <div>Quantity of Receive Products <i class="fa fa-fw fa-caret-up text-success text-sm"></i></div>
+                <input class="h2 m-b-sm" style="border:none; text-align:center" readonly id="qtyReceive"/>
+              </div>
+
+              <div class="col-sm-3 col-xs-6">
+                <div>Receive SKUs <i class="fa fa-fw fa-caret-up text-success text-sm"></i></div>
+                <input class="h2 m-b-sm" style="border:none; text-align:center" readonly id="receiveSku"/>
+              </div>
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" >
+              <div>
+                Delivery Receipt Number : <select name="sel_name">
+            <?php
+                require_once('../../mysqlConnector/mysql_connect.php');
+                $query="
+                    SELECT distinct d.drNumber
+                    FROM delivery d 
+                    WHERE distributorName='{$_SESSION['username']}' and NOT exists
+                    (SELECT distinct * FROM received r
+                    WHERE r.drNumber = d.drNumber );";
+                $result=mysqli_query($dbc,$query);
+                while ($row = $result->fetch_assoc()) {
+                    echo "<option value=".$row["drNumber"].">".$row["drNumber"]."</option>";
+                }
+            ?>
+          </select>  <input class="btn btn-default" type="submit" name="submit" value="Search" />
+              </div>
+</form>
+            </div>
+          </div>
+
     <div class="table-responsive">
-      <table ui-jq="dataTable" ui-options="{
+      <table  ui-options="{
           sAjaxSource: 'api/datatable.json',
           aoColumns: [
             { mData: 'engine' },
@@ -50,24 +83,49 @@ if ($_SESSION['usertype']!=102){
         }" class="table table-striped b-t b-b">
         <thead>
           <tr>
-            <th  style="width:20%">Delivery Receipt Number</th>
-            <th  style="width:25%">P.O Number</th>
-            <th  style="width:25%">Delivery Date</th>
-            <th  style="width:15%">Status</th>
-       
+            <th  style="width:10%">SKU</th>
+            <th  style="width:20%">Product Name</th>
+            <th  style="width:12%;text-align:center;">Purchase Price</th>
+            <th  style="width:10%;text-align:center;">Retail Price</th>
+            <th  style="width:20%;text-align:center;">Delivery Qty</th>
+            <th  style="width:15%">Unit</th>
+            <th  style="width:15%">Expiration</th>
           </tr>
         </thead>
         <tbody>
-              <tr>
-           <td> <a href="deliveryreceipt.html"><u>00001</u></a></td>
-            <td>9399034</td>
-            <td>N/A</td>
-            <td><span class="label bg-warning">For Delivery</span></td>
-            <td><input type="checkbox" value=""></td>
-            </tr>
+              <?php  
+               if(isset($_POST['submit'])){
+
+        $drNumber=$_POST['sel_name'];
+        $query2=" select drNumber, p.productID, p.productName, p.sku, p.qtyUnit, p.retailPrice, p.wholesalePrice, d.quantityDR, d.expiryDate from delivery d join products p on d.productID= p.productID where d.drNumber='{$drNumber}' order by p.sku";
+        $result2=mysqli_query($dbc,$query2);
+        echo "<form action=receive.php method=post>";
+        while($row = $result2->fetch_assoc()) {
+            echo"
+   <tbody>
+  <tr class='productRows'>
+    <td>".$row["sku"]."</td>
+    <td>".$row["productName"]."<input type=hidden name='drNumber' value=".$row["drNumber"]."></td> 
+    <td align='right'>".$row["wholesalePrice"]."</td>
+    <td align='right'>".$row["retailPrice"]."</td>
+    <td><input type=number style='text-align:right;' required onkeypress='return event.charCode >= 48 && event.charCode <= 57' min=0 name='qtyRec[]' class='receiveQty' value=".$row["quantityDR"]."></td>
+    <td>".$row["qtyUnit"]." <input type=hidden name='productID[]' value=".$row["productID"]."></td>
+    <td>".$row["expiryDate"]."<input type=hidden name='expiryDate' value=".$row["expiryDate"]."></td>
+  </tr>
+ </tbody>";
+        }
+
+        
+    }
+              ?>
         </tbody>
       </table>
-
+      <br>
+<?php  
+echo "<div><button class='btn btn-success' type=submit id=confirmR name=confirmR value=Confirm />Confirm Receive</button></div>";
+        echo "</form>";
+?>
+<br>
     </div>
   </div>
 </div>
@@ -78,13 +136,71 @@ if ($_SESSION['usertype']!=102){
   </div>
   <!-- /content -->
   
- 
+ <?php  
+ if(isset($_POST['confirmR'])){
+                
+                $drNumber=$_POST['drNumber'];
+                $qtyRec=$_POST['qtyRec'];
+                $productID=$_POST['productID'];
+                $expiryDate=$_POST['expiryDate'];
+                
+                $items= array_combine($productID,$qtyRec);
+                $pairs = array();
+                
+                foreach($items as $key=>$value){
+                    $pairs[] = '('.intval($key).','.intval($value).','.$drNumber.','."'{$_SESSION['username']}'".')';
+                }
+                //add to received table
+                $query="INSERT INTO received (productID, quantityRC, drNumber, receivedBy) values".implode(',',$pairs);
+                $result=mysqli_query($dbc,$query);
+    
+                //add to inventory
+                    
+                    //not yet exist inventory
+                $searchNotExist="select r.productID, r.quantityRC, r.dateReceived
+                                from received r 
+                                where drNumber='{$drNumber}'";
+                $nExist=mysqli_query($dbc,$searchNotExist);
+                while($row = $nExist->fetch_assoc()) {
+                    $insertIntoData="insert into perpetualinventory (productID, inventoryQty, dateInstance, username, expiryDate, active, pulloutStat) values ('{$row["productID"]}','{$row["quantityRC"]}','{$row["dateReceived"]}','{$_SESSION['username']}','{$expiryDate}','1','0')";
+                    $insertResult=mysqli_query($dbc,$insertIntoData);
+                }
+                
+                
+                echo "<script>alert('success');</script>";
+                        
+            }
+
+ ?>
 
 
 
 </div>
 
+<script>
+var rowCount = 0;
+var quantityCount=0;
+  $('.productRows').each(function(){
+    rowCount++;
 
+ });
+
+  $('.receiveQty').each(function(){
+    quantityCount += parseFloat(this.value);
+
+ });
+
+if(rowCount==0){
+  $("#confirmR").prop('disabled', true); 
+}
+
+ var x = document.getElementById("qtyReceive");
+ x.setAttribute("value", quantityCount);
+
+ var y = document.getElementById("receiveSku");
+ y.setAttribute("value", rowCount);
+
+</script>
 
 </body>
 </html>
