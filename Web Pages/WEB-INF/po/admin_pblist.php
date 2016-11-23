@@ -69,7 +69,7 @@ if ($_SESSION['usertype']!=101){
 	//query db
 //if not work use *
 												
-							$resultSet=$mysqli->query("SELECT * FROM productionorder;");
+							$resultSet=$mysqli->query("SELECT * FROM productionorder ORDER BY productionNo, productionDate;");
 
 														if($resultSet->num_rows>0){
 															
@@ -84,7 +84,7 @@ else{
 																echo "</tbody><tr>
 																<td ><a href=prodorder.html>".$rows['productionNo']."</td>
 																<td >".$rows['productionDate']."</td>
-																<td >".$rows['productionDate']."</td>
+															
 																<td >$status</td>
 																
 															</tr></tbody>";
