@@ -59,19 +59,44 @@ if ($_SESSION['usertype']!=101){
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>51</td>
-        <TD>CHMK500</TD>
-          <td>500ml Chocolate Milk</td>
-   
-        </tr>
-        <tr>
-          <td>5</td>
-            <TD>QSPT200</TD>
-          <td>500G Quesong Puti</td>
-     
       
-        </tr>
+     	<?php
+			$output = NULL;
+											
+	//connect to db
+
+												$mysqli= NEW MySQLi("localhost","holly","milk","devapps");
+	//get string value from search
+	//removes any special characters
+										
+
+	//query db
+//if not work use *
+												
+							$resultSet=$mysqli->query("SELECT * FROM productionorder po JOIN products p ON p.productID=po.productID WHERE Date(productionDate) LIKE '2016-07-15'");
+
+														if($resultSet->num_rows>0){
+															
+															while($rows=$resultSet->fetch_assoc()){
+$status = $rows['ordered'];
+if($status ==0){
+$status="unprocessed";	
+}
+else{
+	$status="processed";
+}
+																echo "</tbody><tr>
+																<td ><a href=prodorder.php>".$rows['orderQty']."</td>
+																<td >".$rows['sku']."</td>
+																<td >".$rows['productName']."</td>
+															
+																
+															</tr></tbody>";
+														}
+														}
+														
+			?>
+			
         
       </tbody>
     </table> 
