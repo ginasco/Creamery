@@ -82,7 +82,7 @@ else{
 	$status="processed";
 }
 																echo "</tbody><tr>
-																<td ><a href=prodorder.html>".$rows['productionNo']."</td>
+																<td ><a href=prodorder.php>".$rows['productionNo']."</td>
 																<td >".$rows['productionDate']."</td>
 															
 																<td >$status</td>

@@ -36,7 +36,7 @@ if ($_SESSION['usertype']!=101){
 </div>
 <div class="wrapper-md">
     <p class="m-t m-b">P.B Date: <strong>1 November 2016</strong><br>
-         For Sales Period: <strong>2 November 2016 - 10 November 2016</strong><br>
+        
         P.B ID: <strong>PB-1000</strong><br>
     Status: <span class="label bg-warning">In Production</span>
     </p>
