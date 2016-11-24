@@ -18,7 +18,7 @@
 		?>
 
 		<?php
-		if ($_SESSION['usertype']!=102){
+		if ($_SESSION['usertype']!=101){
 			header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/login.php");
 		} ?>
 
@@ -46,7 +46,9 @@
 											</div>
 										</div>
 										<div class="col-sm-4 form-group" align="right">
-
+<div  align="right">
+											<p>Search by username: <input type="text" name="search3">
+										</div>
 												<input type="SUBMIT" name="submit" value="search"/></p>
 												
 											</div>
@@ -85,19 +87,19 @@
 
 												if(isset($_POST['submit'])){
 	//connect to db
-	//if(empty($search3)){
+	if(empty($search3)){
 													$mysqli= NEW MySQLi("localhost","holly","milk","devapps");
 	//get string value from search
 	//removes any special characters
 													$search = $mysqli->real_escape_string($_POST['search']);
 													$search2 = $mysqli->real_escape_string($_POST['search2']);
-												//	$search3 = $mysqli->real_escape_string($_POST['search3']);
+													$search3 = $mysqli->real_escape_string($_POST['search3']);
 	//query db
 													//if($search3==0){
 
 														$resultSet=$mysqli->query("SELECT po.datePurchase, po.poNumber, p.productName, po.purchaseQty, p.wholesalePrice, (wholesalePrice* purchaseQty) 
 AS total FROM purchase po JOIN products p  ON p.productId=po.productId 
-WHERE po.username='{$_SESSION['username']}' and datePurchase BETWEEN '$search2' AND '$search' ORDER BY po.datePurchase,po.poNumber ;");
+WHERE datePurchase BETWEEN '$search2' AND '$search' ORDER BY po.datePurchase,po.poNumber ;");
 	//check if there are any info gathered from db
 														if($resultSet->num_rows>0){
 															while($rows=$resultSet->fetch_assoc()){
@@ -120,8 +122,38 @@ WHERE po.username='{$_SESSION['username']}' and datePurchase BETWEEN '$search2' 
 
 
 												}
+												else{$resultSet=$mysqli->query("SELECT po.datePurchase, po.poNumber, p.productName, po.purchaseQty, p.wholesalePrice, (wholesalePrice* purchaseQty) 
+AS total FROM purchase po JOIN products p  ON p.productId=po.productId 
+WHERE po.username='$search3' and datePurchase BETWEEN '$search2' AND '$search' ORDER BY po.datePurchase,po.poNumber ;");
+														//put here the session
+
+	//check if there are any info gathered from db
+													if($resultSet->num_rows>0){
+														while($rows=$resultSet->fetch_assoc()){
+
+															echo "<tbody><tr>
+															<td >".$rows['dateSR']."</td>
+															<td >".$rows['username']."</td>
+															<td >".$rows['sku']."</td>
+															<td >".$rows['productName']."</td>
+															<td >".$rows['qtySR']."<input type=hidden class='qtySR' name='qtySR' value=".$rows["qtySR"]."></td>
+															<td >".$rows['qtyUnit']."</td>
+															<td >".$rows['retailPrice']."</td>
+															<td >".$rows['total']."<input type=hidden class='total' name='total' value=".$rows["total"]."></td>
+
+														</tr></tbody>";
+													}
+		//if no data output 
+												}else{
+
+													echo"No results";
+												}
 											
-										
+											
+											
+											
+												}
+										}
 										?>
 										
 										<p></p>
