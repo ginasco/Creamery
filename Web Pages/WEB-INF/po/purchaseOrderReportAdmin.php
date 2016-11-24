@@ -46,11 +46,9 @@
 											</div>
 										</div>
 										<div class="col-sm-4 form-group" align="right">
-<div  align="right">
-											<p>Search by username: <input type="text" name="search3">
+	<div  align="right">
+											<p>Search by username: <input type="text" name="search3"><input type="submit" name="submit" value="search"></p>
 										</div>
-												<input type="SUBMIT" name="submit" value="search"/></p>
-												
 											</div>
 										</form>
 										<div class="wrapper-md bg-white-only b-b">
@@ -87,7 +85,7 @@
 
 												if(isset($_POST['submit'])){
 	//connect to db
-	if(empty($search3)){
+			
 													$mysqli= NEW MySQLi("localhost","holly","milk","devapps");
 	//get string value from search
 	//removes any special characters
@@ -95,7 +93,7 @@
 													$search2 = $mysqli->real_escape_string($_POST['search2']);
 													$search3 = $mysqli->real_escape_string($_POST['search3']);
 	//query db
-													//if($search3==0){
+														if(empty($search3)){
 
 														$resultSet=$mysqli->query("SELECT po.datePurchase, po.poNumber, p.productName, po.purchaseQty, p.wholesalePrice, (wholesalePrice* purchaseQty) 
 AS total FROM purchase po JOIN products p  ON p.productId=po.productId 
@@ -132,14 +130,13 @@ WHERE po.username='$search3' and datePurchase BETWEEN '$search2' AND '$search' O
 														while($rows=$resultSet->fetch_assoc()){
 
 															echo "<tbody><tr>
-															<td >".$rows['dateSR']."</td>
-															<td >".$rows['username']."</td>
-															<td >".$rows['sku']."</td>
-															<td >".$rows['productName']."</td>
-															<td >".$rows['qtySR']."<input type=hidden class='qtySR' name='qtySR' value=".$rows["qtySR"]."></td>
-															<td >".$rows['qtyUnit']."</td>
-															<td >".$rows['retailPrice']."</td>
-															<td >".$rows['total']."<input type=hidden class='total' name='total' value=".$rows["total"]."></td>
+																<td >".$rows['datePurchase']."</td>
+																<td >".$rows['poNumber']."</td>
+																<td >".$rows['productName']."</td>
+																<td >".$rows['purchaseQty']."<input type=hidden class='qtySR' name='qtySR' value=".$rows["purchaseQty"]."></td>
+																
+																<td >".$rows['wholesalePrice']."</td>
+																<td >".$rows['total']."<input type=hidden class='total' name='total' value=".$rows["total"]."></td>
 
 														</tr></tbody>";
 													}

@@ -237,9 +237,7 @@
                   <a href="../po/admin_polist.php">
                     <span>Purchase Orders</span>
                   </a>
-				  <a href="../po/purchaseOrderReportAdmin.php">
-                    <span>Purchase Order Report</span>
-                  </a>
+				
                 </li>
                 <li>
                   <a href="../reports/spoilage_list.php">
@@ -321,6 +319,9 @@
                   </a>
                 </li>
                 <li>
+				  <a href="../po/purchaseOrderReportAdmin.php">
+                    <span>Purchase Order Report</span>
+                  </a>
                 </li>      
               </ul>
             </li>
