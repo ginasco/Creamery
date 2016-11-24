@@ -1,5 +1,6 @@
 
 <!DOCTYPE html>
+<form action="prodorder.php" method="post">
 <html lang="en" class="">
 <head>
   <meta charset="utf-8" />
@@ -68,7 +69,7 @@ if ($_SESSION['usertype']!=101){
 
 	//query db
 //if not work use *
-												
+				$phone =0;								
 							$resultSet=$mysqli->query("SELECT * FROM productionorder ORDER BY productionNo, productionDate;");
 
 														if($resultSet->num_rows>0){
@@ -81,10 +82,13 @@ $status="unprocessed";
 else{
 	$status="processed";
 }
+$_SESSION['productionNo'] = $rows['productionNo'];
+
 																echo "</tbody><tr>
-																<td ><a href=prodorder.php>".$rows['productionNo']."</td>
+																<td ><a href=prodorder.php name=productionNo '>".$rows['productionNo']."</td>
+																
 																<td >".$rows['productionDate']."</td>
-															
+	
 																<td >$status</td>
 																
 															</tr></tbody>";

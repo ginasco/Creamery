@@ -280,10 +280,14 @@
                     <span>Create Purchase Order</span>
                   </a>
                   <a href="../po/polist.php">
-                    <span>My Purcahse Orders</span>
+                    <span>My Purchase Orders</span>
                   </a>
+				 
                 </li>
                 <li>
+				  <a href="../po/purchaseOrderReport.php">
+                    <span>Purchase Order Report</span>
+                  </a>
                 </li>      
               </ul>
             </li>
