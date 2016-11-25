@@ -131,7 +131,7 @@ if ($_SESSION['usertype']!=101){
         </div>
                           
         <div class="modal-footer">
-            <input type="submit" class="btn btn-sm btn-primary" name="submit" value="Save" id="submit" />
+            <a onclick="return confirm('Are you sure?')"><input type="submit" class="btn btn-sm btn-primary" name="submit" value="Save" id="submit" /></a>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
     </form>
