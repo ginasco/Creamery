@@ -102,7 +102,7 @@
             
             $remarks="n/a";
 
-            $insertQuery="insert into purchase (username) values ('{$_SESSION['username']}')";
+            $insertQuery="insert into purchase (username, ordered) values ('{$_SESSION['username']}',0)";
             $resultInsert=mysqli_query($dbc,$insertQuery);
 
              $getNumber="select poNumber from purchase order by poNumber DESC LIMIT 1";
@@ -113,11 +113,11 @@
               $poNumber;
 
             foreach($items as $key=>$value){
-                $pairs[] = '('.intval($key).','.intval($value).','."'$total'".','."'$remarks'".','."'$poNumber'".','."'$ordered'".')';
+                $pairs[] = '('.intval($key).','.intval($value).','."'$total'".','."'$remarks'".','."'$poNumber'".')';
                 }
             
             
-            $query3= "INSERT INTO purchase2 (productID, purchaseQty, total, remark, poNumber, ordered ) values".implode(',',$pairs);
+            $query3= "INSERT INTO purchase2 (productID, purchaseQty, total, remark, poNumber) values".implode(',',$pairs);
             $result3=mysqli_query($dbc,$query3);
             echo "<script>alert('success');</script>";
         }
