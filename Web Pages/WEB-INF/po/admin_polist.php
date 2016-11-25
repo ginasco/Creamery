@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="app app-header-fixed ">
-    
+
 
    <!-- nav -->
    <?php include '../session/levelOfAccess.php';?>
@@ -17,59 +17,82 @@
    <!-- / nav -->
 
    <?php
-if ($_SESSION['usertype']!=101){
-  header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."../../accounts/login.php");
-}
-?>
+   if ($_SESSION['usertype']!=101){
+    header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."../../accounts/login.php");
+  }
+  ?>
 
 
-   <!-- content -->
-   <div id="content" class="app-content" role="main">
-     <div class="app-content-body ">
-       
+  <!-- content -->
+  <div id="content" class="app-content" role="main">
+   <div class="app-content-body ">
 
-      <div class="bg-light lter b-b wrapper-md">
-        <h1 class="m-n font-thin h3">Admin Purchase Order List</h1>
-      </div>
-      <div class="wrapper-md">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            Dealer Purchase Orders
-          </div>
-          <div class="table-responsive">
-            <table  class="table table-striped b-t b-b">
-              <thead>
-                <tr>
-                  <th  style="width:20%">P.O Number</th>
-                  <th  style="width:25%">P.O Date</th>
-                  <th  style="width:25%">Dealer Name</th>
-                  <th  style="width:25%">Production Batch</th>
-                  <th  style="width:15%">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                 <td> <a href="adminPO.php"><u>000002</u></a></td>
-                 <td>1 November 2016</td>
-                 <td>Marcus Ko</td>
-                 <td>PB-1000</td>
-                 <td><span class="label bg-warning">Unfulfilled</span></td>
-               </tr><tr>
-               <td> <a href="adminPO.php"><u>000001</u></a></td>
-               <td>8 October 2016</td>
-               <td>Marcus Ko</td>
-               <td>N/A</td>
-               <td><span class="label bg-danger">Cancelled</span></td>
-             </tr>
-           </tbody>
-         </table>
-       </div>
+
+    <div class="bg-light lter b-b wrapper-md">
+      <h1 class="m-n font-thin h3">Admin Purchase Order List</h1>
+    </div>
+    <div class="wrapper-md">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Dealer Purchase Orders
+        </div>
+        <div class="table-responsive">
+          <table  class="table table-striped b-t b-b">
+            <thead>
+              <tr>
+                <th  style="width:20%">P.O Number</th>
+                <th  style="width:25%">P.O Date</th>
+                <th  style="width:25%">Dealer Name</th>
+                <th  style="width:15%">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php  
+              require_once('../../mysqlConnector/mysql_connect.php');
+
+              $query="Select p.poNumber, DATE(p.datePurchase) AS datePurchase, u.userID, p.ordered  From purchase p JOIN users u ON p.username=u.username order by poNumber desc";
+              $result=mysqli_query($dbc,$query);
+              while($row = $result->fetch_assoc()) {
+                
+                $poNumber=$row["poNumber"];
+                $userID=$row["userID"];
+
+                echo "<tr class='productRows'>
+                <td ><input type=button name=controlNum id=happy class=pN style=border:none;background:none value=".$poNumber."></td>
+                <td>".$row["datePurchase"]."<input type=hidden name=datePurchase value=".$row["datePurchase"]."></td>";
+
+                $query1="SELECT concat(i.fName,' ',i.lName) as distributorName from usersinfo i where userID= '{$userID}'";
+                $result1=mysqli_query($dbc,$query1);
+                while($row = $result1->fetch_assoc()) {
+                  echo "<td>".$row["distributorName"]."</td>";
+                }
+
+
+                
+                if($row["ordered"]==0){
+                    echo " <td><span class='label bg-danger'>Unprocess</span></td> 
+                </tr>";
+                  }else if ($row["ordered"]==1){
+                    echo " <td><<span class='label bg-warning'>processed</span></td> 
+                </tr>";
+                  }
+                
+            }
+
+            ?>
+
+         </tbody>
+       </table>
+       <form id="form" action="adminPO.php" method="GET">
+            <input type="text" style="display:none" id="poNum" name="poNum" />
+          </form>
      </div>
    </div>
-
-
-
  </div>
+
+
+
+</div>
 </div>
 <!-- /content -->
 
@@ -78,7 +101,17 @@ if ($_SESSION['usertype']!=101){
 
 
 </div>
+<script>
 
+  $(document).on('click', '#happy', function(e){
+    e.preventDefault();
+    var pN =  $(this).closest ('tr').find(".pN").val();
+    document.getElementById('poNum').setAttribute('value',pN);
+    $("#form").submit();
+
+  });
+
+</script>
 
 
 </body>
