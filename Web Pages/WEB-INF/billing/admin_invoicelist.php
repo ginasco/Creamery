@@ -51,11 +51,27 @@ if ($_SESSION['usertype']!=101){
           <tr>
             <th  style="width:20%">Invoice Number</th>
             <th  style="width:25%">Invoice Date</th>
-            <th  style="width:25%">Sales Period</th>
+            <th  style="width:25%">Dealer Name</th>
             <th  style="width:15%">Status</th>
           </tr>
         </thead>
         <tbody>
+        <?php
+
+              require_once('../../mysqlConnector/mysql_connect.php');
+              $query="Select distinct controlNum, concat(i.fName,' ',i.lName) as distributorName, DATE(pullOutDate) AS pullOutDate From pullouts p join users u on p.distributorName=u.username join usersinfo i on u.userID=i.userID order by controlNum desc;";
+              $result=mysqli_query($dbc,$query);
+              while($row = $result->fetch_assoc()) {
+                $conNum=$row["controlNum"];
+                echo "<tbody><tr class='productRows'>
+                <td ><input type=button name=controlNum id=happy class=cN style=border:none;background:none value=".$conNum."></td>
+                <td>".$row["distributorName"]."<input type=hidden name=distributorName value=".$row["distributorName"]."></td>
+                <td>".$row["pullOutDate"]."<input type=hidden name=pullOutDate value=".$row["pullOutDate"]."></td>
+                <td></td> 
+              </tr></tbody>";
+            }
+
+            ?>
               <tr>
            <td> <a href="admin_invoice.php"><u>9399034</u></a></td>
             <td>20 OCT 2016</td>
