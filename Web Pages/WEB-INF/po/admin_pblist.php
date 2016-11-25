@@ -96,7 +96,7 @@ else{
 			?>
         </tbody>
       </table>
-	     <form id="form" action="prodorder.php" method="Post">
+	     <form id="form" action="prodorder.php" method="GET">
             <input type="text" style="display:none" id="conNum" name="conNum" />
           </form>
     </div>

@@ -21,13 +21,10 @@
    <?php
 if ($_SESSION['usertype']!=101){
   header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."../../accounts/login.php");
-  $conNum= $_POST['conNum'];
+  $conNum= $_GET['conNum'];
 }
 ?>
-<?php
-$productionNo = $_SESSION['productionNo'];
-echo $productionNo;
- ?>
+
 
 
 
@@ -38,12 +35,12 @@ echo $productionNo;
 
 <div class="bg-light lter b-b wrapper-md hidden-print">
   <a href class="btn btn-sm btn-info pull-right" onClick="window.print();">Print</a>
-  <h1 class="m-n font-thin h3">Production Orders / <?php echo $_POST['conNum'];?></h1>
+  <h1 class="m-n font-thin h3">Production Orders / <?php echo $_GET['conNum'];?></h1>
 </div>
 <div class="wrapper-md">
     <p class="m-t m-b">P.B Date: <strong>1 November 2016</strong><br>
         
-        P.B ID: <strong><?php echo $_POST['conNum'];?></strong><br>
+        P.B ID: <strong><?php echo $_GET['conNum'];?></strong><br>
     Status: <span class="label bg-warning">In Production</span>
     </p>
   <div>
