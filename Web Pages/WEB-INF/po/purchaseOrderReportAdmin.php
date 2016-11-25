@@ -78,6 +78,7 @@
 													
 														<th  style="width:10%">Wholesale Price</th>
 														<th  style="width:10%">Total</th>
+														<th  style="width:10%">Status</th>
 													</tr>
 												</thead>
 
@@ -95,13 +96,19 @@
 	//query db
 														if(empty($search3)){
 
-														$resultSet=$mysqli->query("SELECT po.datePurchase, po.poNumber, p.productName, po.purchaseQty, p.wholesalePrice, (wholesalePrice* purchaseQty) 
-AS total FROM purchase po JOIN products p  ON p.productId=po.productId 
-WHERE datePurchase BETWEEN '$search2' AND '$search' ORDER BY po.datePurchase,po.poNumber ;");
+														$resultSet=$mysqli->query("SELECT po.datePurchase, po.poNumber, p.productName, po2.purchaseQty, po.ordered, p.wholesalePrice, (wholesalePrice* purchaseQty) 
+AS total FROM purchase po JOIN purchase2 po2 ON po2.poNumber=po.poNumber JOIN products p  ON p.productId=po2.productId
+WHERE  datePurchase BETWEEN '$search2' AND '$search' ORDER BY po.datePurchase,po.poNumber;");
 	//check if there are any info gathered from db
 														if($resultSet->num_rows>0){
 															while($rows=$resultSet->fetch_assoc()){
-
+															$status = $rows['ordered'];
+if($status ==0){
+$status="unprocessed";	
+}
+else{
+	$status="processed";
+}
 																echo "<tbody><tr>
 																<td >".$rows['datePurchase']."</td>
 																<td >".$rows['poNumber']."</td>
@@ -110,6 +117,7 @@ WHERE datePurchase BETWEEN '$search2' AND '$search' ORDER BY po.datePurchase,po.
 																
 																<td >".$rows['wholesalePrice']."</td>
 																<td >".$rows['total']."<input type=hidden class='total' name='total' value=".$rows["total"]."></td>
+																 <td><input type=hidden name=status> $status</td>
 															</tr></tbody>";
 														}
 		//if no data output 
@@ -120,14 +128,21 @@ WHERE datePurchase BETWEEN '$search2' AND '$search' ORDER BY po.datePurchase,po.
 
 
 												}
-												else{$resultSet=$mysqli->query("SELECT po.datePurchase, po.poNumber, p.productName, po.purchaseQty, p.wholesalePrice, (wholesalePrice* purchaseQty) 
-AS total FROM purchase po JOIN products p  ON p.productId=po.productId 
-WHERE po.username='$search3' and datePurchase BETWEEN '$search2' AND '$search' ORDER BY po.datePurchase,po.poNumber ;");
+												else{$resultSet=$mysqli->query("SELECT po.datePurchase, po.poNumber, p.productName, po2.purchaseQty, po.ordered, p.wholesalePrice, (wholesalePrice* purchaseQty) 
+AS total FROM purchase po JOIN purchase2 po2 ON po2.poNumber=po.poNumber JOIN products p  ON p.productId=po2.productId
+WHERE username='$search3' and datePurchase BETWEEN '$search2' AND '$search' ORDER BY po.datePurchase,po.poNumber;");
 														//put here the session
 
 	//check if there are any info gathered from db
 													if($resultSet->num_rows>0){
 														while($rows=$resultSet->fetch_assoc()){
+															$status = $rows['ordered'];
+if($status ==0){
+$status="unprocessed";	
+}
+else{
+	$status="processed";
+}
 
 															echo "<tbody><tr>
 																<td >".$rows['datePurchase']."</td>
@@ -137,7 +152,7 @@ WHERE po.username='$search3' and datePurchase BETWEEN '$search2' AND '$search' O
 																
 																<td >".$rows['wholesalePrice']."</td>
 																<td >".$rows['total']."<input type=hidden class='total' name='total' value=".$rows["total"]."></td>
-
+															 <td><input type=hidden name=status> $status</td>
 														</tr></tbody>";
 													}
 		//if no data output 
@@ -148,9 +163,9 @@ WHERE po.username='$search3' and datePurchase BETWEEN '$search2' AND '$search' O
 											
 											
 											
-											
+													}
 												}
-										}
+										
 										?>
 										
 										<p></p>
