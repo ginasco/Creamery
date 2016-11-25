@@ -50,7 +50,7 @@
            <b>Products to be Ordered
            </b> <br>
         <!--  <button type="submit" name="add" class="btn btn-default" id="add">Add Product</button><br> -->
-           <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+           <form action="productionorder.php" method="post">
             <div class="table-responsive">
               <table  class="table table-striped b-t b-b" id="myTable">
                 <thead>
@@ -58,6 +58,7 @@
                     <th  style="width:25%">SKU</th>
 					  <th  style="width:25%">Product Name</th>
                     <th  style="width:10%">Quantity</th>
+					  <th  style="width:10%">Produce</th>
                    
                   </tr>
                 </thead>
@@ -75,19 +76,28 @@
 
 	//query db
 //if not work use *
-$resultSet=$mysqli->query("SELECT sku, productName, SUM(pu2.purchaseQty) as purchaseQty FROM purchase pu JOIN purchase2 pu2
+$resultSet=$mysqli->query("SELECT sku, productName, SUM(pu2.purchaseQty) as purchaseQty,pu2.productID, pu.poNumber FROM purchase pu JOIN purchase2 pu2
 ON pu.poNumber=pu2.poNumber JOIN
- products p ON p.productID=pu2.productID WHERE ordered=0  GROUP BY sku;");
+ products p ON p.productID=pu2.productID WHERE ordered=0  GROUP BY productID;");
+ 
+$resultSet2=$mysqli->query("SELECT DISTINCT pu.poNumber FROM purchase pu JOIN purchase2 pu2
+ON pu.poNumber=pu2.poNumber JOIN
+ products p ON p.productID=pu2.productID WHERE ordered=0 ;");
+ While($row=$resultSet2->fetch_assoc()){
+	 echo "
+<input type=hidden name='poNumber[]' value=".$row['poNumber'].">";
+															
+ }
 
 
 														if($resultSet->num_rows>0){
 															while($rows=$resultSet->fetch_assoc()){
 
 																echo "</tbody><tr>
-																<td >".$rows['sku']."</td>
+															<td >".$rows['sku']."<input type=hidden name='productID[]' value=".$rows['productID']."></td>
 																<td >".$rows['productName']."</td>
 																<td >".$rows['purchaseQty']."</td>
-																<td><input type=text name=orderQty >
+																<td><input type=number min=0 name='orderQty[]' onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder=quantity>
 															</tr></tbody>";
 														}
 		//if no data output 
@@ -119,21 +129,45 @@ ON pu.poNumber=pu2.poNumber JOIN
         if (isset($_POST['confirm'])){
             $productID=$_POST['productID'];
             $orderQty=$_POST['orderQty'];
-            $total=0;
-            
+			$poNumber=$_POST['poNumber'];
+			
+
+            echo "<script>alert('1');</script>";
             $items = array_combine($productID,$orderQty);
             $pairs = array();
             
-            $remarks="n/a";
-            
+  
+            $query4="INSERT INTO productionorder (produced,username) VALUES ('1','{$_SESSION['username']}');";
+
+		
+			//$result4=mysql_query($dbc,$query4);
+			$result4 = mysqli_query($dbc,$query4);
+			
+			$query5="UPDATE purchase SET ordered=1 WHERE poNumber IN('".implode(poNumber,"','")."')";
+		
+			print_r($poNumber);
+			
+			$result5=mysqli_query($dbc,$query5);
+			
+			
+			$query6="SELECT productionNo FROM productionorder ORDER BY productionNo DESC limit 1";
+			$result6=mysqli_query($dbc,$query6);
+			
+			while($row=$result6->fetch_assoc()){
+				$productionNo = $row["productionNo"];
+				
+			}
+			
+			$productionNo;
+			
             foreach($items as $key=>$value){
-                    $pairs[] = '('.intval($key).','.intval($value).','."'{$_SESSION['username']}'".','."'$total'".','."'$remarks'".')';
+                    $pairs[] = '('.intval($key).','.intval($value).','."'$productionNo'".')';
                 }
             
-            require_once('../../mysqlConnector/mysql_connect.php');
-            $query3= "INSERT INTO purchase (productID, purchaseQty, username, totalAmount, remarks) values".implode(',',$pairs);
+           
+            $query3= "INSERT INTO productionorder2 (productID, qty, productionNo) values".implode(',',$pairs);
             $result3=mysqli_query($dbc,$query3);
-            echo "<script>alert('success');</script>";
+             echo "<script>alert('success');</script>";
         }
         
         ?>

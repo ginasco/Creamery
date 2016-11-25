@@ -279,6 +279,8 @@
                   <a href="../po/purchaseorder.php">
                     <span>Create Purchase Order</span>
                   </a>
+				  </li>
+				  <li>
                   <a href="../po/polist.php">
                     <span>My Purchase Orders</span>
                   </a>

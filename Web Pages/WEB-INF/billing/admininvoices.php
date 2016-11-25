@@ -73,13 +73,14 @@
 										<table  class="table table-striped b-t b-b">
 											<thead>
 												<tr>
-													<th  style="width:20%">Invoice Date</th>
+													<th  style="width:10%">Invoice Date</th>
 													<th  style="width:10%">Invoice Number</th>
 													<th  style="width:10%">Dealer Name</th>
 													<th  style="width:10%">Product Name</th>
 													<th  style="width:10%">Quantity</th>
 													
 													<th  style="width:10%">Unit</th>
+														<th  style="width:10%">Status</th>
 													<th  style="width:10%;text-align:right">Wholesale Price</th>
 													<th  style="width:10%;text-align:right">Total</th>
 												</tr>
@@ -101,13 +102,19 @@
 	//query db
 //if not work use *
 													if(empty($search3)){
-														$resultSet=$mysqli->query("SELECT i2.invoiceNo,i.invoiceDate, username,p.qtyUnit, wholesalePrice ,productName, i2.qty, (qty*wholesalePrice) AS total FROM invoice i JOIN invoice2 i2 
-														ON i.invoiceNo = i2.invoiceNo JOIN products p  ON i2.productID=p.productID WHERE status=1;");
+														$resultSet=$mysqli->query("SELECT i2.invoiceNo,i.status,date(i.invoiceDate) as invoiceDate, username,p.qtyUnit, wholesalePrice ,productName, i2.qty, (qty*wholesalePrice) AS total FROM invoice i JOIN invoice2 i2 
+														ON i.invoiceNo = i2.invoiceNo JOIN products p  ON i2.productID=p.productID WHERE invoiceDate BETWEEN '$search2' and '$search'ORDER BY i.invoiceDate asc, i2.invoiceNo;");
 
 
 														if($resultSet->num_rows>0){
 															while($rows=$resultSet->fetch_assoc()){
-
+															$status = $rows['status'];
+if($status ==0){
+$status="unprocessed";	
+}
+else{
+	$status="processed";
+}
 																echo "</tbody><tr>
 																<td >".$rows['invoiceDate']."</td>
 																<td >".$rows['invoiceNo']."</td>
@@ -115,6 +122,7 @@
 																<td >".$rows['productName']."</td>
 																<td >".$rows['qty']."<input type=hidden class='qty' name='qty' value=".$rows["qty"]."></td>
 																<td >".$rows['qtyUnit']."</td>
+																   <td><input type=hidden name=status> $status</td>
 																<td style=text-align:right> ".$rows["wholesalePrice"]."</td>
 																<td  style=text-align:right>".$rows['total']."<input type=hidden class='total' name='total' value=".$rows["total"]."></td>
 															</tr></tbody>";
@@ -127,14 +135,20 @@
 
 												}
 
-												else{$resultSet=$mysqli->query("SELECT i2.invoiceNo,i.invoiceDate, username,p.qtyUnit, wholesalePrice ,productName, i2.qty, (qty*wholesalePrice) AS total FROM invoice i JOIN invoice2 i2 
-														ON i.invoiceNo = i2.invoiceNo JOIN products p  ON i2.productID=p.productID WHERE status=1;");
+												else{$resultSet=$mysqli->query("SELECT i2.invoiceNo,date(i.invoiceDate) as invoiceDate, i.status,username,p.qtyUnit, wholesalePrice ,productName, i2.qty, (qty*wholesalePrice) AS total FROM invoice i JOIN invoice2 i2 
+														ON i.invoiceNo = i2.invoiceNo JOIN products p  ON i2.productID=p.productID WHERE invoiceDate BETWEEN '$search2' and '$search' and username='$search3' ORDER BY i.invoiceDate asc, i2.invoiceNo;");
 														//put here the session
 
 	//check if there are any info gathered from db
 													if($resultSet->num_rows>0){
 															while($rows=$resultSet->fetch_assoc()){
-
+															$status = $rows['status'];
+if($status ==0){
+$status="unprocessed";	
+}
+else{
+	$status="processed";
+}
 																echo "</tbody><tr>
 																<td >".$rows['invoiceDate']."</td>
 																<td >".$rows['invoiceNo']."</td>
@@ -142,8 +156,10 @@
 																<td >".$rows['productName']."</td>
 																<td >".$rows['qty']."<input type=hidden class='qty' name='qty' value=".$rows["qty"]."></td>
 																<td >".$rows['qtyUnit']."</td>
+																   <td><input type=hidden name=status> $status</td>
 																<td style=text-align:right >".$rows['wholesalePrice']."</td>
 																<td style=text-align:right>".$rows['total']."<input type=hidden class='total' name='total' value=".$rows["total"]."></td>
+																
 															</tr></tbody>";
 														}
 		//if no data output 

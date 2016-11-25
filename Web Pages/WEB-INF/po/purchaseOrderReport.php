@@ -96,7 +96,7 @@
 	//query db
 													//if($search3==0){
 
-														$resultSet=$mysqli->query("SELECT po.datePurchase, po.poNumber, p.productName, po2.purchaseQty, po.ordered, p.wholesalePrice, (wholesalePrice* purchaseQty) 
+														$resultSet=$mysqli->query("SELECT date(po.datePurchase) AS datePurchase  , po.poNumber, p.productName, po2.purchaseQty, po.ordered, p.wholesalePrice, (wholesalePrice* purchaseQty) 
 AS total FROM purchase po JOIN purchase2 po2 ON po2.poNumber=po.poNumber JOIN products p  ON p.productId=po2.productId
 WHERE po.username='{$_SESSION['username']}' and datePurchase BETWEEN '$search2' AND '$search' ORDER BY po.datePurchase,po.poNumber;");
 	//check if there are any info gathered from db
