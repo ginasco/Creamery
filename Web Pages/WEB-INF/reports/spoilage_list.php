@@ -78,7 +78,7 @@
 
           </table>
 
-          <form id="form" action="spoilage_info.php" method="Post">
+          <form id="form" action="spoilage_info.php?conNum=18" method="get">
             <input type="text" style="display:none" id="conNum" name="conNum" />
           </form>
 

@@ -77,7 +77,7 @@ if ($_SESSION['usertype']!=102){
     </div>
   </div>
 </div>
-<form id="form" action="PO.php" method="Post">
+<form id="form" action="PO.php" method="GET">
             <input type="text" style="display:none" id="poNum" name="poNum" />
           </form>
 

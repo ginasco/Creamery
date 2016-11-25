@@ -15,7 +15,7 @@
 
    <!-- nav -->
    <?php include '../session/levelOfAccess.php';
-   $conNum=$_POST['conNum'];
+   $conNum=$_GET['conNum'];
    ?>
    
    <!-- / nav -->
@@ -33,14 +33,14 @@
 
       <form>
         <div class="bg-light lter b-b wrapper-md hidden-print">
-          <a href class="btn btn-sm btn-info pull-right" onClick="window.print();">Print</a>
+          <button name="conNum" class="btn btn-sm btn-info pull-right" onClick="window.print();">Print</button>
           <h1 class="m-n font-thin h3"> Spoilage Products /# <input type=text style="border:none;background:none" readonly name="conNum" value="<?php echo $conNum; ?>"/></h1>
         </div>
       </form>
 
       <div class="wrapper-md">
         <?php 
-        $conNum=$_POST['conNum'];
+        $conNum=$_GET['conNum'];
         require_once('../../mysqlConnector/mysql_connect.php');
         $query="Select distinct controlNum, concat(i.fName,' ',i.lName) as distributorName, DATE(pullOutDate) AS pullOutDate, concat(i.address,' ',i.city) as address From pullouts p join users u on p.distributorName=u.username join usersinfo i on u.userID=i.userID where controlNum = '$conNum'";
         $result=mysqli_query($dbc,$query);
@@ -79,12 +79,13 @@
               <th style="width:20%">DESCRIPTION</th>
               <th style="width:20%">Unit</th>
               <th style="width:9%">Unit Price</th>
+              <th style="width:9%">TOTAL</th>
             </tr>
           </thead>
           <?php
-          $conNum=$_POST['conNum'];
+          $conNum=$_GET['conNum'];
           require_once('../../mysqlConnector/mysql_connect.php');
-          $query="Select p.sku, p.productName, u.pullOutQty,p.unitPrice, p.qtyUnit From pullouts2 u join products p on u.productID=p.productID where u.controlNum='$conNum'";
+          $query="Select p.sku, p.productName, u.pullOutQty, p.unitPrice, (p.unitPrice * u.pullOutQty) AS total, p.qtyUnit From pullouts2 u join products p on u.productID=p.productID where u.controlNum='$conNum'";
           $result=mysqli_query($dbc,$query);
           while($row = $result->fetch_assoc()){
             echo"
@@ -93,7 +94,8 @@
                 <td >".$row["sku"]."</td>
                 <td>".$row["productName"]."</td>
                 <td>".$row["qtyUnit"]."</td>
-                <td style=text-align:right>".$row["unitPrice"]."<input type=hidden name=unitPrice class=unitPrice value=".$row["unitPrice"]."></td>
+                <td style=text-align:right>".$row["unitPrice"]."</td>
+                <td style=text-align:right>".$row["total"]."<input type=hidden name=unitPrice class=unitPrice value=".$row["total"]."></td>
                 <td></td> 
               </tr></tbody>
             ";
