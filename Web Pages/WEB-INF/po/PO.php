@@ -85,7 +85,7 @@ $query="Select date(datePurchase) as datePurchase From purchase where poNumber =
         
         <tr>
           <td colspan="4   " class="text-right no-border"><strong>Grand Total</strong></td>
-          <td><strong><span>₱</span><input type="number" style="border:none;text-align:right" pattern="[0-9]*" readonly id="grandTotal"/></strong></td>
+          <td><strong><span>₱</span><input type="number" style="border:none;text-align:right" readonly id="grandTotal"/></strong></td>
         </tr>
       </tbody>
     </table> 
