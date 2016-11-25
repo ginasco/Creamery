@@ -75,8 +75,9 @@
 
 	//query db
 //if not work use *
-													
-														$resultSet=$mysqli->query("SELECT sku, productName, SUM(purchaseQty) as purchaseQty FROM purchase pu JOIN products p ON pu.productID=p.productID WHERE ordered=0  GROUP BY sku;");
+$resultSet=$mysqli->query("SELECT sku, productName, SUM(pu2.purchaseQty) as purchaseQty FROM purchase pu JOIN purchase2 pu2
+ON pu.poNumber=pu2.poNumber JOIN
+ products p ON p.productID=pu2.productID WHERE ordered=0  GROUP BY sku;");
 
 
 														if($resultSet->num_rows>0){
