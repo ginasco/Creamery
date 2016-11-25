@@ -56,6 +56,7 @@
                 
                 $poNumber=$row["poNumber"];
                 $userID=$row["userID"];
+                $ordered=$row["ordered"];
 
                 echo "<tr class='productRows'>
                 <td ><input type=button name=controlNum id=happy class=pN style=border:none;background:none value=".$poNumber."></td>
@@ -69,10 +70,10 @@
 
 
                 
-                if($row["ordered"]==0){
+                if($ordered==0){
                     echo " <td><span class='label bg-danger'>Unprocess</span></td> 
                 </tr>";
-                  }else if ($row["ordered"]==1){
+                  }else if ($ordered==1){
                     echo " <td><<span class='label bg-warning'>processed</span></td> 
                 </tr>";
                   }

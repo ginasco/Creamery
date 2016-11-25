@@ -41,8 +41,10 @@ if ($_SESSION['usertype']!=102){
         <thead>
           <tr>
             <th  style="width:20%">P.O Number</th>
-            <th  style="width:25%">P.O Date</th>
-            <th  style="width:15%">Total</th>
+            <th  style="width:20%">P.O Date</th>
+            <th  style="width:15%">Status</th>
+            <th  style="width:15%;text-align:right">Total</th>
+            
           </tr>
         </thead>
         <tbody > 
@@ -50,14 +52,15 @@ if ($_SESSION['usertype']!=102){
            <?php  
             require_once('../../mysqlConnector/mysql_connect.php');
 
-            $query="Select poNumber, DATE(datePurchase) AS datePurchase From purchase where username ='{$_SESSION['username']}' order by poNumber desc";
+            $query="Select poNumber, DATE(datePurchase) AS datePurchase, ordered From purchase where username ='{$_SESSION['username']}' order by poNumber desc";
               $result=mysqli_query($dbc,$query);
               while($row = $result->fetch_assoc()) {
                 $poNumber=$row["poNumber"];
+                $ordered=$row["ordered"];
 
                 
 
-                echo "<tbody><tr class='productRows'>
+                echo "<tr class='productRows'>
                 <td ><input type=button name=controlNum id=happy class=pN style=border:none;background:none value=".$poNumber."></td>
                 <td>".$row["datePurchase"]."<input type=hidden name=datePurchase value=".$row["datePurchase"]."></td>";
                 
@@ -67,8 +70,16 @@ if ($_SESSION['usertype']!=102){
                   $total = $row["total"];
                 }
                     $total;
-                echo " <td>".$total."</td> 
-              </tr></tbody>";
+                
+
+                if($ordered==0){
+                    echo " <td><span class='label bg-danger'>Unprocess</span></td> 
+                ";
+                  }else if ($ordered==1){
+                    echo " <td><span class='label bg-warning'>processed</span></td> 
+                ";
+                  }
+                  echo " <td style='text-align:right'>".$total."</td> </tr>";
             }
 
            ?>
