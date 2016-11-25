@@ -91,20 +91,29 @@ $query="Select date(datePurchase) as datePurchase From purchase where poNumber =
     </table> 
       
       <?php
-      $time = date("Y-m-d");
+	  
+     
 
-      $getDate="select (datePurchase) as datePurchase from purchase where poNumber='{$poNum}'";
-      $resultDate=mysqli_query($dbc,$getDate);
-        while($row = $resultDate->fetch_assoc()) {
-          $datePurchase=$row["datePurchase"];
+     // $getDate="select date(datePurchase) as datePurchase from purchase where poNumber='{$poNum}';";
+     // $resultDate=mysqli_query($dbc,$query);
+	$query="SELECT ABS(DATEDIFF(datePurchase, CURDATE())) as days FROM purchase WHERE poNumber='{$poNum}';";
+	 
+       $result=mysqli_query($dbc,$query);
+
+		
+        while($row = $result->fetch_assoc()) {
+	
+          $days=$row["days"];
         }
-        $datePurchase;
+       // $datePurchase;
+		
+	
       //$diff=date_diff($time,$datePurchase);
-      $diff=$time->diff($datePurchase); 
-      if($diff>3){
+     // $diff=$date->diff($datePurchase); 
+      if($days>3){
         echo "<button class='btn m-b-xs w-xs btn-danger' disabled>Cancel P.O</button>";
       }else{
-        echo "<button class='btn m-b-xs w-xs btn-danger' disabled>Cancel P.O</button>";
+        echo "<button class='btn m-b-xs w-xs btn-danger' >Cancel P.O</button>";
       }
       ?>
        
