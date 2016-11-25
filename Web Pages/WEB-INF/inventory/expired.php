@@ -105,7 +105,7 @@ if ($_SESSION['usertype']!=102){
               <div ng-include="'tpl/modal.form.html'"></div>
             </script>
             
-            <button class="btn btn-success" name=confirm id=confirm ng-click="open('lg')">Process Pull-Out</button>
+            <a onclick="return confirm('Are you sure?')"><button class="btn btn-success" name=confirm id=confirm ng-click="open('lg')">Process Pull-Out</button></a>
           </span>
         </div>
       </form>
