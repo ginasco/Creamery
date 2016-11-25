@@ -234,8 +234,8 @@
                   </a>
                 </li>
                 <li>
-                  <a href="../billing/receivables.php">
-                    <span>Accounts Receivable</span>
+                  <a href="../billing/receivableReport.php">
+                    <span>Receivable Report</span>
                   </a>
                 </li>
                 <li>
