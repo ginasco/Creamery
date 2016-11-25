@@ -18,7 +18,7 @@
 <!-- / nav -->
 
 <?php
-if ($_SESSION['usertype']!=102){
+if ($_SESSION['usertype']!=101){
   header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."../../accounts/login.php");
 }
 ?>
@@ -57,7 +57,7 @@ if ($_SESSION['usertype']!=102){
         </thead>
         <tbody>
               <tr>
-           <td> <a href="invoice.php"><u>9399034</u></a></td>
+           <td> <a href="admin_invoice.php"><u>9399034</u></a></td>
             <td>20 OCT 2016</td>
             <td>15 October - 19 October 2016</td>
             <td><span class="label bg-warning">Unpaid</span></td>
