@@ -219,8 +219,13 @@
                   </a>
                 </li>
                 <li>
+                  <a href="../billing/admin_invoicelist.php">
+                    <span>Dealer Invoices List</span>
+                  </a>
+                </li>
+                <li>
                   <a href="../billing/admininvoices.php">
-                    <span>Dealer Invoices</span>
+                    <span>Dealer Invoices Report</span>
                   </a>
                 </li>
                 <li>
