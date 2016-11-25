@@ -75,7 +75,7 @@ if ($_SESSION['usertype']!=101){
 														if($resultSet->num_rows>0){
 															
 															while($rows=$resultSet->fetch_assoc()){
-$status = $rows['ordered'];
+$status = $rows['produced'];
 if($status ==0){
 $status="unprocessed";	
 }
