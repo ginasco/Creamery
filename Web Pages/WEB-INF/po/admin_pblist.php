@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<form action="prodorder.php" method="post">
+
 <html lang="en" class="">
 <head>
   <meta charset="utf-8" />
@@ -70,7 +70,7 @@ if ($_SESSION['usertype']!=101){
 	//query db
 //if not work use *
 				$phone =0;								
-							$resultSet=$mysqli->query("SELECT * FROM productionorder ORDER BY productionNo, productionDate;");
+							$resultSet=$mysqli->query("SELECT * FROM productionorder ORDER BY productionNo desc, productionDate;");
 
 														if($resultSet->num_rows>0){
 															
@@ -82,42 +82,23 @@ $status="unprocessed";
 else{
 	$status="processed";
 }
-$_SESSION['productionNo'] = $rows['productionNo'];
-
-																echo "</tbody><tr>
-																<td ><a href=prodorder.php name=productionNo '>".$rows['productionNo']."</td>
-																
-																<td >".$rows['productionDate']."</td>
-	
-																<td >$status</td>
-																
-															</tr></tbody>";
+  $conNum=$rows["productionNo"];
+                echo "<tbody><tr class='productRows'>
+                <td ><input type=button name=controlNum id=happy class=cN style=border:none;background:none value=".$conNum."></td>
+                <td>".$rows["productionDate"]."<input type=hidden name=productionDate value=".$rows["productionDate"]."></td>
+                <td><input type=hidden name=status> $status</td>
+                <td></td> 
+              </tr></tbody>";
 														}
 														}
+														$_SESSION['produtionNum'] = $rows["productionNo"];
 														
 			?>
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
         </tbody>
       </table>
+	     <form id="form" action="prodorder.php" method="Post">
+            <input type="text" style="display:none" id="conNum" name="conNum" />
+          </form>
     </div>
   </div>
 </div>
@@ -133,7 +114,17 @@ $_SESSION['productionNo'] = $rows['productionNo'];
 
 
 </div>
+<script>
 
+  $(document).on('click', '#happy', function(e){
+    e.preventDefault();
+    var cN =  $(this).closest ('tr').find(".cN").val();
+    document.getElementById('conNum').setAttribute('value',cN);
+    $("#form").submit();
+
+  });
+
+</script>
 
 
 </body>

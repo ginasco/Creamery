@@ -246,7 +246,7 @@
                 </li>
                 <li>
 				   <a href="../po/purchaseOrderReportAdmin.php">
-                    <span>Sales Report</span>
+                    <span>Purchase Order Report</span>
                   </a>
                 </li>      
               </ul>

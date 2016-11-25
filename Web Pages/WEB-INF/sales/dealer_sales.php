@@ -87,8 +87,8 @@
 														<th  style="width:20%">Product Name</th>
 														<th  style="width:10%">Quantity</th>
 														<th  style="width:10%">Unit</th>
-														<th  style="width:10%">Retail Price</th>
-														<th  style="width:10%">Total</th>
+														<th  style="width:10%;text-align:right">Retail Price</th>
+														<th  style="width:10%;text-align:right">Total</th>
 													</tr>
 												</thead>
 
@@ -118,8 +118,8 @@
 																<td >".$rows['productName']."</td>
 																<td >".$rows['qtySR']."<input type=hidden class='qtySR' name='qtySR' value=".$rows["qtySR"]."></td>
 																<td >".$rows['qtyUnit']."</td>
-																<td >".$rows['retailPrice']."</td>
-																<td >".$rows['total']."<input type=hidden class='total' name='total' value=".$rows["total"]."></td>
+																<td style=text-align:right>".$rows['retailPrice']."</td>
+																<td style=text-align:right>".$rows['total']."<input type=hidden class='total' name='total' value=".$rows["total"]."></td>
 															</tr></tbody>";
 														}
 		//if no data output 
@@ -145,8 +145,8 @@
 															<td >".$rows['productName']."</td>
 															<td >".$rows['qtySR']."<input type=hidden class='qtySR' name='qtySR' value=".$rows["qtySR"]."></td>
 															<td >".$rows['qtyUnit']."</td>
-															<td >".$rows['retailPrice']."</td>
-															<td >".$rows['total']."<input type=hidden class='total' name='total' value=".$rows["total"]."></td>
+															<td style=text-align:right>".$rows['retailPrice']."</td>
+															<td style=text-align:right>".$rows['total']."<input type=hidden class='total' name='total' value=".$rows["total"]."></td>
 														</tr></tbody>";
 													}
 		//if no data output 
