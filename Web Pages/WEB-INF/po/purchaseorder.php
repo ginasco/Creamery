@@ -52,7 +52,7 @@
            <select id="productChosen">
              <?php 
                 require_once('../../mysqlConnector/mysql_connect.php');
-                $query="select productID, productName, wholesalePrice, retailPrice, sku from products;";
+                $query="select productID, productName, wholesalePrice, retailPrice, sku from products where productType=101;";
                 $result=mysqli_query($dbc,$query);
                 
                 if ($result!=null){
