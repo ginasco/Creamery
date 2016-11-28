@@ -186,7 +186,7 @@ if (isset($message)){
 	    
 	    
 <div class="container">
-    <h1 class="well">Create New Dealer</h1>
+    <h1 class="well">Create New User</h1>
 	<div class="col-lg-12 well">
 	<div class="row">
 				<form>
