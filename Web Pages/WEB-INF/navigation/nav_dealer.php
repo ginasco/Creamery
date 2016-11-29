@@ -68,43 +68,7 @@
 
       <!-- nabar right -->
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" data-toggle="dropdown" class="dropdown-toggle">
-            <i class="icon-bell fa-fw"></i>
-            <span class="visible-xs-inline">Notifications</span>
-            <span class="badge badge-sm up bg-danger pull-right-xs">2</span>
-          </a>
-          <!-- dropdown -->
-          <div class="dropdown-menu w-xl animated fadeInUp">
-            <div class="panel bg-white">
-              <div class="panel-heading b-light bg-light">
-                <strong>You have <span>2</span> notifications</strong>
-              </div>
-              <div class="list-group">
-                <a href class="list-group-item">
-                  <span class="pull-left m-r thumb-sm">
-
-                  </span>
-                  <span class="clear block m-b-none">
-                    Product 500ml Chocolate Milk is near expiry.<br>
-                    <small class="text-muted">10 minutes ago</small>
-                  </span>
-                </a>
-                <a href class="list-group-item">
-                  <span class="clear block m-b-none">
-                    Product 200g Quesong Puti is low in stock.<br>
-                    <small class="text-muted">1 hour ago</small>
-                  </span>
-                </a>
-              </div>
-              <div class="panel-footer text-sm">
-                <a href class="pull-right"><i class="fa fa-cog"></i></a>
-                <a href="#notes" data-toggle="class:show animated fadeInRight">See all the notifications</a>
-              </div>
-            </div>
-          </div>
-          <!-- / dropdown -->
-        </li>
+        
         <li class="dropdown">
           <a href="#" data-toggle="dropdown" class="dropdown-toggle clear" data-toggle="dropdown">
             <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
@@ -116,9 +80,7 @@
           <ul class="dropdown-menu animated fadeInRight w">
 
             
-            <li>
-              <a ui-sref="app.page.profile">Profile</a>
-            </li>
+          
             <li>
               <a ui-sref="app.docs">
 
