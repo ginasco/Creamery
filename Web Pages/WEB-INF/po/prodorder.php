@@ -10,20 +10,21 @@
 
 </head>
 <body>
-<div class="app app-header-fixed ">
-  
+  <div class="app app-header-fixed ">
 
- <!-- nav -->
-   <?php include '../session/levelOfAccess.php';?>
+
+   <!-- nav -->
+   <?php include '../session/levelOfAccess.php';
+   $conNum= $_GET['conNum'];?>
    
    <!-- / nav -->
 
    <?php
-if ($_SESSION['usertype']!=101){
-  header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."../../accounts/login.php");
-  $conNum= $_GET['conNum'];
-}
-?>
+   if ($_SESSION['usertype']!=101){
+    header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."../../accounts/login.php");
+
+  }
+  ?>
 
 
 
@@ -31,95 +32,120 @@ if ($_SESSION['usertype']!=101){
   <!-- content -->
   <div id="content" class="app-content" role="main">
   	<div class="app-content-body ">
-	    
 
-<div class="bg-light lter b-b wrapper-md hidden-print">
-  <a href class="btn btn-sm btn-info pull-right" onClick="window.print();">Print</a>
-  <h1 class="m-n font-thin h3">Production Orders / <?php echo $_GET['conNum'];?></h1>
-</div>
-<div class="wrapper-md">
-    <p class="m-t m-b">P.B Date: <strong>1 November 2016</strong><br>
-        
-        P.B ID: <strong><?php echo $_GET['conNum'];?></strong><br>
-    Status: <span class="label bg-warning">In Production</span>
-    </p>
-  <div>
-    <div class="well m-t bg-light lt">
-      <div class="row">
-        
-        
+
+      <div class="bg-light lter b-b wrapper-md hidden-print">
+        <a href class="btn btn-sm btn-info pull-right" onClick="window.print();">Print</a>
+        <h1 class="m-n font-thin h3">Production Orders / <?php echo $_GET['conNum'];?></h1>
+      </div>
+      <div class="wrapper-md">
+        <?php  
+        require_once('../../mysqlConnector/mysql_connect.php');
+
+        $query="SELECT DATE(productionDate) as productionDate, produced FROM productionorder WHERE productionNo='{$conNum}'";
+        $result=mysqli_query($dbc,$query);
+        while($row = $result->fetch_assoc()) {
+          $status=$row["produced"];
+          echo "<p class='m-t m-b'>P.B Date: <strong>".$row["productionDate"]."</strong><br> ";
+          if ($status==0) {
+            echo"Status:<span class='label bg-danger'>Unprocessed</span><br>";
+          }else if($status==1){
+            echo"Status:<span class='label bg-warning'>Processed</span><br>";
+          }
+
+          echo "Production ID: <strong><input type=text style='border:none;background:none' readonly name='inNum' value=".$conNum."></strong>";
+
+        }
+        ?>
+        <div>
+          <div class="well m-t bg-light lt">
+            <div class="row">
+
+
+            </div>
+          </div>
+          <div class="line"></div>
+          <table class="table table-striped bg-white b-a">
+            <thead>
+              <tr>
+                <th style="width: 15%">QTY</th>
+                <th style="width: 15%">SKU</th>
+                <th style="width:30%">DESCRIPTION</th>
+                <th style="width:14%;text-align:right">Unit Price</th>
+                <th style="width:15%;text-align:right">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <?php
+              require_once('../../mysqlConnector/mysql_connect.php');
+
+
+              $query="SELECT p.sku, po.qty, p.productName, p.unitPrice, (po.qty*p.unitPrice) as total FROM productionorder2 po JOIN products p ON p.productID=po.productID WHERE productionNo='{$conNum}'";
+              $result=mysqli_query($dbc,$query);
+              while($rows=$result->fetch_assoc()){
+
+                echo "<tr>
+                <td >".$rows['qty']."</td>
+                <td >".$rows['sku']."</td>
+                <td >".$rows['productName']."</td>
+                <td style=text-align:right>".$rows['unitPrice']."</td>
+                <td style=text-align:right>".$rows['total']."<input type=hidden name=unitPrice id=total class=total class=unitPrice value=".$rows['total']."></td>
+
+
+              </tr>";
+            }
+
+
+
+            ?>
+            <tr>
+              <td colspan="4" class="text-right"><strong>Grandtotal</strong></td>
+              <td colspan="5 " style="text-align:right"><strong><span>₱</span><input type="number" style="border:none;text-align:right" readonly id="subTotal"/></strong></td>
+            </tr>
+
+          </tbody>
+        </table> 
+
+        <button class="btn m-b-xs w-xs btn-danger">Cancel P.B</button>
       </div>
     </div>
-    <div class="line"></div>
-    <table class="table table-striped bg-white b-a">
-      <thead>
-        <tr>
-          <th style="width: 60px">QTY</th>
-            <th style="width: 70px">SKU</th>
-            <th style="width:400px">DESCRIPTION</th>
-        
-     
-        </tr>
-      </thead>
-      <tbody>
-      
-     	<?php
-			$output = NULL;
-											
-	//connect to db
 
-												$mysqli= NEW MySQLi("localhost","holly","milk","devapps");
-	//get string value from search
-	//removes any special characters
-										
 
-	//query db
-//if not work use *
-												
-							$resultSet=$mysqli->query("SELECT * FROM productionorder po JOIN products p ON p.productID=po.productID WHERE Date(productionDate) LIKE '2016-07-15'");
-
-														if($resultSet->num_rows>0){
-															
-															while($rows=$resultSet->fetch_assoc()){
-$status = $rows['ordered'];
-if($status ==0){
-$status="unprocessed";	
-}
-else{
-	$status="processed";
-}
-																echo "</tbody><tr>
-																<td ><a href=prodorder.php>".$rows['orderQty']."</td>
-																<td >".$rows['sku']."</td>
-																<td >".$rows['productName']."</td>
-															
-																
-															</tr></tbody>";
-														}
-														}
-														
-			?>
-			
-        
-      </tbody>
-    </table> 
-      
-       <button class="btn m-b-xs w-xs btn-danger">Cancel P.B</button>
   </div>
 </div>
+<!-- /content -->
 
-
-	</div>
-  </div>
-  <!-- /content -->
-  
 
 
 
 
 </div>
 
+<script>
+var quantityCount=0;
+var vat=0;
+var grandTotal;
 
+  $('.total').each(function(){
+    quantityCount += parseFloat(this.value);
+
+ });
+
+ var x = document.getElementById("subTotal");
+ x.setAttribute("value", quantityCount);
+
+ vat=quantityCount*0.12;
+ var v = document.getElementById("VAT");
+ v.setAttribute("value", vat);
+
+ grandTotal=vat+quantityCount;
+ var g = document.getElementById("grandTotal");
+ g.setAttribute("value",grandTotal);
+
+
+
+</script>
 
 </body>
 </html>
