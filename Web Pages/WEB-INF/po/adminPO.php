@@ -120,9 +120,18 @@
         }
           ?>
             <tr>
-              <td colspan="4    " class="text-right no-border"><strong>Total</strong></td>
-              <td colspan="5    "style="text-align:right"><strong><span>₱</span><input type="number" style="border:none;text-align:right" readonly id="grandTotal"/></strong></td>
-            </tr>
+            <td colspan="4" class="text-right"><strong>Subtotal</strong></td>
+          <td colspan="5    "style="text-align:right"><strong><span>₱</span><input type="number" style="border:none;text-align:right" readonly id="subTotal"/></strong></td>
+        </tr>
+        
+        <tr>
+          <td colspan="4" class="text-right no-border"><strong>12% VAT</strong></td>
+          <td colspan="5    "style="text-align:right"><strong><span>₱</span><input type="number" style="border:none;text-align:right" readonly id="VAT"/></strong></td>
+        </tr>
+        <tr>
+          <td colspan="4    " class="text-right no-border"><strong>Total</strong></td>
+          <td colspan="5    "style="text-align:right"><strong><span>₱</span><input type="number" style="border:none;text-align:right" readonly id="grandTotal"/></strong></td>
+        </tr>
           </tbody>
         </table> 
         
@@ -142,14 +151,25 @@
 </div>
 <script>
 var quantityCount=0;
+var vat=0;
+var grandTotal;
 
   $('.total').each(function(){
     quantityCount += parseFloat(this.value);
 
  });
 
- var x = document.getElementById("grandTotal");
+ var x = document.getElementById("subTotal");
  x.setAttribute("value", quantityCount);
+
+ vat=quantityCount*0.12;
+ var v = document.getElementById("VAT");
+ v.setAttribute("value", vat);
+
+ grandTotal=vat+quantityCount;
+ var g = document.getElementById("grandTotal");
+ g.setAttribute("value",grandTotal);
+
 
 
 </script>

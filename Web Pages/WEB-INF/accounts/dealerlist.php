@@ -98,7 +98,7 @@ if ($_SESSION['usertype']!=101){
                            set users.usertype='{$userStatus}', usersinfo.address='{$address}', usersinfo.city='{$philCity}', usersinfo.contactNum='{$contactNumber}', usersinfo.emailAdd='{$emailAddress}', usersinfo.tinNum='{$tinNumber}'
                            where users.userID=usersinfo.userID and users.userID='{$userID}'";
             $result=mysqli_query($dbc,$updateDealer);
-             header("location:dealerlist.php"); //problem here
+             header("location:dealerlist.php"); 
             exit;
         }
         ?>

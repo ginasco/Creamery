@@ -37,16 +37,7 @@ if ($_SESSION['usertype']!=101){
       Invoices
     </div>
     <div class="table-responsive">
-      <table ui-jq="dataTable" ui-options="{
-          sAjaxSource: 'api/datatable.json',
-          aoColumns: [
-            { mData: 'engine' },
-            { mData: 'browser' },
-            { mData: 'platform' },
-            { mData: 'version' },
-            { mData: 'grade' }
-          ]
-        }" class="table table-striped b-t b-b">
+      <table class="table table-striped b-t b-b">
         <thead>
           <tr>
             <th  style="width:20%">Invoice Number</th>
@@ -59,29 +50,33 @@ if ($_SESSION['usertype']!=101){
         <?php
 
               require_once('../../mysqlConnector/mysql_connect.php');
-              $query="Select distinct controlNum, concat(i.fName,' ',i.lName) as distributorName, DATE(pullOutDate) AS pullOutDate From pullouts p join users u on p.distributorName=u.username join usersinfo i on u.userID=i.userID order by controlNum desc;";
+              $query="Select distinct invoiceNo, concat(i.fName,' ',i.lName) as distributorName, DATE(invoiceDate) AS invoiceDate From invoice p join users u on p.username=u.username join usersinfo i on u.userID=i.userID order by invoiceNo desc;";
               $result=mysqli_query($dbc,$query);
               while($row = $result->fetch_assoc()) {
-                $conNum=$row["controlNum"];
-                echo "<tbody><tr class='productRows'>
-                <td ><input type=button name=controlNum id=happy class=cN style=border:none;background:none value=".$conNum."></td>
-                <td>".$row["distributorName"]."<input type=hidden name=distributorName value=".$row["distributorName"]."></td>
-                <td>".$row["pullOutDate"]."<input type=hidden name=pullOutDate value=".$row["pullOutDate"]."></td>
-                <td></td> 
-              </tr></tbody>";
+                $invoiceNo=$row["invoiceNo"];
+                echo "<tr class='productRows'>
+                <td ><input type=button name=invoiceNo id=happy class=cN style=border:none;background:none value=".$invoiceNo."></td>
+                <td>".$row["invoiceDate"]."<input type=hidden name=invoiceDate value=".$row["invoiceDate"]."></td>
+                <td>".$row["distributorName"]."<input type=hidden name=distributorName value=".$row["distributorName"]."></td>";
+
+                $queryStatus="select status from invoice where invoiceNo='{$invoiceNo}'";
+                $resultStatus=mysqli_query($dbc,$queryStatus);
+                while($row = $resultStatus->fetch_assoc()) {
+                  $status=$row["status"];
+                  if ($status==0) {
+                    echo"<td><span class='label bg-warning'>Unpaid</span></td>";
+                  }else if($status==1){
+                    echo"<td><span class='label bg-success'>Paid</span></td>";
+                  }
+                }
+
+
+                 
+              echo "
+              </tr>";
             }
 
             ?>
-              <tr>
-           <td> <a href="admin_invoice.php"><u>9399034</u></a></td>
-            <td>20 OCT 2016</td>
-            <td>15 October - 19 October 2016</td>
-            <td><span class="label bg-warning">Unpaid</span></td>
-            </tr><tr>
-                  <td>9399034</td>
-            <td>10 OCT 2016</td>
-            <td>5 October - 9 October 2016</td>
-            <td><span class="label bg-success">Paid</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -92,6 +87,9 @@ if ($_SESSION['usertype']!=101){
 
 	</div>
   </div>
+  <form id="form" action="admin_invoice.php" method="get">
+            <input type="text" style="display:none" id="conNum" name="conNum" />
+   </form>
   <!-- /content -->
   
   
@@ -100,7 +98,17 @@ if ($_SESSION['usertype']!=101){
 
 </div>
 
+<script>
 
+  $(document).on('click', '#happy', function(e){
+    e.preventDefault();
+    var cN =  $(this).closest ('tr').find(".cN").val();
+    document.getElementById('conNum').setAttribute('value',cN);
+    $("#form").submit();
+
+  });
+
+</script>
 
 </body>
 </html>
