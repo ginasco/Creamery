@@ -64,20 +64,16 @@ if ($_SESSION['usertype']!=101){
         <?php
 
           require_once('../../mysqlConnector/mysql_connect.php');
-          $query1="SELECT ui.userID,ui.fName,ui.lName,ui.rating FROM USERSINFO ui WHERE ui.rating <=5;";
+          $query1="SELECT ui.userID,ui.fName,ui.lName,ui.rating, u.UserType FROM USERSINFO ui JOIN Users U ON UI.userID = u.UserID WHERE u.usertype='102';";
 			
           $result=mysqli_query($dbc,$query1);
           while($row = $result->fetch_assoc()){ 
 			
  
 			$fullname = $row["fName"] .' '.$row["lName"];
-			$userID = $row["userID"];
-			$rating = $row["rating"];
-			
-
-            echo "<tr>
-                    <td class=fullName>".$fullname." <input type=text name='userid[]' value=".$row["userID"]." style=display:none></td>
-				<td class=rating><input id=rating name='rating[]' value=".$row["rating"]." type=number class=rating min=0 max=5 step=0.2 data-size=sm>
+	
+            echo "<tr> <td class=fullName>".$fullname." <input type=text name='useridR[]' value=".$row["userID"]." style=display:none></td>
+				<td class=rating><input id=rating name='ratingR[]' value=".$row["rating"]." type=number class=rating min=0 max=5 step=0.2 data-size=sm>
     <hr></td>
 									
  
@@ -90,56 +86,37 @@ if ($_SESSION['usertype']!=101){
         ?>
       </tbody>
     </table>
-	<button type="submit" id="update" name="update" class="btn btn-lg btn-info">UPDATE</button>		
+	<button type="submit" name="update" class="btn btn-lg btn-info">UPDATE</button>		
 	</form>
 <!--	<input id=rating value=".$row["rating"]." type=number class=rating min=0 max=5 step=0.2 data-size=sm>-->
 	  
-	<?php
-	if (isset($_POST['update'])){
-		echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
-		$rating=$_POST['rating'];
-		$userID=$_POST['userid'];
-		//echo "marcus". $rating;
-	//	echo $userID;
-         
-				    require_once('../../mysqlConnector/mysql_connect.php');
-				$query2="SELECT * FROM usersinfo";
-				$result2=mysqli_query($dbc,$query2);
-			
-	 $items = array_combine($rating,$userID);
-    $pairs = array();
-	 foreach($items as $key=>$value){
-     
-	  			$query="UPDATE USERSINFO SET rating = '$key' WHERE userID = '$value'";
-									
-			//	echo $query;
-				
-			
-			 $result3 =mysqli_query($dbc,$query);
-		echo $result3;
 	  
-    }
-			
-			   header("location:dealerMetrics.php"); 
-    exit;
-			
-			
-			
-				
-				
-			
-				
-				
-				//$query3="UPDATE usersinfo ui SET rating='0' WHERE userID='$row["userID"]';";
-				//$result=mysqli_query($dbc,$query3);
-				
+	  
+	<?php
+	$items;
+	if (isset($_POST['update'])){
+		 
+		$rating= $_POST['ratingR'];
+		$userID= $_POST['useridR'];
+	    $items= array_combine($userID,$rating);
 		
+		print_r(count($items));
+		
+	 foreach($items as $key=>$value){
+    	$query="UPDATE USERSINFO SET rating = '$value' WHERE userID = '$key'";
+	
+		 $result3 =mysqli_query($dbc,$query);
+	 }	
+	
+				
+	 header("location:dealerMetrics.php"); 
+    exit;			
+				
+	
 					
 	}
-         
-		
-        
-		?>
+ 	
+					?>
   </div>
 </div>
 </div>
@@ -197,8 +174,6 @@ if ($_SESSION['usertype']!=101){
    
       //  $('#rating').rating('update',0);
         
-        
-     
     });
 </script>
 
