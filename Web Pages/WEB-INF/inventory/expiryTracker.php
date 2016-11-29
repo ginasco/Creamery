@@ -42,16 +42,19 @@
 									<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 										<div class="col-sm-4 form-group">
 											Product:
-											<select name="search">
-
-												<option value="Milk">Milk</option>
-												<option value="Yogurt">Yogurt</option>
-												<option value="Chocolate Milk">Chocolate Milk</option>
-												<option value="Kesong Puti">Kesong Puti</option>
-												<option value="Low Fat Milk">Low Fat Milk</option>
-
-
-											</select>
+											<select id="productChosen" name="search">
+												<?php 
+                require_once('../../mysqlConnector/mysql_connect.php');
+                $query="select productID, productName, wholesalePrice, retailPrice, sku from products where productType=101;";
+                $result=mysqli_query($dbc,$query);
+                
+                if ($result!=null){
+                  while($row=$result->fetch_assoc()) {
+                    echo"<option value=".$row["productID"].">".$row["productName"]."</option>";
+                  }
+                }
+                ?>
+				</select>
 											<input type="SUBMIT"  required name="submit" value="search"/>
 										</div>
 									</form>
@@ -85,7 +88,7 @@
 
 											$resultSet=$mysqli->query("
 												Select p.productName,pi.expiryDate, pi.inventoryQty FROM perpetualinventory pi JOIN products p  
-												ON p.productID=pi.productID WHERE pi.username='{$_SESSION['username']}' and p.productName LIKE '$search' and pi.active=1;");
+												ON p.productID=pi.productID WHERE pi.username='{$_SESSION['username']}' and p.productID='{$search}' and pi.active=1;");
 //and p.productName='$search%'");
 // WHERE pi.username='{$_SESSION['username']}' and p.productName='$search%'");
 

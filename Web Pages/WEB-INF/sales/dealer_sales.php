@@ -48,16 +48,19 @@
 										</div>
 										<div class="col-sm-4 form-group" align="right">
 											<p>Product:
-												<select name="search3">
-													<option value=0>---</option>
-													<option value=1>Milk</option>
-													<option value=2>Yogurt</option>
-													<option value=3>Chocolate Milk</option>
-													<option value=4>Kesong Puti</option>
-													<option value=5>Low Fat Milk</option>
-
-
-												</select>
+											<select id="productChosen" name="search3">
+												<?php 
+                require_once('../../mysqlConnector/mysql_connect.php');
+                $query="select productID, productName, wholesalePrice, retailPrice, sku from products where productType=101;";
+                $result=mysqli_query($dbc,$query);
+                
+                if ($result!=null){
+                  while($row=$result->fetch_assoc()) {
+                    echo"<option value=".$row["productID"].">".$row["productName"]."</option>";
+                  }
+                }
+                ?>
+				</select>
 												<input type="SUBMIT" name="submit" value="search"/></p>
 												
 											</div>
