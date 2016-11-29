@@ -24,8 +24,8 @@ if ($_SESSION['usertype']!=102){
 
    <!-- modal -->
 
-    <?php include '../view/modal.html';?>
-   <!-- /modal -->
+  <?php include '../view/modal.html';?>
+  <!-- /modal -->
 
    <!-- content -->
    <div id="content" class="app-content" role="main">
@@ -158,11 +158,19 @@ if (isset($_POST['confirm'])){
     $query4= "UPDATE perpetualinventory SET pulloutStat=1 WHERE productID IN ('".implode($productID,"', '")."') AND expiryDate IN ('".implode($expiryDate,"', '")."')";
     $result4=mysqli_query($dbc,$query4);
   //------- /update inventory -------
+//     if ($result4 || mysqli_num_rows($result4) > 0)
+// {
+//   echo "<script type='text/javascript'>
+//      $('#successBodyModal').append('<p>Submitted successfully!</p>');
+//      $('#successModal').modal('show');
+//     </script>";
+ 
+// }
+  
+header("location:expired.php"); 
+   exit;  
+  
 
-    //echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
-
-    header("location:expired.php"); 
-    exit;
 }
 
 ?>

@@ -22,10 +22,7 @@
   }
   ?>
 
-  <!-- modal -->
-
-  <?php include '../view/modal.html';?>
-  <!-- /modal -->
+ 
 
   <!-- content -->
   <div id="content" class="app-content" role="main">
@@ -78,7 +75,7 @@
 
           </table>
 
-          <form id="form" action="spoilage_info.php?conNum=18" method="get">
+          <form id="form" action="spoilage_info.php" method="get">
             <input type="text" style="display:none" id="conNum" name="conNum" />
           </form>
 
