@@ -257,6 +257,7 @@ if (isset($message)){
 						
                         <option value=101>101- ADMIN</option>
                         <option value=102>102- DEALER</option>
+						<option value=104>104- FARMER</option>
                        
                     </select>
 								<p>Rating:</p> <br>

@@ -72,6 +72,12 @@ $flag=1;
                 $_SESSION['userID']=$row["userID"];
                 header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/../dashboard/dashboard_dealer.php");
                 $_SESSION['name']=$row["fName"] .' '.$row["lName"];//customer
+			}
+			else if($row["usertype"]==104){
+                $_SESSION['usertype']=104;
+                $_SESSION['userID']=$row["userID"];
+                header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/../dashboard/dashboard_farmer.php");
+			$_SESSION['name']=$row["fName"] .' '.$row["lName"];//farmer
             }else if($row["usertype"]==103){
                 $message.= "<p>You don't have access";
             }
