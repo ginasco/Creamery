@@ -17,7 +17,7 @@
    <!-- / nav -->
 
    <?php
-   if ($_SESSION['usertype']!=104){
+   if ($_SESSION['usertype']!=102){
     header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."../../accounts/login.php");
   }
   ?>
