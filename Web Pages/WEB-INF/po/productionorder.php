@@ -128,12 +128,45 @@
      $productID=$_POST['productID'];
      $purchaseQty=$_POST['orderQty'];
      $poNumber=$_POST['poNumber'];
+$orderQty = $mysqli->real_escape_string($_POST['orderQty']);
 
+if(empty($orderQty))
+	{  				 $queryUpdate1="UPDATE purchase SET ordered=0 WHERE poNumber IN ('".implode($poNumber,"', '")."')";
+					 $result6=mysqli_query($dbc,$queryUpdate1);
+					 
+					  $queryInsertProduction="insert into productionorder (username,produced) values ('{$_SESSION['username']}',0)";
+     $result=mysqli_query($dbc,$queryInsertProduction);
+//------- /insert porductionorder -------
 
+//------- get latest production order number -------
+     $query2="select productionNo from productionorder order by productionNo DESC LIMIT 1";
+     $result2=mysqli_query($dbc,$query2);
+     while($row=$result2->fetch_assoc()) {
+      $productionNo=$row["productionNo"];
+    }
+    $productionNo;
+//------- /get latest production order number -------
 
+    $items = array_combine($productID,$purchaseQty);
+    $pairs = array();
+
+    foreach($items as $key=>$value){
+      $pairs[] = '('.intval($key).','.intval($value).','."'$productionNo'".')';
+    }
+
+//------- insert porductionorder2 -------
+    $query3= "INSERT INTO productionorder2 (productID, qty, productionNo) values".implode(',',$pairs);
+    $result3=mysqli_query($dbc,$query3);
+//------- /insert porductionorder2 -------
+
+    header("location:productionorder.php"); 
+    exit; 
+					 } 
 //------- update purchase -------
+else{
      $queryUpdate="UPDATE purchase SET ordered=1 WHERE poNumber IN ('".implode($poNumber,"', '")."')";
      $result4=mysqli_query($dbc,$queryUpdate);
+	 }
 //------- /update purchase -------
 
 //------- insert porductionorder -------
