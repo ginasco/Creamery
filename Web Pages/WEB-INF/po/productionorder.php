@@ -28,8 +28,8 @@
     header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."../../accounts/login.php");
   }
   require_once('../../mysqlConnector/mysql_connect.php');
-                $query="select productID, productName, wholesalePrice, retailPrice, sku from products";
-                $result=mysqli_query($dbc,$query);
+  $query="select productID, productName, wholesalePrice, retailPrice, sku from products";
+  $result=mysqli_query($dbc,$query);
   ?>
 
   <!-- content -->
@@ -49,121 +49,124 @@
 
            <b>Products to be Ordered
            </b> <br>
-        <!--  <button type="submit" name="add" class="btn btn-default" id="add">Add Product</button><br> -->
+           <!--  <button type="submit" name="add" class="btn btn-default" id="add">Add Product</button><br> -->
            <form action="productionorder.php" method="post">
             <div class="table-responsive">
               <table  class="table table-striped b-t b-b" id="myTable">
                 <thead>
                   <tr>
                     <th  style="width:25%">SKU</th>
-					  <th  style="width:25%">Product Name</th>
+                    <th  style="width:25%">Product Name</th>
                     <th  style="width:10%">Quantity</th>
-					  <th  style="width:10%">Produce</th>
-                   
+                    <th  style="width:10%">Produce</th>
+
                   </tr>
                 </thead>
                 <tbody id="tableList">
-					<?php
+                 <?php
 
-											$output = NULL;
-										
+                 $output = NULL;
+
 	//connect to db
 
-												$mysqli= NEW MySQLi("localhost","holly","milk","devapps");
+                 $mysqli= NEW MySQLi("localhost","holly","milk","devapps");
 	//get string value from search
 	//removes any special characters
-											
+
 
 	//query db
 //if not work use *
-$resultSet=$mysqli->query("SELECT pu.poNumber,sku, productName, SUM(pu2.purchaseQty) as purchaseQty,pu2.productID, pu.poNumber FROM purchase pu JOIN purchase2 pu2
-ON pu.poNumber=pu2.poNumber JOIN
- products p ON p.productID=pu2.productID WHERE ABS(datediff(datePurchase, curdate())) >=3 and ordered='0' GROUP BY productID;");
- 
-$resultSet2=$mysqli->query("SELECT DISTINCT pu.poNumber FROM purchase pu WHERE ordered=0 and ABS(datediff(datePurchase, curdate())) >=3 ;");
- While($row=$resultSet2->fetch_assoc()){
-	 echo "
-<input type=hidden name='poNumber[]' value=".$row['poNumber'].">";
-															
- }
+                 $resultSet=$mysqli->query("SELECT pu.poNumber,sku, productName, SUM(pu2.purchaseQty) as purchaseQty,pu2.productID, pu.poNumber FROM purchase pu JOIN purchase2 pu2
+                  ON pu.poNumber=pu2.poNumber JOIN
+                  products p ON p.productID=pu2.productID WHERE ABS(datediff(datePurchase, curdate())) >=3 and ordered='0' GROUP BY productID;");
+
+                 $resultSet2=$mysqli->query("SELECT DISTINCT pu.poNumber FROM purchase pu WHERE ordered=0 and ABS(datediff(datePurchase, curdate())) >=3 ;");
+                 While($row=$resultSet2->fetch_assoc()){
+                  echo "
+                  <input type=hidden name='poNumber[]' value=".$row['poNumber'].">";
+
+                }
 //SELECT p.poNumber FROM purchase p WHERE ABS(datediff(datePurchase, curdate())) >=3 and ordered='0';
 
 
-											if($resultSet->num_rows>0){
-															while($rows=$resultSet->fetch_assoc()){
+                if($resultSet->num_rows>0){
+                 while($rows=$resultSet->fetch_assoc()){
 
-																echo "<tr>
-															<td >".$rows['sku']."<input type=hidden name='productID[]' value=".$rows['productID']."></td>
-																<td >".$rows['productName']."</td>
-																<td >".$rows['purchaseQty']."</td>
-																<td><input type=number min=0 name='orderQty[]' onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder=quantity>
-															</tr>";
-														}
+                  echo "<tr>
+                  <td >".$rows['sku']."<input type=hidden name='productID[]' value=".$rows['productID']."></td>
+                  <td >".$rows['productName']."</td>
+                  <td >".$rows['purchaseQty']."</td>
+                  <td><input type=number min=0 name='orderQty[]' onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder=quantity>
+                  </tr>";
+                }
 		//if no data output 
-													}else{
+              }else{
 
-														echo"No results";
-													}
-			
-            
-       if($resultSet->num_rows>0){
-		   while($rows=$resultSet2->fetch_assoc()){
-			   echo "
-				<input type=hidden name='poNumber[]' value=".$row['poNumber'].">";
-		   }
-	   }
-        
-										?>
-               </tbody>
-              </table>
-              <button type="submit" name="confirm" class="btn btn-success">Submit</button> 
-              
-              
-            </div>
-</form>
+                echo"No results";
+              }
 
-<?php 
-if (isset($_POST['confirm'])){
-	require_once('../../mysqlConnector/mysql_connect.php');
-	$productID=$_POST['productID'];
-    $purchaseQty=$_POST['orderQty'];
-	$poNumber=$_POST['poNumber'];
-			
-	
+
+              if($resultSet->num_rows>0){
+               while($rows=$resultSet2->fetch_assoc()){
+                echo "
+                <input type=hidden name='poNumber[]' value=".$row['poNumber'].">";
+              }
+            }
+
+            ?>
+          </tbody>
+        </table>
+        <button type="submit" name="confirm" class="btn btn-success">Submit</button> 
+
+
+      </div>
+    </form>
+
+    <?php 
+    if (isset($_POST['confirm'])){
+     require_once('../../mysqlConnector/mysql_connect.php');
+     $productID=$_POST['productID'];
+     $purchaseQty=$_POST['orderQty'];
+     $poNumber=$_POST['poNumber'];
+
+
 
 //------- update purchase -------
-	$queryUpdate="UPDATE purchase SET ordered=1 WHERE poNumber IN ('".implode($poNumber,"', '")."')";
-	$result4=mysqli_query($dbc,$queryUpdate);
+     $queryUpdate="UPDATE purchase SET ordered=1 WHERE poNumber IN ('".implode($poNumber,"', '")."')";
+     $result4=mysqli_query($dbc,$queryUpdate);
 //------- /update purchase -------
 
 //------- insert porductionorder -------
-$queryInsertProduction="insert into productionorder (username,produced) values ('{$_SESSION['username']}',0)";
-$result=mysqli_query($dbc,$queryInsertProduction);
+     $queryInsertProduction="insert into productionorder (username,produced) values ('{$_SESSION['username']}',0)";
+     $result=mysqli_query($dbc,$queryInsertProduction);
 //------- /insert porductionorder -------
 
 //------- get latest production order number -------
-    $query2="select productionNo from productionorder order by productionNo DESC LIMIT 1";
-    $result2=mysqli_query($dbc,$query2);
-    while($row=$result2->fetch_assoc()) {
+     $query2="select productionNo from productionorder order by productionNo DESC LIMIT 1";
+     $result2=mysqli_query($dbc,$query2);
+     while($row=$result2->fetch_assoc()) {
       $productionNo=$row["productionNo"];
     }
     $productionNo;
 //------- /get latest production order number -------
 
-$items = array_combine($productID,$purchaseQty);
+    $items = array_combine($productID,$purchaseQty);
     $pairs = array();
-	
-	foreach($items as $key=>$value){
-                $pairs[] = '('.intval($key).','.intval($value).','."'$productionNo'".')';
-                }
+
+    foreach($items as $key=>$value){
+      $pairs[] = '('.intval($key).','.intval($value).','."'$productionNo'".')';
+    }
 
 //------- insert porductionorder2 -------
- $query3= "INSERT INTO productionorder2 (productID, qty, productionNo) values".implode(',',$pairs);
- $result3=mysqli_query($dbc,$query3);
+    $query3= "INSERT INTO productionorder2 (productID, qty, productionNo) values".implode(',',$pairs);
+    $result3=mysqli_query($dbc,$query3);
 //------- /insert porductionorder2 -------
 
-}
-?>
+    header("location:expired.php"); 
+    exit; 
+
+  }
+  ?>
 </div>
 </div>
 </div>
@@ -172,35 +175,35 @@ $items = array_combine($productID,$purchaseQty);
 </div>
 
 
-        
-  <!-- /content -->
-  
+
+<!-- /content -->
+
 
 </div>
 
 <script>
  $(document).on('click', "#add", function(){
-               var para = document.createElement("tr");
-               var element = document.getElementById("tableList");
-               para.setAttribute("class", "trList");
-               element.appendChild(para);
-               var e = document.getElementById("productChosen");
-               var productID = e.options[e.selectedIndex].value;
-               
-               var productChosen = $("#productChosen").find(":selected").text();
+   var para = document.createElement("tr");
+   var element = document.getElementById("tableList");
+   para.setAttribute("class", "trList");
+   element.appendChild(para);
+   var e = document.getElementById("productChosen");
+   var productID = e.options[e.selectedIndex].value;
+
+   var productChosen = $("#productChosen").find(":selected").text();
 
 
-                $(".trList").append('<td>'+productChosen+'<input type="number" style=display:none readOnly name="productID[]" value="'+productID+'"</td>');
-                $(".trList").append('<td><input type="number" min="0" name="orderQty[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="quantity"/></td>');
-                $(".trList").append('<td><input type="button" name="delete" id="delete" class="ibtnDel btn btn-outline btn-danger"  value=Delete ></td>');
+   $(".trList").append('<td>'+productChosen+'<input type="number" style=display:none readOnly name="productID[]" value="'+productID+'"</td>');
+   $(".trList").append('<td><input type="number" min="0" name="orderQty[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="quantity"/></td>');
+   $(".trList").append('<td><input type="button" name="delete" id="delete" class="ibtnDel btn btn-outline btn-danger"  value=Delete ></td>');
 
-                para.setAttribute("class", "trListSaved");
-            });
+   para.setAttribute("class", "trListSaved");
+ });
 
  $(document).on('click', "#delete", function(event){
-        $(this).closest("tr").remove();
-               
-            });
+  $(this).closest("tr").remove();
+
+});
 
 
 </script>
