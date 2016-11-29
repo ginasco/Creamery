@@ -162,7 +162,7 @@
     $result3=mysqli_query($dbc,$query3);
 //------- /insert porductionorder2 -------
 
-    header("location:expired.php"); 
+    header("location:productionorder.php"); 
     exit; 
 
   }
