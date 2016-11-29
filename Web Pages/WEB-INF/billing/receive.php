@@ -165,7 +165,53 @@ if(isset($_POST['confirmR'])){
     $insertIntoData="insert into perpetualinventory (productID, inventoryQty, dateInstance, username, expiryDate, active, pulloutStat) values ('{$row["productID"]}','{$row["quantityRC"]}','{$row["dateReceived"]}','{$_SESSION['username']}','{$expiryDate}','1','0')";
     $insertResult=mysqli_query($dbc,$insertIntoData);
   }
+
+  $productIDsold = array();
   
+  $qtySold = array();
+  $soldItem = array();
+  $pairs = array();
+  $mysqli= NEW MySQLi("localhost","holly","milk","devapps");
+  $resultSet=$mysqli->query("SELECT r.productID, sum(r.qtySR)as qtySR  FROM sales s JOIN salessr r ON s.receiptNum=r.receiptNum WHERE s.status=0 GROUP BY r.productID");
+
+  $sold= array();
+  if($resultSet->num_rows>0){
+  while($row = $resultSet->fetch_assoc()) {
+    //$receiptNum = $row['receiptNum'];
+    $productIDsold=$row['productID'];
+    $qtySold=$row['qtySR'];
+
+    $sold[] = array( 
+      'productID' => $row['productID'],
+       'qtySR' => $row['qtySR']
+    );
+  }
+
+  $insertInvoice="insert into invoice (username, status) values('{$_SESSION['username']}',0) ";
+  $resultInsert=mysqli_query($dbc,$insertInvoice);
+
+  $getLatest="select invoiceNo from invoice order by invoiceNo DESC LIMIT 1";
+  $resultLatest=mysqli_query($dbc,$getLatest);
+  while ($row=$resultLatest->fetch_assoc()) {
+    $invoiceNo=$row["invoiceNo"];
+  }
+  $invoiceNo;
+  $total=0;
+
+  foreach($sold as $key=>$value){
+
+    $pairs[] = '('.intval($value['productID']).','.intval($value['qtySR']).','."'$invoiceNo'".','."'$total'".')';
+  }
+
+  //print_r($pairs);
+
+  $insertProducts="insert into invoice2 (productID, qty, invoiceNo, total) values".implode(',',$pairs);
+  $resultInsertProduct=mysqli_query($dbc,$insertProducts);
+  
+  $closeInvoice="Update sales set status=1 where status=0 ";
+  $resultClose=mysqli_query($dbc,$closeInvoice);
+  
+  }
   
   echo "<script>alert('success');</script>";
   
