@@ -76,36 +76,43 @@
 
 	//query db
 //if not work use *
-$resultSet=$mysqli->query("SELECT sku, productName, SUM(pu2.purchaseQty) as purchaseQty,pu2.productID, pu.poNumber FROM purchase pu JOIN purchase2 pu2
+$resultSet=$mysqli->query("SELECT pu.poNumber,sku, productName, SUM(pu2.purchaseQty) as purchaseQty,pu2.productID, pu.poNumber FROM purchase pu JOIN purchase2 pu2
 ON pu.poNumber=pu2.poNumber JOIN
- products p ON p.productID=pu2.productID WHERE ordered=0  GROUP BY productID;");
+ products p ON p.productID=pu2.productID WHERE ABS(datediff(datePurchase, curdate())) >=3 and ordered='0' GROUP BY productID;");
  
-$resultSet2=$mysqli->query("SELECT DISTINCT pu.poNumber FROM purchase pu JOIN purchase2 pu2
-ON pu.poNumber=pu2.poNumber JOIN
- products p ON p.productID=pu2.productID WHERE ordered=0 ;");
+$resultSet2=$mysqli->query("SELECT DISTINCT pu.poNumber FROM purchase pu WHERE ordered=0 and ABS(datediff(datePurchase, curdate())) >=3 ;");
  While($row=$resultSet2->fetch_assoc()){
 	 echo "
 <input type=hidden name='poNumber[]' value=".$row['poNumber'].">";
 															
  }
+//SELECT p.poNumber FROM purchase p WHERE ABS(datediff(datePurchase, curdate())) >=3 and ordered='0';
 
 
-														if($resultSet->num_rows>0){
+											if($resultSet->num_rows>0){
 															while($rows=$resultSet->fetch_assoc()){
 
-																echo "</tbody><tr>
+																echo "<tr>
 															<td >".$rows['sku']."<input type=hidden name='productID[]' value=".$rows['productID']."></td>
 																<td >".$rows['productName']."</td>
 																<td >".$rows['purchaseQty']."</td>
 																<td><input type=number min=0 name='orderQty[]' onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder=quantity>
-															</tr></tbody>";
+															</tr>";
 														}
 		//if no data output 
 													}else{
 
 														echo"No results";
 													}
-
+			
+            
+       if($resultSet->num_rows>0){
+		   while($rows=$resultSet2->fetch_assoc()){
+			   echo "
+				<input type=hidden name='poNumber[]' value=".$row['poNumber'].">";
+		   }
+	   }
+        
 										?>
                </tbody>
               </table>
@@ -114,63 +121,58 @@ ON pu.poNumber=pu2.poNumber JOIN
               
             </div>
 </form>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
 
+<?php 
+if (isset($_POST['confirm'])){
+	require_once('../../mysqlConnector/mysql_connect.php');
+	$productID=$_POST['productID'];
+    $purchaseQty=$_POST['orderQty'];
+	$poNumber=$_POST['poNumber'];
+			
+	
 
+//------- update purchase -------
+	$queryUpdate="UPDATE purchase SET ordered=1 WHERE poNumber IN ('".implode($poNumber,"', '")."')";
+	$result4=mysqli_query($dbc,$queryUpdate);
+//------- /update purchase -------
 
+//------- insert porductionorder -------
+$queryInsertProduction="insert into productionorder (username,produced) values ('{$_SESSION['username']}',0)";
+$result=mysqli_query($dbc,$queryInsertProduction);
+//------- /insert porductionorder -------
 
+//------- get latest production order number -------
+    $query2="select productionNo from productionorder order by productionNo DESC LIMIT 1";
+    $result2=mysqli_query($dbc,$query2);
+    while($row=$result2->fetch_assoc()) {
+      $productionNo=$row["productionNo"];
+    }
+    $productionNo;
+//------- /get latest production order number -------
 
-<?php
-        if (isset($_POST['confirm'])){
-            $productID=$_POST['productID'];
-            $orderQty=$_POST['orderQty'];
-			$poNumber=$_POST['poNumber'];
-			
-
-            echo "<script>alert('1');</script>";
-            $items = array_combine($productID,$orderQty);
-            $pairs = array();
-            
-  
-            $query4="INSERT INTO productionorder (produced,username) VALUES ('1','{$_SESSION['username']}');";
-
-		
-			//$result4=mysql_query($dbc,$query4);
-			$result4 = mysqli_query($dbc,$query4);
-			
-			$query5="UPDATE purchase SET ordered=1 WHERE poNumber IN('".implode(poNumber,"','")."')";
-		
-			print_r($poNumber);
-			
-			$result5=mysqli_query($dbc,$query5);
-			
-			
-			$query6="SELECT productionNo FROM productionorder ORDER BY productionNo DESC limit 1";
-			$result6=mysqli_query($dbc,$query6);
-			
-			while($row=$result6->fetch_assoc()){
-				$productionNo = $row["productionNo"];
-				
-			}
-			
-			$productionNo;
-			
-            foreach($items as $key=>$value){
-                    $pairs[] = '('.intval($key).','.intval($value).','."'$productionNo'".')';
+$items = array_combine($productID,$purchaseQty);
+    $pairs = array();
+	
+	foreach($items as $key=>$value){
+                $pairs[] = '('.intval($key).','.intval($value).','."'$productionNo'".')';
                 }
-            
-           
-            $query3= "INSERT INTO productionorder2 (productID, qty, productionNo) values".implode(',',$pairs);
-            $result3=mysqli_query($dbc,$query3);
-             echo "<script>alert('success');</script>";
-        }
+
+//------- insert porductionorder2 -------
+ $query3= "INSERT INTO productionorder2 (productID, qty, productionNo) values".implode(',',$pairs);
+ $result3=mysqli_query($dbc,$query3);
+//------- /insert porductionorder2 -------
+
+}
+?>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
         
-        ?>
   <!-- /content -->
   
 
