@@ -140,14 +140,23 @@ if (isset($_POST['confirm'])){
     $controlNum;
   //------- /get latest pullout control number -------
 
-    $items = array_combine($productID,$inventoryQty);
     $pairs = array();
+   
+    $a = array();
+
+    $a = array_unique($productID);
+    $a = array_combine($a, array_fill(0, count($a), 0));
+
+    foreach($productID as $k=>$v) {
+      $a[$v] += $inventoryQty[$k];
+    }
+    
 
     $remarks="spoilage";
 
-    foreach($items as $key=>$value){
-      $pairs[] = '('.intval($key).','.intval($value).','."'$controlNum'".','."'$remarks'".')';
-    }
+    foreach($a as $key=>$value){
+       $pairs[] = '('.intval($key).','.intval($value).','."'$controlNum'".','."'$remarks'".')';
+     }
 
   //------- inserting to pullouts2 table -------
     $query3= "INSERT INTO pullouts2 (productID, pullOutQty, controlNum, remarks) values".implode(',',$pairs);
