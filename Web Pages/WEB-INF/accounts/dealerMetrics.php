@@ -166,18 +166,13 @@ if ($_SESSION['usertype']!=101){
     jQuery(document).ready(function () {
         $("#rating").rating({
             starCaptions: function(val) {
-                if (val < 3) {
-                    return val;
-                } else {
-                    return 'high';
-                }
+              
             },
         
             hoverOnClear: false
         });
    
-      //  $('#rating').rating('update',0);
-        
+     
     });
 </script>
 
