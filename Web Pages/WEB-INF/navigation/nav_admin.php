@@ -17,14 +17,7 @@
   <link rel="stylesheet" href="../../imports/css/font.css" type="text/css" />
   <link rel="stylesheet" href="../../imports/css/app.css" type="text/css" />
 
-  <!-- star rating  -->
-    
-      
-   
-
-
-<!--  star rating-->
-
+ 
 
 </head>
 
@@ -347,6 +340,9 @@
   <!-- / footer -->
 
 </body>
+
+ 
+
 <script src="../libs/jquery/jquery/dist/jquery.js"></script>
 <script src="../libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
 <script src="../libs/jquery/js/ui-load.js"></script>
@@ -355,5 +351,5 @@
 <script src="../libs/jquery/js/ui-nav.js"></script>
 <script src="../libs/jquery/js/ui-toggle.js"></script>
 <script src="../libs/jquery/js/ui-client.js"></script>
-  <script src="../accounts/js/star-rating.js" type="text/javascript"></script>
+
 </html>

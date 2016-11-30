@@ -1,3 +1,5 @@
+$(document).ready(function() {
+	
 
 var app = angular.module('myApp', []);
 
@@ -13,6 +15,7 @@ app.controller('POSController', function ($scope) {
     $scope.order = [];
     
     $scope.add = function(item) {
+			alert("hello...");
       var foodItem = {
         id : $scope.itemsCnt,
         item : item
@@ -41,4 +44,5 @@ app.controller('POSController', function ($scope) {
     $scope.clearOrder = function() {
       $scope.order = [];
     };
+});
 });

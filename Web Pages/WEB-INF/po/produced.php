@@ -79,7 +79,7 @@
 //if not work use *
                  $resultSet=$mysqli->query("SELECT po.productionNo,p.sku, p.productName, SUM(po2.qty) as qty,po2.productID, po.productionNo FROM productionorder po JOIN productionorder2 po2
                   ON po.productionNo=po2.productionNo JOIN
-                  products p ON p.productID=po2.productID WHERE produced='0' GROUP BY productID;");
+                  products p ON p.productID=po2.productID WHERE produced='1' GROUP BY productID;");
 
                 $resultSet2=$mysqli->query("SELECT DISTINCT po.productionNo FROM productionorder po WHERE produced=0;");
                  While($row=$resultSet2->fetch_assoc()){
@@ -130,9 +130,9 @@
      $qty=$_POST['productionQty'];
      $productionNo=$_POST['productionNo'];
 $productionQty = $mysqli->real_escape_string($_POST['productionQty']);
-if(empty($productionQty)){
+
 //------- update productionorder -------
-     $queryUpdate="UPDATE productionorder SET produced=0 WHERE productionNo IN ('".implode($productionNo,"', '")."')";
+     $queryUpdate="UPDATE productionorder SET produced=1 WHERE productionNo IN ('".implode($productionNo,"', '")."')";
      $result4=mysqli_query($dbc,$queryUpdate);
 //------- /update purchase -------
 
@@ -158,7 +158,8 @@ if(empty($productionQty)){
     }
 
 //------- insert produced2 -------
-    $query3= "INSERT INTO produced2 (productID, qty) values".implode(',',$pairs);
+   // $query3= "INSERT INTO produced2 (productID, qty) values".implode(',',$pairs);
+	$query3="INSERT INTO produced2 (productID, producedQty,productionNo) values".implode(',',$pairs);
     $result3=mysqli_query($dbc,$query3);
 //------- /insert porductionorder2 -------
 
@@ -166,41 +167,8 @@ if(empty($productionQty)){
     exit; 
 }
 
-else{
-	 $queryUpdate="UPDATE productionorder SET produced=1 WHERE productionNo IN ('".implode($productionNo,"', '")."')";
-     $result4=mysqli_query($dbc,$queryUpdate);
-//------- /update purchase -------
 
-//------- insert produced -------
-     $queryInsertProduced="insert into produced (produced,allocated) values (1,0)";
-     $result=mysqli_query($dbc,$queryInsertProduced);
-//------- /insert porductionorder -------
-
-//------- get latest production order number(not fixed) -------
-     $query2="select productionNo from productionorder order by productionNo DESC LIMIT 1";
-     $result2=mysqli_query($dbc,$query2);
-     while($row=$result2->fetch_assoc()) {
-      $productionNo=$row["productionNo"];
-    }
-    $productionNo;
-//------- /get latest production order number(notfixed) ------- 
-
-    $items = array_combine($productID,$qty);
-    $pairs = array();
-
-    foreach($items as $key=>$value){
-      $pairs[] = '('.intval($key).','.intval($value).','."'$productionNo'".')';
-    }
-
-//------- insert produced2 -------
-    $query3= "INSERT INTO produced2 (productID, qty) values".implode(',',$pairs);
-    $result3=mysqli_query($dbc,$query3);
-//------- /insert porductionorder2 -------
-
-    header("location:produced.php"); 
-    exit; 
-}
-  }
+  
   ?>
 </div>
 </div>

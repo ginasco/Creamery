@@ -10,11 +10,11 @@
 
 <!-- star rating  -->
     
-      <script src="../../imports/libs/jquery/js/jquery.min.js"></script>
 
     <link rel="stylesheet" href="../accounts/css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
   
-  
+   
+    <script src="../account/js/star-rating.js" type="text/javascript"></script>
    
 
    
