@@ -1,252 +1,246 @@
-
 <!DOCTYPE html>
+  <form action="produced.php" method="post">
 <html lang="en" class="">
 <head>
   <meta charset="utf-8" />
   <title>Laguna Creamery Inc</title>
   <meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <link rel="stylesheet" href="../libs/assets/animate.css/animate.css" type="text/css" />
+  <link rel="stylesheet" href="../libs/assets/font-awesome/css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="../libs/assets/simple-line-icons/css/simple-line-icons.css" type="text/css" />
+  <link rel="stylesheet" href="../libs/jquery/bootstrap/dist/css/bootstrap.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/font.css" type="text/css" />
+  <link rel="stylesheet" href="css/app.css" type="text/css" />
 
 </head>
 <body>
   <div class="app app-header-fixed ">
-    
+
 
    <!-- nav -->
    <?php include '../session/levelOfAccess.php';?>
+   
    <!-- / nav -->
 
    <?php
    if ($_SESSION['usertype']!=104){
     header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."../../accounts/login.php");
   }
+  require_once('../../mysqlConnector/mysql_connect.php');
+  $query="select productID, productName, wholesalePrice, retailPrice, sku from products";
+  $result=mysqli_query($dbc,$query);
   ?>
-
 
   <!-- content -->
   <div id="content" class="app-content" role="main">
   	<div class="app-content-body ">
-     
+
 
       <div class="bg-light lter b-b wrapper-md">
-        <h1 class="m-n font-thin h3">Receive Delivery</h1>
+        <h1 class="m-n font-thin h3">Production Order</h1>
       </div>
       <div class="wrapper-md">
         <div class="panel panel-default">
           <div class="panel-heading">
-            Delivery Receipts
+            Create Production Order
           </div>
+          <div class="wrapper-md">
 
-          <div class="wrapper-md bg-white-only b-b">
-            <div class="row text-center">
-              <div class="col-sm-3 col-xs-6" >
-                <div>Quantity of Receive Products <i class="fa fa-fw fa-caret-up text-success text-sm"></i></div>
-                <input class="h2 m-b-sm" style="border:none; text-align:center" readonly id="qtyReceive"/>
-              </div>
+           <b>Products to be Ordered
+           </b> <br>
+           <!--  <button type="submit" name="add" class="btn btn-default" id="add">Add Product</button><br> -->
+           <form action="productionorder.php" method="post">
+            <div class="table-responsive">
+              <table  class="table table-striped b-t b-b" id="myTable">
+                <thead>
+                  <tr>
+                    <th  style="width:25%">SKU</th>
+                    <th  style="width:25%">Product Name</th>
+                    <th  style="width:10%">Quantity</th>
+                    <th  style="width:10%">Produced Quantity</th>
 
-              <div class="col-sm-3 col-xs-6">
-                <div>Receive SKUs <i class="fa fa-fw fa-caret-up text-success text-sm"></i></div>
-                <input class="h2 m-b-sm" style="border:none; text-align:center" readonly id="receiveSku"/>
-              </div>
-              <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" >
-                <div>
-                  Delivery Receipt Number : <select name="sel_name">
-                  <?php
-                  require_once('../../mysqlConnector/mysql_connect.php');
-                  $query="
-                  SELECT distinct d.drNumber
-                  FROM delivery d 
-                  WHERE distributorName='{$_SESSION['username']}' and NOT exists
-                  (SELECT distinct * FROM received r
-                  WHERE r.drNumber = d.drNumber );";
-                  $result=mysqli_query($dbc,$query);
-                  while ($row = $result->fetch_assoc()) {
-                    echo "<option value=".$row["drNumber"].">".$row["drNumber"]."</option>";
-                  }
-                  ?>
-                </select>  <input class="btn btn-default" type="submit" name="submit" value="Search" />
-              </div>
-            </form>
-          </div>
-        </div>
+                  </tr>
+                </thead>
+                <tbody id="tableList">
+                 <?php
 
-        <div class="table-responsive">
-          <table  ui-options="{
-          sAjaxSource: 'api/datatable.json',
-          aoColumns: [
-          { mData: 'engine' },
-          { mData: 'browser' },
-          { mData: 'platform' },
-          { mData: 'version' },
-          { mData: 'grade' }
-          ]
-        }" class="table table-striped b-t b-b">
-        <thead>
-          <tr>
-            <th  style="width:10%">SKU</th>
-            <th  style="width:20%">Product Name</th>
-            <th  style="width:12%;text-align:center;">Purchase Price</th>
-            <th  style="width:10%;text-align:center;">Retail Price</th>
-            <th  style="width:20%;text-align:center;">Delivery Qty</th>
-            <th  style="width:15%">Unit</th>
-            <th  style="width:15%">Expiration</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php  
-          if(isset($_POST['submit'])){
+                 $output = NULL;
 
-            $drNumber=$_POST['sel_name'];
-            $query2=" select drNumber, p.productID, p.productName, p.sku, p.qtyUnit, p.retailPrice, p.wholesalePrice, d.quantityDR, d.expiryDate from delivery d join products p on d.productID= p.productID where d.drNumber='{$drNumber}' order by p.sku";
-            $result2=mysqli_query($dbc,$query2);
-            echo "<form action=receive.php method=post>";
-            while($row = $result2->fetch_assoc()) {
-              echo"
-              <tbody>
-                <tr class='productRows'>
-                  <td>".$row["sku"]."</td>
-                  <td>".$row["productName"]."<input type=hidden name='drNumber' value=".$row["drNumber"]."></td> 
-                  <td align='right'>".$row["wholesalePrice"]."</td>
-                  <td align='right'>".$row["retailPrice"]."</td>
-                  <td><input type=number style='text-align:right;' required onkeypress='return event.charCode >= 48 && event.charCode <= 57' min=0 name='qtyRec[]' class='receiveQty' value=".$row["quantityDR"]."></td>
-                  <td>".$row["qtyUnit"]." <input type=hidden name='productID[]' value=".$row["productID"]."></td>
-                  <td>".$row["expiryDate"]."<input type=hidden name='expiryDate' value=".$row["expiryDate"]."></td>
-                </tr>
-              </tbody>";
+	//connect to db
+
+                 $mysqli= NEW MySQLi("localhost","holly","milk","devapps");
+	//get string value from search
+	//removes any special characters
+
+
+	//query db
+//if not work use *
+                 $resultSet=$mysqli->query("SELECT po.productionNo,p.sku, p.productName, SUM(po2.qty) as qty,po2.productID, po.productionNo FROM productionorder po JOIN productionorder2 po2
+                  ON po.productionNo=po2.productionNo JOIN
+                  products p ON p.productID=po2.productID WHERE produced='0' GROUP BY productID;");
+
+                $resultSet2=$mysqli->query("SELECT DISTINCT po.productionNo FROM productionorder po WHERE produced=0;");
+                 While($row=$resultSet2->fetch_assoc()){
+                  echo "
+                  <input type=hidden name='productionNo[]' value=".$row['productionNo'].">";
+
+                }
+//SELECT p.poNumber FROM purchase p WHERE ABS(datediff(datePurchase, curdate())) >=3 and ordered='0';
+
+
+                if($resultSet->num_rows>0){
+                 while($rows=$resultSet->fetch_assoc()){
+
+                  echo "<tr>
+                  <td >".$rows['sku']."<input type=hidden name='productID[]' value=".$rows['productID']."></td>
+                  <td >".$rows['productName']."</td>
+                  <td >".$rows['qty']."</td>
+                  <td><input type=number min=0 name='productionQty[]' onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder=quantity>
+                  </tr>";
+                }
+		//if no data output 
+              }else{
+
+                echo"No results";
+              }
+
+
+              if($resultSet->num_rows>0){
+               while($rows=$resultSet2->fetch_assoc()){
+                echo "
+                <input type=hidden name='productionNo[]' value=".$row['productionNo'].">";
+              }
             }
 
-            
-          }
-          ?>
-        </tbody>
-      </table>
-      <br>
-      <?php  
-      echo "<div><button class='btn btn-success' type=submit id=confirmR name=confirmR value=Confirm />Confirm Receive</button></div>";
-      echo "</form>";
-      ?>
-      <br>
-    </div>
-  </div>
-</div>
+            ?>
+          </tbody>
+        </table>
+        <button type="submit" name="confirm" class="btn btn-success">Submit</button> 
 
 
+      </div>
+    </form>
 
-</div>
-</div>
-<!-- /content -->
+    <?php 
+    if (isset($_POST['confirm'])){
+     require_once('../../mysqlConnector/mysql_connect.php');
+     $productID=$_POST['productID'];
+     $qty=$_POST['productionQty'];
+     $productionNo=$_POST['productionNo'];
+$productionQty = $mysqli->real_escape_string($_POST['productionQty']);
+if(empty($productionQty)){
+//------- update productionorder -------
+     $queryUpdate="UPDATE productionorder SET produced=0 WHERE productionNo IN ('".implode($productionNo,"', '")."')";
+     $result4=mysqli_query($dbc,$queryUpdate);
+//------- /update purchase -------
 
-<?php  
-if(isset($_POST['confirmR'])){
-  
-  $drNumber=$_POST['drNumber'];
-  $qtyRec=$_POST['qtyRec'];
-  $productID=$_POST['productID'];
-  $expiryDate=$_POST['expiryDate'];
-  
-  $items= array_combine($productID,$qtyRec);
-  $pairs = array();
-  
-  foreach($items as $key=>$value){
-    $pairs[] = '('.intval($key).','.intval($value).','.$drNumber.','."'{$_SESSION['username']}'".')';
-  }
-                //add to received table
-  $query="INSERT INTO received (productID, quantityRC, drNumber, receivedBy) values".implode(',',$pairs);
-  $result=mysqli_query($dbc,$query);
-  
-                //add to inventory
-  
-                    //not yet exist inventory
-  $searchNotExist="select r.productID, r.quantityRC, r.dateReceived
-  from received r 
-  where drNumber='{$drNumber}'";
-  $nExist=mysqli_query($dbc,$searchNotExist);
-  while($row = $nExist->fetch_assoc()) {
-    $insertIntoData="insert into perpetualinventory (productID, inventoryQty, dateInstance, username, expiryDate, active, pulloutStat) values ('{$row["productID"]}','{$row["quantityRC"]}','{$row["dateReceived"]}','{$_SESSION['username']}','{$expiryDate}','1','0')";
-    $insertResult=mysqli_query($dbc,$insertIntoData);
-  }
+//------- insert produced -------
+     $queryInsertProduced="insert into produced (produced,allocated) values (1,0)";
+     $result=mysqli_query($dbc,$queryInsertProduced);
+//------- /insert porductionorder -------
 
-  $productIDsold = array();
-  
-  $qtySold = array();
-  $soldItem = array();
-  $pairs = array();
-  $mysqli= NEW MySQLi("localhost","holly","milk","devapps");
-  $resultSet=$mysqli->query("SELECT r.productID, sum(r.qtySR)as qtySR  FROM sales s JOIN salessr r ON s.receiptNum=r.receiptNum WHERE s.status=0 GROUP BY r.productID");
+//------- get latest production order number(not fixed) -------
+     $query2="select productionNo from productionorder order by productionNo DESC LIMIT 1";
+     $result2=mysqli_query($dbc,$query2);
+     while($row=$result2->fetch_assoc()) {
+      $productionNo=$row["productionNo"];
+    }
+    $productionNo;
+//------- /get latest production order number(notfixed) ------- 
 
-  $sold= array();
-  if($resultSet->num_rows>0){
-  while($row = $resultSet->fetch_assoc()) {
-    //$receiptNum = $row['receiptNum'];
-    $productIDsold=$row['productID'];
-    $qtySold=$row['qtySR'];
+    $items = array_combine($productID,$qty);
+    $pairs = array();
 
-    $sold[] = array( 
-      'productID' => $row['productID'],
-       'qtySR' => $row['qtySR']
-    );
-  }
+    foreach($items as $key=>$value){
+      $pairs[] = '('.intval($key).','.intval($value).','."'$productionNo'".')';
+    }
 
-  $insertInvoice="insert into invoice (username, status) values('{$_SESSION['username']}',0) ";
-  $resultInsert=mysqli_query($dbc,$insertInvoice);
+//------- insert produced2 -------
+    $query3= "INSERT INTO produced2 (productID, qty) values".implode(',',$pairs);
+    $result3=mysqli_query($dbc,$query3);
+//------- /insert porductionorder2 -------
 
-  $getLatest="select invoiceNo from invoice order by invoiceNo DESC LIMIT 1";
-  $resultLatest=mysqli_query($dbc,$getLatest);
-  while ($row=$resultLatest->fetch_assoc()) {
-    $invoiceNo=$row["invoiceNo"];
-  }
-  $invoiceNo;
-  $total=0;
-
-  foreach($sold as $key=>$value){
-
-    $pairs[] = '('.intval($value['productID']).','.intval($value['qtySR']).','."'$invoiceNo'".','."'$total'".')';
-  }
-
-  //print_r($pairs);
-
-  $insertProducts="insert into invoice2 (productID, qty, invoiceNo, total) values".implode(',',$pairs);
-  $resultInsertProduct=mysqli_query($dbc,$insertProducts);
-  
-  $closeInvoice="Update sales set status=1 where status=0 ";
-  $resultClose=mysqli_query($dbc,$closeInvoice);
-  
-  }
-  
-  echo "<script>alert('success');</script>";
-  
+    header("location:produced.php"); 
+    exit; 
 }
 
-?>
+else{
+	 $queryUpdate="UPDATE productionorder SET produced=1 WHERE productionNo IN ('".implode($productionNo,"', '")."')";
+     $result4=mysqli_query($dbc,$queryUpdate);
+//------- /update purchase -------
 
+//------- insert produced -------
+     $queryInsertProduced="insert into produced (produced,allocated) values (1,0)";
+     $result=mysqli_query($dbc,$queryInsertProduced);
+//------- /insert porductionorder -------
+
+//------- get latest production order number(not fixed) -------
+     $query2="select productionNo from productionorder order by productionNo DESC LIMIT 1";
+     $result2=mysqli_query($dbc,$query2);
+     while($row=$result2->fetch_assoc()) {
+      $productionNo=$row["productionNo"];
+    }
+    $productionNo;
+//------- /get latest production order number(notfixed) ------- 
+
+    $items = array_combine($productID,$qty);
+    $pairs = array();
+
+    foreach($items as $key=>$value){
+      $pairs[] = '('.intval($key).','.intval($value).','."'$productionNo'".')';
+    }
+
+//------- insert produced2 -------
+    $query3= "INSERT INTO produced2 (productID, qty) values".implode(',',$pairs);
+    $result3=mysqli_query($dbc,$query3);
+//------- /insert porductionorder2 -------
+
+    header("location:produced.php"); 
+    exit; 
+}
+  }
+  ?>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<!-- /content -->
 
 
 </div>
 
 <script>
-  var rowCount = 0;
-  var quantityCount=0;
-  $('.productRows').each(function(){
-    rowCount++;
+ $(document).on('click', "#add", function(){
+   var para = document.createElement("tr");
+   var element = document.getElementById("tableList");
+   para.setAttribute("class", "trList");
+   element.appendChild(para);
+   var e = document.getElementById("productChosen");
+   var productID = e.options[e.selectedIndex].value;
 
-  });
+   var productChosen = $("#productChosen").find(":selected").text();
 
-  $('.receiveQty').each(function(){
-    quantityCount += parseFloat(this.value);
 
-  });
+   $(".trList").append('<td>'+productChosen+'<input type="number" style=display:none readOnly name="productID[]" value="'+productID+'"</td>');
+   $(".trList").append('<td><input type="number" min="0" name="productionQty[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="quantity"/></td>');
+   $(".trList").append('<td><input type="button" name="delete" id="delete" class="ibtnDel btn btn-outline btn-danger"  value=Delete ></td>');
 
-  if(rowCount==0){
-    $("#confirmR").prop('disabled', true); 
-  }
+   para.setAttribute("class", "trListSaved");
+ });
 
-  var x = document.getElementById("qtyReceive");
-  x.setAttribute("value", quantityCount);
+ $(document).on('click', "#delete", function(event){
+  $(this).closest("tr").remove();
 
-  var y = document.getElementById("receiveSku");
-  y.setAttribute("value", rowCount);
+});
+
 
 </script>
-
 </body>
 </html>
