@@ -12,8 +12,9 @@
 <link rel="stylesheet" type="text/css" href="../sales/css/datepicker.css" />
 <link rel="stylesheet" type="text/css" href="../sales/css/style.css" />
 <!-- star rating  -->
-    
-    
+
+
+     
   
 <script src="../../imports/libs/jquery/js/jquery.min.js"></script>
 <!--  star rating-->
