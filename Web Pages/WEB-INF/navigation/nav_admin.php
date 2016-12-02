@@ -208,7 +208,8 @@
 				   <a href="../po/purchaseOrderReportAdmin.php">
                     <span>Purchase Order Report</span>
                   </a>
-                </li>      
+                </li>  
+				
               </ul>
             </li>
 
@@ -273,16 +274,8 @@
                     <span>List Production Orders</span>
                   </a>
                 </li>
-                <li>
-                  <a href="../reports/pbreportlist.php">
-                    <span>Production Reports</span>
-                  </a>
-                </li>
-                <li>
-				  <a href="../po/purchaseOrderReportAdmin.php">
-                    <span>Purchase Order Report</span>
-                  </a>
-                </li>      
+             
+                 
               </ul>
             </li>
 
