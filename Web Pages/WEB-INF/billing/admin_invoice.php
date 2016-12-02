@@ -120,6 +120,7 @@ $query="SELECT DATE(invoiceDate) as invoiceDate, DATE(DATE_ADD(invoiceDate,INTER
               </tr>";
         }
           ?>
+          <tr>
           <td colspan="4" class="text-right"><strong>Subtotal</strong></td>
           <td colspan="5    "style="text-align:right"><strong><span>₱</span><input type="number" style="border:none;text-align:right" readonly id="subTotal"/></strong></td>
         </tr>

@@ -270,7 +270,7 @@
 
   <!-- footer -->
 <footer id="footer" class="app-footer" role="footer">
-  <div class="wrapper b-t bg-light">
+  <div class="wrapper b-t bg-light hidden-print">
     <span class="pull-right">2.2.0 <a href ui-scroll="app" class="m-l-sm text-muted"><i class="fa fa-long-arrow-up"></i></a></span>
     &copy; 2016 Copyright.
   </div>
@@ -279,7 +279,6 @@
 <script src='../libs/angular/angular-animate/angular-animate.js'></script>
 -->
  
-<script src="../sales/js/pos.js"></script>
 <script src="../libs/jquery/jquery/dist/jquery.js"></script>
   <script src="../libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
     <script src="../libs/jquery/js/ui-load.js"></script>

@@ -228,7 +228,7 @@
                     <span>Distribution</span>
 
                     <li>
-                      <a href="allocation.html">
+                      <a href="../po/allocation.php">
                         <span>Allocate Deliveries</span>
                       </a>
                     </li>
