@@ -44,7 +44,7 @@
 										<div class="col-sm-8" align="left">  
 											
 												<div class="hero-unit">
-													<p> Starting Date: <input type="text"  name="search2" data-date-format='yyyy-mm-dd' id="from" > End Date:<input type="text" name="search"  data-date-format='yyyy-mm-dd' id="to" > </p>
+													<p> Starting Date: <input type="text"  required name="search2" data-date-format='yyyy-mm-dd' id="from" > End Date:<input type="text" required name="search"  data-date-format='yyyy-mm-dd' id="to" > </p>
 												</div>
 													
 											

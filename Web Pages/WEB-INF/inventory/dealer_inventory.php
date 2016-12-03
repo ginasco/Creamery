@@ -141,10 +141,10 @@ $totalAmount+=$rows['total'];
       <div class="hero-unit">
 		
 		<p> Starting Date:
-         <input type="text"  name="search2" data-date-format='yyyy-mm-dd' id="from" > 
+         <input type="text"  required name="search2" data-date-format='yyyy-mm-dd' id="from" > 
 		<?php //$date=0;	$from_date = date("Y-m-d", strtotime($date)); echo $from_date; ?>
 		<p> End Date </p>
-			 <input type="text" name="search"  data-date-format='yyyy-mm-dd' id="to" > 
+			 <input type="text" required name="search"  data-date-format='yyyy-mm-dd' id="to" > 
 			 <?php //  $to_date= date("Y-m-d", strtotime($date));  echo $to_date;?>
 			 		<input type="SUBMIT" name="submit" value="search"/>
 			 
