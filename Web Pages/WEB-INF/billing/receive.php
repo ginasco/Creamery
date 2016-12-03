@@ -39,15 +39,8 @@
 
           <div class="wrapper-md bg-white-only b-b">
             <div class="row text-center">
-              <div class="col-sm-3 col-xs-6" >
-                <div>Quantity of Receive Products <i class="fa fa-fw fa-caret-up text-success text-sm"></i></div>
-                <input class="h2 m-b-sm" style="border:none; text-align:center" readonly id="qtyReceive"/>
-              </div>
 
-              <div class="col-sm-3 col-xs-6">
-                <div>Receive SKUs <i class="fa fa-fw fa-caret-up text-success text-sm"></i></div>
-                <input class="h2 m-b-sm" style="border:none; text-align:center" readonly id="receiveSku"/>
-              </div>
+              
               <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" >
                 <div>
                   Delivery Receipt Number : <select name="sel_name">
