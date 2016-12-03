@@ -235,6 +235,11 @@
                   </a>
                 </li>
                 <li>
+                  <a href="../delivery/generateDelivery.php">
+                    <span>Generate Delivery Receipt</span>
+                  </a>
+                </li>
+                <li>
                   <a href="../delivery/deliverylist.php">
                     <span>Delivery Statuses</span>
                   </a>
