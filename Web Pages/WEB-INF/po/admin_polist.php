@@ -74,7 +74,7 @@
                     echo " <td><span class='label bg-danger'>Unprocess</span></td> 
                 </tr>";
                   }else if ($ordered==1){
-                    echo " <td><<span class='label bg-warning'>processed</span></td> 
+                    echo " <td><span class='label bg-warning'>processed</span></td> 
                 </tr>";
                   }
                 
