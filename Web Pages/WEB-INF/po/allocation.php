@@ -64,7 +64,7 @@
                  <td >".$row["productName"]."<input type=hidden class=productID name=productID value=".$row["productID"]."></td>
                  <td>".$row["producedQty"]."<input type=hidden class=producedQty name=producedQty value=".$row["producedQty"]."></td>
                  <td>".$row["expirationDate"]."<input type=hidden class=expirationDate name=expirationDate value=".$row["expirationDate"]."></td>
-                 <td><button type=button name=allocate id=allocate >Allocate</button></td>";
+                 <td><button type=button name=allocate class='btn btn-sm btn-default' id=allocate >Allocate</button></td>";
                }
 
 
@@ -217,7 +217,7 @@
 
 
 <div class="pull-right">
-  <button  name="confirm">Confirm</button>
+  <button class="btn btn-sm btn-default"  name="confirm">Confirm</button>
 </div>
 </form>
 

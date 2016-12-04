@@ -78,7 +78,7 @@
 
            $conNum=$rows["productionNo"];
            echo "<tr class='productRows'>
-           <td ><input type=button name=controlNum id=happy class=cN style=border:none;background:none value=".$conNum."></td>
+           <td >PB-<input type=button name=controlNum id=happy class=cN style=border:none;background:none value=".$conNum."></td>
            <td>".$rows["productionDate"]."</td>
            ";
           

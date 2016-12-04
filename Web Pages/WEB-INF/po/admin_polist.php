@@ -59,7 +59,7 @@
                 $ordered=$row["ordered"];
 
                 echo "<tr class='productRows'>
-                <td ><input type=button name=controlNum id=happy class=pN style=border:none;background:none value=".$poNumber."></td>
+                <td >PO-<input type=button name=controlNum id=happy class=pN style=border:none;background:none value=".$poNumber."></td>
                 <td>".$row["datePurchase"]."<input type=hidden name=datePurchase value=".$row["datePurchase"]."></td>";
 
                 $query1="SELECT concat(i.fName,' ',i.lName) as distributorName from usersinfo i where userID= '{$userID}'";

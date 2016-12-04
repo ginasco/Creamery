@@ -61,7 +61,7 @@
               while($row = $result->fetch_assoc()) {
                 $conNum=$row["controlNum"];
                 echo "<tbody><tr class='productRows'>
-                <td ><input type=button name=controlNum id=happy class=cN style=border:none;background:none value=".$conNum."></td>
+                <td >SP-<input type=button name=controlNum id=happy class=cN style=border:none;background:none value=".$conNum."></td>
                 <td>".$row["distributorName"]."<input type=hidden name=distributorName value=".$row["distributorName"]."></td>
                 <td>".$row["pullOutDate"]."<input type=hidden name=pullOutDate value=".$row["pullOutDate"]."></td>
                 <td></td> 

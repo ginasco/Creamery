@@ -55,7 +55,7 @@ if ($_SESSION['usertype']!=101){
               while($row = $result->fetch_assoc()) {
                 $invoiceNo=$row["invoiceNo"];
                 echo "<tr class='productRows'>
-                <td ><input type=button name=invoiceNo id=happy class=cN style=border:none;background:none value=".$invoiceNo."></td>
+                <td >INV-<input type=button name=invoiceNo id=happy class=cN style=border:none;background:none value=".$invoiceNo."></td>
                 <td>".$row["invoiceDate"]."<input type=hidden name=invoiceDate value=".$row["invoiceDate"]."></td>
                 <td>".$row["distributorName"]."<input type=hidden name=distributorName value=".$row["distributorName"]."></td>";
 

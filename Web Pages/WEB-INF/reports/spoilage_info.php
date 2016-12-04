@@ -34,7 +34,7 @@
       <form>
         <div class="bg-light lter b-b wrapper-md hidden-print">
           <button name="conNum" class="btn btn-sm btn-info pull-right" onClick="window.print();">Print</button>
-          <h1 class="m-n font-thin h3"> Spoilage Products /# <input type=text style="border:none;background:none" readonly name="conNum" value="<?php echo $conNum; ?>"/></h1>
+          <h1 class="m-n font-thin h3"> Spoilage Products /SP- <input type=text style="border:none;background:none" readonly name="conNum" value="<?php echo $conNum; ?>"/></h1>
         </div>
       </form>
 

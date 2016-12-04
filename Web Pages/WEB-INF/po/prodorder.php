@@ -36,7 +36,7 @@
 
       <div class="bg-light lter b-b wrapper-md hidden-print">
         <a href class="btn btn-sm btn-info pull-right" onClick="window.print();">Print</a>
-        <h1 class="m-n font-thin h3">Production Orders / <?php echo $_GET['conNum'];?></h1>
+        <h1 class="m-n font-thin h3">Production Orders / PB-<?php echo $_GET['conNum'];?></h1>
       </div>
       <div class="wrapper-md">
         <?php  
