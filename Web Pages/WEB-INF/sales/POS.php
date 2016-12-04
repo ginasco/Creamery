@@ -59,7 +59,7 @@
 				
                require_once('../../mysqlConnector/mysql_connect.php');
                $query="SELECT i.productID,i.expiryDate, p.productName, p.retailPrice, i.inventoryQty, i.expiryDate
-               FROM perpetualinventory i JOIN products p ON i.productID = p.productID where inventoryQty>0";
+               FROM perpetualinventory i JOIN products p ON i.productID = p.productID where inventoryQty>0 and pulloutStat=0";
                $result=mysqli_query($dbc,$query);
                while($row = $result->fetch_assoc()) {
 				   
