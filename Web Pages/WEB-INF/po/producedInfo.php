@@ -67,10 +67,10 @@ $query="Select date(producedDate) as datePurchase From produced where production
           $result=mysqli_query($dbc,$query);
           while($row = $result->fetch_assoc()) {
             echo "  <tr class='productRows'>
-                <td >".$row["sku"]."<input type=hidden name='productID[]' class=productID value=".$row["productID"]."></td>
+                <td >".$row["sku"]."<input type=hidden  name='productID[]' class=productID value=".$row["productID"]."></td>
                 <td >".$row["productName"]."<input type=hidden name='poNum' class=productID value=".$poNum."></td>
                 <td>".$row["producedQty"]."<input type=hidden name='producedQty[]' class=producedQty value=".$row["producedQty"]."></td>
-                <td ><input type=number onkeypress='return event.charCode >= 48 && event.charCode <= 57' min='0' name=qtyProduced class=qtyProduced ></td>
+                <td ><input type=number onkeypress='return event.charCode >= 48 && event.charCode <= 57'required min='0' name=qtyProduced class=qtyProduced ></td>
 
                
               </tr>";
