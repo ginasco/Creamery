@@ -128,7 +128,7 @@
      $productID=$_POST['productID'];
      $purchaseQty=$_POST['orderQty'];
      $poNumber=$_POST['poNumber'];
-$orderQty = $mysqli->real_escape_string($_POST['orderQty']);
+//$orderQty = $mysqli->real_escape_string($_POST['orderQty']);
 
 
 	  				 $queryUpdate1="UPDATE purchase SET ordered=1 WHERE poNumber IN ('".implode($poNumber,"', '")."')";
@@ -152,22 +152,67 @@ $orderQty = $mysqli->real_escape_string($_POST['orderQty']);
 
     foreach($items as $key=>$value){
       $pairs[] = '('.intval($key).','.intval($value).','."'$productionNo'".')';
-    
+    }
 
 //------- insert porductionorder2 -------
     $query3= "INSERT INTO productionorder2 (productID, qty, productionNo) values".implode(',',$pairs);
     $result3=mysqli_query($dbc,$query3);
 //------- /insert porductionorder2 -------
 
-    header("location:productionorder.php"); 
-    exit; 
-					 } 
+//------- insert produced -------
+		$query4="INSERT INTO produced(produced) VALUES ('0');";
+		 $result4=mysqli_query($dbc,$query4);
+//-------/ insert produced -------
+
+//-------get latest production number FROM produced -------
+		$query5="select productionNo from produced order by productionNo DESC LIMIT 1;";
+		 $result5=mysqli_query($dbc,$query5);
+		 while($row=$result5->fetch_assoc()) {
+      $prodN=$row["productionNo"];
+    }
+    $prodN;
+//-------/get latest production number FROM produced -------
+$marcus=array();
+
+//------- select qty from productionOrder2 -------
+ $mysqli= NEW MySQLi("localhost","holly","milk","devapps");
+ $resultSet1=$mysqli->query("select qty,productID from productionorder2 WHERE productionNo='{$productionNo}'");
+ if($resultSet1->num_rows>0){
+	 
+	 
+	 while($row = $resultSet1->fetch_assoc()) {
+	 
+	 $marcus[]= array(
+	  'prod' =>$row['productID'],
+	  'qty'=>$row['qty']);
+	 
+	 }
+ }
+		echo $productionNo;
+			 
+	$expire= "0000-00-00";
+	$alloc="0";
+	foreach($marcus as $key=>$value){
+		$gina[]= '('.intval($value['prod']).','.intval($value['qty']).','."'$expire'".','."'$alloc'".','."'$productionNo'".')';
+		
 	}
+
+//------- /select qty from productionOrder2 -------
+
+//------- insert produced2 -------
+$query7="INSERT INTO produced2 (productID,producedQty,expirationDate,allocated,productionNo) VALUES ".implode(',',$gina); 
+$result7=mysqli_query($dbc,$query7);
+//------- /insert produced2 -------
+//
+   header("location:productionorder.php"); 
+   exit; 
+					 } 
+	
 //------- update purchase -------
 
   ?>
 </div>
-</div>
+</div> 
 </div>
 </div>
 </div>
