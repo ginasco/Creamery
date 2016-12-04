@@ -11,7 +11,7 @@ $flag=0;
 
 if (isset($_SESSION['badlogin'])){
 if ($_SESSION['badlogin']>=3)
-       header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/dashboard.php");
+       header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/homepage.php");
 }
 
 if (isset($_POST['submit'])){
@@ -65,18 +65,18 @@ $flag=1;
             if($row["usertype"]==101){
             $_SESSION['usertype']=101;
             $_SESSION['userID']=$row["userID"];
-            header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/../dashboard/dashboard_admin.php");
+            header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/../dashboard/homepage_admin.php");
             $_SESSION['name']=$row["fName"] .' '.$row["lName"];//admin
             }else if($row["usertype"]==102){
                 $_SESSION['usertype']=102;
                 $_SESSION['userID']=$row["userID"];
-                header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/../dashboard/dashboard_dealer.php");
+                header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/../dashboard/homepage_dealer.php");
                 $_SESSION['name']=$row["fName"] .' '.$row["lName"];//customer
 			}
 			else if($row["usertype"]==104){
                 $_SESSION['usertype']=104;
                 $_SESSION['userID']=$row["userID"];
-                header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/../dashboard/dashboard_farmer.php");
+                header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/../dashboard/homepage_farmer.php");
 			$_SESSION['name']=$row["fName"] .' '.$row["lName"];//farmer
             }else if($row["usertype"]==103){
                 $message.= "<p>You don't have access";

@@ -16,7 +16,7 @@
 <?php include '../session/levelOfAccess.php';
 $inNum=$_GET['conNum'];?>
 <!-- / nav -->
-
+ 
 <?php
 if ($_SESSION['usertype']!=101){
   header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."../../accounts/login.php");
@@ -47,13 +47,62 @@ $query="SELECT DATE(invoiceDate) as invoiceDate, DATE(DATE_ADD(invoiceDate,INTER
         ";
                 if ($status==0) {
                     echo"Payment status: <span class='label bg-warning'>Unpaid</span><br>";
-                  }else if($status==1){
+						$updaterating=0;
+				$query14="UPDATE usersinfo SET usersinfo.rating='$updaterating' WHERE usersinfo.userID=5;";
+					   $result14=mysqli_query($dbc,$query14);
+	  
+	  
+			
+				
+				}
+                  else if($status==1){
                     echo"Payment status:<span class='label bg-success'>Paid</span><br>";
+					
+					//$query12="UPDATE usersinfo SET usersinfo.rating='$updaterating' WHERE usersinfo.fName='Raph';";
+					 //  $result12=mysqli_query($dbc,$query12);
+					   
+					   $query13="SELECT DATE(invoiceDate) as invoiceDate, DATE(DATE_ADD(invoiceDate,INTERVAL 7 DAY) )AS dueDate,  
+							  ABS(DATEDIFF(invoiceDate,CURDATE())) as days FROM invoice WHERE invoiceNo='{$inNum}'";
+					  $result13=mysqli_query($dbc,$query13);
+			  
+
+		
+        while($row = $result13->fetch_assoc()) {
+	
+          $days=$row["days"];
+        }
+        $days;
+
+      if($days<=7){
+		  //formula here
+       	$updaterating=5;
+		   //what to use in where??
+					$query11="UPDATE usersinfo SET usersinfo.rating='$updaterating' WHERE usersinfo.userID=5;";
+					   $result11=mysqli_query($dbc,$query11);
+      }
+	  
+	  else{
+		    //formula here
+       	$updaterating=1;
+
+					//what to use in where??
+					$query12="UPDATE usersinfo SET usersinfo.rating='$updaterating' WHERE usersinfo.userID=5;";
+					   $result12=mysqli_query($dbc,$query12);
+      }
+	  /*else{
+        echo "<form action='PO.php' method='POST'><button type='hidden-print' name=cancel class='btn m-b-xs w-xs btn-danger' >Cancel P.O</button>
+        <input type=hidden name=poNumber value='$poNum' ></form>";
+      }*/
+					   
+					   
                   }
 
                   echo "Invoice ID: <strong>INV-<input type=text style='border:none;background:none' readonly name='inNum' value=".$inNum."></strong>";
 
       }
+	  
+	  
+	  
 ?>
    
     </p>
@@ -188,7 +237,7 @@ $query="SELECT DATE(invoiceDate) as invoiceDate, DATE(DATE_ADD(invoiceDate,INTER
                     $queryChange="UPDATE invoice SET status=0 WHERE invoiceNo='{$inNum}'";
                     $resultChange=mysqli_query($dbc,$queryChange);
                   }
-                  header("location:admin_invoicelist.php"); 
+                 header("location:admin_invoicelist.php"); 
             exit;
                 }
   }
