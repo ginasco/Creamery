@@ -9,110 +9,135 @@
 
 </head>
 <body>
-<div class="app app-header-fixed ">
-  
+  <div class="app app-header-fixed ">
 
-  <!-- nav -->
-<?php include '../session/levelOfAccess.php';?>
-<!-- / nav -->
 
-<?php
-if ($_SESSION['usertype']!=102){
-  header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."../../accounts/login.php");
-}
-?>
+    <!-- nav -->
+    <?php include '../session/levelOfAccess.php';
+    $inNum=$_GET['conNum'];?>
+    <!-- / nav -->
 
-  <!-- content -->
-  <div id="content" class="app-content" role="main">
-  	<div class="app-content-body ">
-	    
+    <?php
+    if ($_SESSION['usertype']!=102){
+      header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."../../accounts/login.php");
+    }
+    ?>
 
-<div class="bg-light lter b-b wrapper-md hidden-print">
-  <a href class="btn btn-sm btn-info pull-right" onClick="window.print();">Print</a>
-  <h1 class="m-n font-thin h3">Invoice / INV-9399034</h1>
-</div>
-<div class="wrapper-md">
-    <p class="m-t m-b">Invoice Date: <strong>20 October 2016</strong><br>
-   
-          Due Date: <strong>29 OCT 2016</strong><br>
-        Payment status: <span class="label bg-warning">Unpaid</span><br>
-        Invoice ID: <strong>INV-9399034</strong>
-    
-    </p>
-  <div>
-    <div class="well m-t bg-light lt">
-      <div class="row">
-        <div class="col-xs-6">
-          <strong>Customer:</strong>
-          <h4>Marcus Ko</h4>
-          <p>
-            19 Anahaw Road<br>
-            North Forbes Park, Makati City<br>
-            National Capital Region <br>
-            Phone: +63 917 325 8562<br>
-            Email: marcus_ko@gmail.com<br>
-          </p>
-        </div>
-        
+    <!-- content -->
+    <div id="content" class="app-content" role="main">
+     <div class="app-content-body ">
+
+
+      <div class="bg-light lter b-b wrapper-md hidden-print">
+        <a href class="btn btn-sm btn-info pull-right" onClick="window.print();">Print</a>
+        <h1 class="m-n font-thin h3">Invoice / INV-<input type=text style="border:none;background:none" readonly name="inNum" value="<?php echo $inNum; ?>"/></h1>
       </div>
+      <div class="wrapper-md">
+        <?php  
+        require_once('../../mysqlConnector/mysql_connect.php');
+
+        $query="SELECT DATE(invoiceDate) as invoiceDate, DATE(DATE_ADD(invoiceDate,INTERVAL 7 DAY) )AS dueDate, status FROM invoice WHERE invoiceNo='{$inNum}'";
+        $result=mysqli_query($dbc,$query);
+        while($row = $result->fetch_assoc()) {
+          $status=$row["status"];
+          echo "<p class='m-t m-b'>Invoice Date: <strong>".$row["invoiceDate"]."</strong><br>
+          Due Date: <strong>".$row["dueDate"]."</strong><br>
+          ";
+          if ($status==0) {
+            echo"Payment status: <span class='label bg-warning'>Unpaid</span><br>";
+          }
+          else if($status==1){
+            echo"Payment status:<span class='label bg-success'>Paid</span><br>";
+          }
+        }
+        ?>
+        <div>
+
+          <div class="line"></div>
+          <table class="table table-striped bg-white b-a">
+            <thead>
+              <tr>
+               <th style="width: 15%">QTY</th>
+               <th style="width: 15%">SKU</th>
+               <th style="width:30%">DESCRIPTION</th>
+               <th style="width: 14%">UNIT PRICE</th>
+               <th style="width: 15%;text-align:right">TOTAL</th>
+             </tr>
+           </thead>
+           <tbody>
+            <?php  
+            $query="Select pu.qty, p.productName, p.sku, p.wholesalePrice, p.productID From invoice2 pu join products p on pu.productID=p.productID where pu.invoiceNo = '{$inNum}'";
+            $result=mysqli_query($dbc,$query);
+            while($row = $result->fetch_assoc()) {
+              echo "  <tr class='productRows'>
+              <td >".$row["qty"]."<input type=hidden name=qty class=qty value=".$row["qty"]."></td>
+              <td >".$row["sku"]."</td>
+              <td>".$row["productName"]."</td>
+              <td style=text-align:right>".$row["wholesalePrice"]."</td>";
+
+              $query1="Select (pu.qty*p.wholesalePrice) as total From invoice2 pu join products p on pu.productID=p.productID where pu.invoiceNo = '{$inNum}' and pu.productID='{$row["productID"]}'";
+              $result1=mysqli_query($dbc,$query1);
+              while($row = $result1->fetch_assoc()) {
+                $total=$row["total"];
+              }
+
+              echo "<td style=text-align:right>".$total."<input type=hidden name=unitPrice id=total class=total class=unitPrice value=".$total."></td>
+              <td></td> 
+            </tr>";
+          }
+          ?>
+          <tr>
+            <td colspan="4" class="text-right"><strong>Subtotal</strong></td>
+            <td colspan="5    "style="text-align:right"><strong><span>₱</span><input type="number" style="border:none;text-align:right" readonly id="subTotal"/></strong></td>
+          </tr>
+
+          <tr>
+            <td colspan="4" class="text-right no-border"><strong>12% VAT</strong></td>
+            <td colspan="5    "style="text-align:right"><strong><span>₱</span><input type="number" style="border:none;text-align:right" readonly id="VAT"/></strong></td>
+          </tr>
+          <tr>
+            <td colspan="4    " class="text-right no-border"><strong>Total</strong></td>
+            <td colspan="5    "style="text-align:right"><strong><span>₱</span><input type="number" style="border:none;text-align:right" readonly id="grandTotal"/></strong></td>
+          </tr>
+        </tbody>
+      </table>              
     </div>
-         Sales Period: <strong>15 October - 19 October 2016</strong><br>
-    <div class="line"></div>
-    <table class="table table-striped bg-white b-a">
-      <thead>
-        <tr>
-          <th style="width: 60px">QTY</th>
-            <th style="width: 70px">SKU</th>
-            <th style="width:400px">DESCRIPTION</th>
-        
-            <th style="width: 70px">UNIT PRICE</th>
-          <th style="width: 90px">TOTAL</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>51</td>
-        <TD>CHMK500</TD>
-          <td>500ml Chocolate Milk</td>
-          <td>PHP 50.00</td>
-          <td>PHP 2550.00</td>
-        </tr>
-        <tr>
-          <td>5</td>
-            <TD>QSPT200</TD>
-          <td>500G Quesong Puti</td>
-          <td>PHP 50.00</td>
-          <td>PHP 250.00</td>
-        </tr>
-        <tr>
-          <td colspan="4" class="text-right"><strong>Subtotal</strong></td>
-          <td>PHP 2800.00</td>
-        </tr>
-        
-        <tr>
-          <td colspan="4" class="text-right no-border"><strong>12% VAT</strong></td>
-          <td>PHP 336.00</td>
-        </tr>
-        <tr>
-          <td colspan="4    " class="text-right no-border"><strong>Total</strong></td>
-          <td><strong>PHP 3136.00</strong></td>
-        </tr>
-      </tbody>
-    </table>              
   </div>
+
+
 </div>
+</div>
+<!-- /content -->
 
 
-	</div>
-  </div>
-  <!-- /content -->
-  
- 
 
 
 
 </div>
 
+<script>
+  var quantityCount=0;
+  var vat=0;
+  var grandTotal;
 
+  $('.total').each(function(){
+    quantityCount += parseFloat(this.value);
+
+  });
+
+  var x = document.getElementById("subTotal");
+  x.setAttribute("value", quantityCount);
+
+  vat=quantityCount*0.12;
+  var v = document.getElementById("VAT");
+  v.setAttribute("value", vat);
+
+  grandTotal=vat+quantityCount;
+  var g = document.getElementById("grandTotal");
+  g.setAttribute("value",grandTotal);
+
+
+
+</script>
 </body>
 </html>
