@@ -61,7 +61,7 @@ if ($_SESSION['usertype']!=102){
                 
 
                 echo "<tr class='productRows'>
-                <td ><input type=button name=controlNum id=happy class=pN style=border:none;background:none value=".$poNumber."></td>
+                <td >PO-<input type=button name=controlNum id=happy class=pN style=border:none;background:none value=".$poNumber."></td>
                 <td>".$row["datePurchase"]."<input type=hidden name=datePurchase value=".$row["datePurchase"]."></td>";
                 
                 $getTotal="select SUM(p.wholesalePrice* pu.purchaseQty) AS total from purchase2 pu join products p on pu.productID=p.productID where poNumber='{$poNumber}'";
