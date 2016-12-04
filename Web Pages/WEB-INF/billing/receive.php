@@ -49,7 +49,7 @@
                   $query="
                   SELECT distinct d.drNumber
                   FROM delivery d 
-                  WHERE distributorName='{$_SESSION['username']}' and NOT exists
+                  WHERE distributorName='{$_SESSION['username']}' and cancel=0 and NOT exists
                   (SELECT distinct * FROM received r
                   WHERE r.drNumber = d.drNumber );";
                   $result=mysqli_query($dbc,$query);
