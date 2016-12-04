@@ -47,10 +47,7 @@
           ";
           if ($status==0) {
             echo"Payment status: <span class='label bg-warning'>Unpaid</span><br>";
-            $updaterating=0;
-            $query14="UPDATE usersinfo SET usersinfo.rating='$updaterating' WHERE usersinfo.userID=5;";
-            $result14=mysqli_query($dbc,$query14);
-            
+           
             
             
             
@@ -61,7 +58,16 @@
 					//$query12="UPDATE usersinfo SET usersinfo.rating='$updaterating' WHERE usersinfo.fName='Raph';";
 					 //  $result12=mysqli_query($dbc,$query12);
             
-            $query13="SELECT DATE(invoiceDate) as invoiceDate, DATE(DATE_ADD(invoiceDate,INTERVAL 7 DAY) )AS dueDate,  
+            
+			
+			 $query10="SELECT u.userID FROM invoice p JOIN users u ON p.username=u.username WHERE p.invoiceNo='{$inNum}'";
+        $result10=mysqli_query($dbc,$query10);
+        while($row = $result10->fetch_assoc()) {
+          $user=$row["userID"];
+        }
+        $user;
+			
+			$query13="SELECT DATE(invoiceDate) as invoiceDate, DATE(DATE_ADD(invoiceDate,INTERVAL 7 DAY) )AS dueDate,  
             ABS(DATEDIFF(invoiceDate,CURDATE())) as days FROM invoice WHERE invoiceNo='{$inNum}'";
             $result13=mysqli_query($dbc,$query13);
             
@@ -75,25 +81,53 @@
 
             if($days<=7){
 		  //formula here
-              $updaterating=5;
+		 	 
+              $query10="SELECT DISTINCT( i.invoiceNo), ui.rating,i.username from usersinfo ui JOIN users u ON ui.userID=u.userID JOIN invoice i ON i.username=u.username WHERE i.invoiceNo=3;";
+				 $result10=mysqli_query($dbc,$query10);
 		   //what to use in where??
-              $query11="UPDATE usersinfo SET usersinfo.rating='$updaterating' WHERE usersinfo.userID=5;";
-              $result11=mysqli_query($dbc,$query11);
+		     
+            while($row = $result10->fetch_assoc()) {
+             
+              $rating=$row["rating"];
+			  $first_number = 5;
+$second_number = 2;
+$sum_total = ($rating + $first_number);
+$final=($sum_total/$second_number);
+//round($final);
+
+//$direct_text = 'The two variables added together = ';
+//print($rating);
+//print($second_number);
+//print ($final);
+		
             }
             
-            else{
-		    //formula here
-              $updaterating=1;
+		
 
-					//what to use in where??
-              $query12="UPDATE usersinfo SET usersinfo.rating='$updaterating' WHERE usersinfo.userID=5;";
-              $result12=mysqli_query($dbc,$query12);
+              $query11="UPDATE usersinfo SET usersinfo.rating='{$final}' WHERE usersinfo.userID='{$user}';";
+              $result11=mysqli_query($dbc,$query11);
             }
-	  /*else{
-        echo "<form action='PO.php' method='POST'><button type='hidden-print' name=cancel class='btn m-b-xs w-xs btn-danger' >Cancel P.O</button>
-        <input type=hidden name=poNumber value='$poNum' ></form>";
-      }*/
-      
+			else{
+				 
+              $query10="SELECT DISTINCT( i.invoiceNo), ui.rating,i.username from usersinfo ui JOIN users u ON ui.userID=u.userID JOIN invoice i ON i.username=u.username WHERE i.invoiceNo=3;";
+				 $result10=mysqli_query($dbc,$query10);
+		   //what to use in where??
+		     
+            while($row = $result10->fetch_assoc()) {
+             
+              $rating1=$row["rating"];
+			  $first_number1 = 1;
+$second_number1 = 2;
+$sum_total1 = ($rating1 + $first_number1);
+$final1=($sum_total1/$second_number1);
+
+$query15="UPDATE usersinfo SET usersinfo.rating='{$final1}' WHERE usersinfo.userID='{$user}';";
+              $result15=mysqli_query($dbc,$query15);
+				
+				
+			}
+         
+			}
       
     }
 
