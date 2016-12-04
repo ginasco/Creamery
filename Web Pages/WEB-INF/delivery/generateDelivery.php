@@ -112,6 +112,7 @@
     $expirationDate=$_POST['expirationDate'];
     $purchaseNo=$_POST['purchaseNo'];
     $deliveredBy="n/a";
+    $cancel=0;
 
     $sql = "SELECT MAX(`drNumber`) AS drNumber FROM `delivery`";
     $result=mysqli_query($dbc,$sql);
@@ -132,12 +133,12 @@
   
     foreach($items as $key=>$value){
 
-      $pairs3[] = '('.intval($value['productID']).','.intval($value['qtyAllocated']).',"'.$value['expirationDate'].'",'."'$name'".','."'$deliveredBy'".','."'$drNumber'".')';
+      $pairs3[] = '('.intval($value['productID']).','.intval($value['qtyAllocated']).',"'.$value['expirationDate'].'",'."'$name'".','."'$deliveredBy'".','."'$drNumber'".','."'$cancel'".')';
     }
 
     //print_r($pairs3);
 
-    $sql = "INSERT INTO `delivery`(`productID`, `quantityDR`,`expiryDate`,`distributorName`, `deliveredBy`, `drNumber`) VALUES".implode(',',$pairs3);
+    $sql = "INSERT INTO `delivery`(`productID`, `quantityDR`,`expiryDate`,`distributorName`, `deliveredBy`, `drNumber`, `cancel`) VALUES".implode(',',$pairs3);
     $result=mysqli_query($dbc,$sql);
 
     $sql = "UPDATE allocation set receiptGenerated=1 WHERE purchaseNo IN ('".implode($purchaseNo,"', '")."') AND username='{$name}' AND productID IN ('".implode($productID,"', '")."')";
