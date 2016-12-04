@@ -36,7 +36,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-5">
           <div class="well">
             <div class="box">
               <div class="text-info">Products</div>
@@ -54,11 +54,17 @@
               </thead>
               <tbody id="mainList">
                <?php 
+			    $time = date("Y/m/d");
+                $date = strtotime($time);
+				
                require_once('../../mysqlConnector/mysql_connect.php');
-               $query="SELECT i.productID, p.productName, p.retailPrice, i.inventoryQty, i.expiryDate
+               $query="SELECT i.productID,i.expiryDate, p.productName, p.retailPrice, i.inventoryQty, i.expiryDate
                FROM perpetualinventory i JOIN products p ON i.productID = p.productID where inventoryQty>0";
                $result=mysqli_query($dbc,$query);
                while($row = $result->fetch_assoc()) {
+				   
+                  $expiryDate=strtotime($row["expiryDate"]);
+                  if($date<=$expiryDate){
                  echo"
 
                  <tr>
@@ -69,7 +75,8 @@
                   <td>".$row["expiryDate"]."</td>
                   <td><button type=submit name=add  class=btn btn-info btn-lg addc id=add>Add</button></td>
                 </tr>";
-              }
+				  }
+				  }
               ?>
             </tbody>
           </table>
@@ -84,7 +91,7 @@
         </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-7">
         <div  class="well">
           <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
             <div class="panel panel-primary">
@@ -308,9 +315,9 @@ if (isset($_POST['confirm'])){
            element.appendChild(para);
            $(".trList").append('<td style=display:none><input name="productID[]" class="pID" id="productID" type="text" readOnly value="'+pR+'" /></td>');
            $(".trList").append('<td><input style="width:100%;border:none" name="productName" id="productName" type="text" readOnly value="'+pN+'"/></td>');
-           $(".trList").append('<td><input type="hidden" class="currQty" value="'+qty+'"/> <input style="width:50px;border:none"  name="retailPrice" class="retailPrice" type="number" readOnly value="'+rP+'"/></td>');
+           $(".trList").append('<td><input type="hidden" class="currQty" value="'+qty+'"/> <input style="width:60px;border:none"  name="retailPrice" class="retailPrice" type="number" readOnly value="'+rP+'"/></td>');
            $(".trList").append('<td>  <input style="width:50px"  type="number" class="num" id="orderValue" required min=0 type="number" onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="qtySold[]"></td> <td><input style="width:50px;border:none"  readOnly type="number" class="eachQty" /></td>');
-           $(".trList").append('<td ><button type=button class="btn btn-danger btn-xs pull-right" id="delete"><span class="glyphicon glyphicon-trash"></span></button></td>');
+           $(".trList").append('<td ><button type=button class="btn btn-danger btn-xs pull-center" id="delete"><span class="glyphicon glyphicon-trash"></span></button></td>');
            para.setAttribute("class", "trListSaved");
            
          });
