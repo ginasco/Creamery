@@ -86,9 +86,10 @@
             </tr>";
           }
           ?>
+
           <tr>
             <td colspan="4" class="text-right"><strong>Subtotal</strong></td>
-            <td colspan="5    "style="text-align:right"><strong><span>₱</span><input type="number" style="border:none;text-align:right" readonly id="subTotal"/></strong></td>
+            <td colspan="5    "style="text-align:right"><strong><span>₱</span><input type="number" style="border:none;text-align:right"  id="subTotal"/></strong></td>
           </tr>
 
           <tr>
@@ -121,8 +122,7 @@
   var grandTotal;
 
   $('.total').each(function(){
-    quantityCount += parseFloat(this.value);
-
+    quantityCount += parseInt(this.value); 
   });
 
   var x = document.getElementById("subTotal");
@@ -139,5 +139,8 @@
 
 
 </script>
+
+
+
 </body>
 </html>
