@@ -56,7 +56,7 @@
 
                 $productionNo=$row["productionNo"];
                 
-                $sql = "SELECT p.productName,pr.producedQty, pr.expirationDate,pr.productID FROM produced2 pr JOIN products p ON pr.productID=p.productID WHERE pr.productionNo='{$productionNo}' ORDER BY p.productName";
+                $sql = "SELECT p.productName,pr.producedQty, pr.expirationDate,pr.productID FROM produced2 pr JOIN products p ON pr.productID=p.productID WHERE pr.productionNo='{$productionNo}' and pr.allocated=0 ORDER BY p.productName";
                 $result1=mysqli_query($dbc,$sql);
                 while($row = $result1->fetch_assoc()) {
 
@@ -284,8 +284,7 @@ $result=mysqli_query($dbc,$sql);
 
 $sql = "INSERT INTO `allocation`(`username`, `qtyAllocated`,`purchaseNo`,`expirationDate`, `productID`,`receiptGenerated`) VALUES".implode(',',$pairs3);
 $result=mysqli_query($dbc,$sql);
-echo $sql;
-}
+//echo $sql;
 
 $query10 = "SELECT `purchaseNo`,`productID` FROM `allocation` WHERE `receiptGenerated`=0";
 $result10=mysqli_query($dbc,$query10);
@@ -296,6 +295,12 @@ while($row = $result10->fetch_assoc()) {
 $sql = "UPDATE `purchase2` SET `allocated`=1 WHERE `productID`='{$prod}' AND `poNumber`='{$poNu}'";
 $result=mysqli_query($dbc,$sql);
 }
+
+header("location:allocation.php"); 
+exit;
+}
+
+
 
 ?>
 
