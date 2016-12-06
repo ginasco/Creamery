@@ -73,10 +73,13 @@ if ($_SESSION['usertype']!=102){
                 
 
                 if($ordered==0){
-                    echo " <td><span class='label bg-danger'>Unprocess</span></td> 
+                    echo " <td><span class='label bg-warning'>Unprocess</span></td> 
                 ";
                   }else if ($ordered==1){
-                    echo " <td><span class='label bg-warning'>processed</span></td> 
+                    echo " <td><span class='label bg-success'>processed</span></td> 
+                ";
+                  }else if ($ordered==3){
+                    echo " <td><span class='label bg-danger'>canceled</span></td> 
                 ";
                   }
                   echo " <td style='text-align:right'>".$total."</td> </tr>";

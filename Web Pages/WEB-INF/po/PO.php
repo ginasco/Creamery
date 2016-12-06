@@ -36,11 +36,13 @@ if ($_SESSION['usertype']!=102){
 <div class="wrapper-md">
 <?php  
 require_once('../../mysqlConnector/mysql_connect.php');
-$query="Select date(datePurchase) as datePurchase From purchase where poNumber = '$poNum'";
+$query="Select date(datePurchase) as datePurchase, ordered From purchase where poNumber = '{$poNum}'";
         $result=mysqli_query($dbc,$query);
         while($row = $result->fetch_assoc()) {
           echo "  <p class='m-t m-b'>P.O Date: <strong>".$row["datePurchase"]."</strong><br>";
+          $ordered=$row["ordered"];
         }
+        $ordered;
 
 ?>
    
@@ -92,6 +94,13 @@ $query="Select date(datePurchase) as datePurchase From purchase where poNumber =
      
       <?php
 
+      $queryOR="SELECT ordered From purchase where poNumber = '{$poNum}'";
+        $resultOR=mysqli_query($dbc,$queryOR);
+        while($row = $resultOR->fetch_assoc()) {
+          $ordered1=$row["ordered"];
+        }
+        $ordered1;
+
 	$query="SELECT ABS(DATEDIFF(datePurchase, CURDATE())) as days FROM purchase WHERE poNumber='{$poNum}';";
 	 
        $result=mysqli_query($dbc,$query);
@@ -103,27 +112,27 @@ $query="Select date(datePurchase) as datePurchase From purchase where poNumber =
         }
         $days;
 
-      if($days>3){
+      if($ordered1==3){
+         echo "<button name=cancel class='btn m-b-xs w-xs btn-danger' disabled>Cancel P.O</button>";
+      }else{
+        if($days>3){
         echo "<button name=cancel class='btn m-b-xs w-xs btn-danger' disabled>Cancel P.O</button>";
       }else{
         echo "<form action='PO.php' method='POST'><button type='hidden-print' name=cancel class='btn m-b-xs w-xs btn-danger' >Cancel P.O</button>
         <input type=hidden name=poNumber value='$poNum' ></form>";
       }
+      }
+      
       ?>
 
       <?php  
       if (isset($_POST['cancel'])){
         $poNumber=$_POST['poNumber'];
-        $deletePO2="DELETE FROM purchase2 where poNumber='{$poNumber}'";
-        $result=mysqli_query($dbc,$deletePO2);
-        echo $deletePO2;
-        echo $deletePO;
+        //echo $deletePO2;
+        //echo $deletePO;
 
-
-        $deletePO="DELETE FROM purchase WHERE poNumber='{$poNumber}'";
+        $deletePO="UPDATE purchase SET ordered=3 WHERE poNumber='{$poNumber}'";
         $result=mysqli_query($dbc,$deletePO);
-
-        
 
         header("location:polist.php"); 
     exit;
