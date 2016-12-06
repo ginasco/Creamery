@@ -57,6 +57,7 @@ $message=NULL;
 if(!isset($message)){
 if($retypepassword==$password){
 require_once('../../mysqlConnector/mysql_connect.php');
+
 $query="Insert into USERS (username,password,usertype) values ('{$username}',PASSWORD('$password'),'{$usertype}')";
 
 $result=mysqli_query($dbc,$query);
@@ -153,7 +154,13 @@ $message=NULL;
 if(!isset($message)){
 if($retypepassword==$password){
 require_once('../../mysqlConnector/mysql_connect.php');
-$query="Insert into USERSINFO (tinNum,address,city,contactNum,emailAdd,fName,lName,rating) values ('{$tinNum}','{$address}','{$city}','{$contactNum}','{$emailAdd}','{$fName}','{$lName}','{$rating}')";
+$quertGetID= "SELECT userID from users order by userID DESC LIMIT 1";
+$resultID=mysqli_query($dbc,$quertGetID);
+while($row=$resultID->fetch_assoc()) {
+	$id=$row["userID"];
+}
+$id;
+$query="Insert into USERSINFO (userID,tinNum,address,city,contactNum,emailAdd,fName,lName,rating) values ('{$id}','{$tinNum}','{$address}','{$city}','{$contactNum}','{$emailAdd}','{$fName}','{$lName}','{$rating}')";
 
 $result=mysqli_query($dbc,$query);
 
