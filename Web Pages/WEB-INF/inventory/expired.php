@@ -80,9 +80,9 @@ if ($_SESSION['usertype']!=102){
                 on i.productID=p.productID where i.active!=0 and i.pulloutStat=0 and username ='{$_SESSION['username']}'";
                 $result=mysqli_query($dbc,$query);
                 while($row = $result->fetch_assoc()) {
-
+                  $qtyCount=$row["inventoryQty"];
                   $expiryDate=strtotime($row["expiryDate"]);
-                  if($date>=$expiryDate){
+                  if($date>=$expiryDate AND $qtyCount>0){
 
                    echo "<tbody><tr class='productRows'>
                    <td>".$row["sku"]."<input type=hidden name='productID[]' value=".$row["productID"]."></td>
