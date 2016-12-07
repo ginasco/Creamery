@@ -44,10 +44,13 @@
          P.O ID: <strong>PO-<input type=text style='border:none;background:none' readonly name='poNum' value=".$poNum."></strong><br> ";
 
         if($row["ordered"]==0){
-                    echo " <td>Status: <span class='label bg-danger'>Unprocess</span></td> 
+                    echo " <td>Status: <span class='label bg-warning'>Unprocess</span></td> 
                 </tr>";
                   }else if ($row["ordered"]==1){
-                    echo " <td>Status: <span class='label bg-warning'>processed</span></td> 
+                    echo " <td>Status: <span class='label bg-success'>processed</span></td> 
+                </tr>";
+                  }else if ($row["ordered"]==3){
+                    echo " <td>Status: <span class='label bg-danger'>canceled</span></td> 
                 </tr>";
                   }
       }
