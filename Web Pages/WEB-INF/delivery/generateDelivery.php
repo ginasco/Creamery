@@ -141,6 +141,8 @@
     $sql = "INSERT INTO `delivery`(`productID`, `quantityDR`,`expiryDate`,`distributorName`, `deliveredBy`, `drNumber`, `cancel`) VALUES".implode(',',$pairs3);
     $result=mysqli_query($dbc,$sql);
 
+    // echo $sql;
+
     $sql = "UPDATE allocation set receiptGenerated=1 WHERE purchaseNo IN ('".implode($purchaseNo,"', '")."') AND username='{$name}' AND productID IN ('".implode($productID,"', '")."')";
     $result=mysqli_query($dbc,$sql);
 

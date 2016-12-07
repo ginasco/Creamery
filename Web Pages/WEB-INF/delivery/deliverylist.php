@@ -59,17 +59,20 @@
                 $cancel=$row["cancel"];
 
                 echo "<tr class='productRows'>
-                <td ><input type=button name=controlNum id=happy class=pN style=border:none;background:none value=".$poNumber."></td>
-                <td>".$row["datePurchase"]."<input type=hidden name=datePurchase value=".$row["datePurchase"]."></td>";
+                <td ><input type=button name=controlNum id=happy class=pN style=border:none;background:none value=".$poNumber."></td>";
 
                 $query1="SELECT concat(i.fName,' ',i.lName) as distributorName, i.city from usersinfo i where userID= '{$userID}'";
                 $result1=mysqli_query($dbc,$query1);
                 while($rows = $result1->fetch_assoc()) {
                   echo "
-                  <td>".$rows["city"]."</td><td>".$rows["distributorName"]."</td>";
+                  
+                  <td>".$rows["distributorName"]."</td>
+                  <td>".$rows["city"]."</td>";
 
 
                 }
+
+                echo "<td>".$row["datePurchase"]."<input type=hidden name=datePurchase value=".$row["datePurchase"]."></td>";
 
                 if($cancel==1){
                   echo "<td><span class='label bg-danger'>cancel</span></td>";
